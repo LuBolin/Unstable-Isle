@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://du7g0v2b07ywc"]
+[gd_scene load_steps=12 format=3 uid="uid://du7g0v2b07ywc"]
 
 [ext_resource type="Script" path="res://scenes/world/world_camera.gd" id="1_0tqhe"]
 [ext_resource type="PackedScene" uid="uid://bneapx68qdf77" path="res://scenes/world/arena.tscn" id="2_yxqng"]
@@ -28,6 +28,8 @@ background_mode = 2
 sky = SubResource("Sky_siqx5")
 sky_rotation = Vector3(-3.57792, 0, 0)
 
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_4dlaj"]
+
 [node name="Overworld" type="Node3D"]
 
 [node name="ThirdPersonCam" type="Camera3D" parent="."]
@@ -48,3 +50,10 @@ script = ExtResource("3_31kcv")
 [node name="Entities" type="Node3D" parent="GameController"]
 
 [node name="MenuOverlay" parent="." instance=ExtResource("4_wre41")]
+
+[node name="InputRaycastTargetBody" type="StaticBody3D" parent="."]
+collision_layer = 8
+collision_mask = 0
+
+[node name="WorldBoundaryPlane" type="CollisionShape3D" parent="InputRaycastTargetBody"]
+shape = SubResource("WorldBoundaryShape3D_4dlaj")

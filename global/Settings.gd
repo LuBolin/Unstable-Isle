@@ -11,3 +11,7 @@ const SKY_BOX_ANGLE: int = -205
 # thus skybox is at -115 - 90 = -205 degrees
 
 const GRAVITY: int = 200
+
+# Layers
+# 1: Physics
+# 4: Input World Boundary Plane

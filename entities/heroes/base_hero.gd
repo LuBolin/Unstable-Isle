@@ -38,16 +38,13 @@ var target: Vector3 = Vector3.ZERO
 
 func _ready():
 	character = character
-	var line = CylinderMesh.new()
-	line.top_radius = 4
-	line.bottom_radius = 4
-	target_line.set_mesh(line)
 
 func create(c_id: int, initial_pos: Vector3):
 	controller_id = c_id
 	self.name = str(c_id)
 	if c_id == Network.multiplayer.get_unique_id():
 		ring = get_node("Base/Ring")
+		# Inspector -> Resource -> Local to Scene
 		ring.get_mesh().surface_get_material(0).albedo_color = Color.GREEN
 	position = initial_pos
 	target = position
