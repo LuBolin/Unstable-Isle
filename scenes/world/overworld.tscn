@@ -1,0 +1,41 @@
+[gd_scene load_steps=9 format=3 uid="uid://du7g0v2b07ywc"]
+
+[ext_resource type="Script" path="res://scenes/world/world_camera.gd" id="1_0tqhe"]
+[ext_resource type="PackedScene" uid="uid://bneapx68qdf77" path="res://scenes/world/arena.tscn" id="2_yxqng"]
+
+[sub_resource type="Gradient" id="Gradient_238p4"]
+offsets = PackedFloat32Array(0.511628, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_bal0x"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_u7sd5"]
+seamless = true
+color_ramp = SubResource("Gradient_238p4")
+noise = SubResource("FastNoiseLite_bal0x")
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_c866b"]
+sky_top_color = Color(0.282353, 0.462745, 0.643137, 1)
+sky_curve = 0.0284196
+sky_cover = SubResource("NoiseTexture2D_u7sd5")
+
+[sub_resource type="Sky" id="Sky_siqx5"]
+sky_material = SubResource("ProceduralSkyMaterial_c866b")
+
+[sub_resource type="Environment" id="Environment_hoq5u"]
+background_mode = 2
+sky = SubResource("Sky_siqx5")
+sky_rotation = Vector3(-3.57792, 0, 0)
+
+[node name="Overworld" type="Node3D"]
+
+[node name="ThirdPersonCam" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.422618, 0.906308, 0, -0.906308, 0.422618, 0, 400, 160)
+script = ExtResource("1_0tqhe")
+
+[node name="SkyBox" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_hoq5u")
+
+[node name="Sun" type="DirectionalLight3D" parent="SkyBox"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+
+[node name="Arena" parent="." instance=ExtResource("2_yxqng")]

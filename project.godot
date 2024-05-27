@@ -11,11 +11,38 @@ config_version=5
 [application]
 
 config/name="Unstable Isle"
+run/main_scene="res://scenes/world/overworld.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://resources/icon.png"
-config/macos_native_icon="res://resources/icon.png"
-config/windows_native_icon="res://resources/icon.png"
+config/macos_native_icon="res://resources/misc/icon.icns"
+config/windows_native_icon="res://resources/misc/icon.ico"
+
+[autoload]
+
+Settings="*res://global/Settings.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/copilot/plugin.cfg", "res://addons/gdDelaunay/plugin.cfg")
+
+[input]
+
+scroll_up={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":4,"canceled":false,"pressed":false,"double_click":false,"script":null)
+]
+}
+scroll_down={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":5,"canceled":false,"pressed":false,"double_click":false,"script":null)
+]
+}
+
+[physics]
+
+3d/default_gravity=200.0
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="mobile"

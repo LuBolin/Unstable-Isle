@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bneapx68qdf77"]
+
+[ext_resource type="Script" path="res://scenes/world/island_manager.gd" id="1_h5xcj"]
+[ext_resource type="PackedScene" uid="uid://c64vsovi28q7w" path="res://scenes/world/ground_chunk.tscn" id="2_aexai"]
+
+[node name="Arena" type="Node3D"]
+
+[node name="IslandManager" type="Node3D" parent="."]
+script = ExtResource("1_h5xcj")
+ground_chunk = ExtResource("2_aexai")
