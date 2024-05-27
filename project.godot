@@ -19,7 +19,9 @@ config/windows_native_icon="res://resources/misc/icon.ico"
 
 [autoload]
 
-Settings="*res://global/Settings.gd"
+Settings="*res://global/settings.gd"
+Network="*res://global/network.gd"
+InputPoller="*res://global/input_poller.gd"
 
 [editor_plugins]
 

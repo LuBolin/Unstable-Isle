@@ -48,8 +48,6 @@ func focus_at(pos: Vector2) -> void:
 	# complement of the angle
 	var z_over_y = atan(deg_to_rad(90 + CAM_ANGLE))
 	var delta_z = target.y * z_over_y
-	print("Delta is ", delta_z)
-	print("Target is ", pos.y)
 	# pos is in x-z plane, thus pos.y is z
 	# + delta because +ve. z-axis is downwards
 	# and we point diagonally towards the -ve z direction

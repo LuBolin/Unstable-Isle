@@ -5,13 +5,15 @@ extends Node3D
 var mesh_root = null
 
 var island_radius = 400
-var delaunay_step = 25
+var delaunay_step = 40
 var delaunay_noise = 20
+#var delaunay_step = 25
+#var delaunay_noise = 20
 var mesh_seed = 33333
 
 var crumble_step_size = 10
 var crumble_radius = island_radius
-var crumble_period = 5.0
+var crumble_period = 15.0
 
 var game_started = false
 
@@ -22,6 +24,8 @@ func _process(delta):
 	pass
 
 func _input(event):
+	# right click will be for movement now
+	return
 	if not game_started:
 		return
 	if event is InputEventKey:

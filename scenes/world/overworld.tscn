@@ -1,7 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://du7g0v2b07ywc"]
+[gd_scene load_steps=11 format=3 uid="uid://du7g0v2b07ywc"]
 
 [ext_resource type="Script" path="res://scenes/world/world_camera.gd" id="1_0tqhe"]
 [ext_resource type="PackedScene" uid="uid://bneapx68qdf77" path="res://scenes/world/arena.tscn" id="2_yxqng"]
+[ext_resource type="Script" path="res://scenes/world/game_controller.gd" id="3_31kcv"]
+[ext_resource type="PackedScene" uid="uid://bmylpelnr50lw" path="res://scenes/gui/placeholder_menu_overlay.tscn" id="4_wre41"]
 
 [sub_resource type="Gradient" id="Gradient_238p4"]
 offsets = PackedFloat32Array(0.511628, 1)
@@ -39,3 +41,10 @@ environment = SubResource("Environment_hoq5u")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 
 [node name="Arena" parent="." instance=ExtResource("2_yxqng")]
+
+[node name="GameController" type="Node3D" parent="."]
+script = ExtResource("3_31kcv")
+
+[node name="Entities" type="Node3D" parent="GameController"]
+
+[node name="MenuOverlay" parent="." instance=ExtResource("4_wre41")]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dqmbhtd1nghrs"]
+[gd_scene load_steps=9 format=3 uid="uid://dqmbhtd1nghrs"]
 
 [ext_resource type="Script" path="res://entities/heroes/base_hero.gd" id="1_6v6ao"]
 [ext_resource type="PackedScene" uid="uid://dxukvbn3aiys5" path="res://entities/paper.tscn" id="1_pjgk3"]
@@ -17,6 +17,11 @@ albedo_color = Color(1, 0, 0, 1)
 material = SubResource("StandardMaterial3D_okujh")
 inner_radius = 13.0
 outer_radius = 15.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_tksj2"]
+top_radius = 4.0
+bottom_radius = 4.0
+height = 50.0
 
 [node name="Hero" type="CharacterBody3D"]
 script = ExtResource("1_6v6ao")
@@ -38,3 +43,4 @@ mesh = SubResource("CylinderMesh_1q0os")
 mesh = SubResource("TorusMesh_eldxs")
 
 [node name="TargetLine" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_tksj2")
