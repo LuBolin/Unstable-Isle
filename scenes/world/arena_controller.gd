@@ -1,71 +1,31 @@
+class_name ArenaController
 extends Node3D
 
 @export var ground_chunk: PackedScene
 
-var mesh_root = null
+@onready var chunk_root = $ChunkRoot
 
-var island_radius = 400
 var delaunay_step = 40
 var delaunay_noise = 20
-#var delaunay_step = 25
-#var delaunay_noise = 20
-var mesh_seed = 33333
 
+var crumble_radius = Settings.ISLAND_RADIUS
 var crumble_step_size = 10
-var crumble_radius = island_radius
-var crumble_period = 15.0
-
-var game_started = false
+var crumble_period = 5.0
 
 func _ready():
-	start_game()
-
-func _process(delta):
+	# start_game()
 	pass
 
-func _input(event):
-	# right click will be for movement now
-	return
-	if not game_started:
-		return
-	if event is InputEventKey:
-		if event.is_pressed():
-			if event.keycode == KEY_R:
-				get_tree().reload_current_scene()
-	elif event is InputEventMouseButton:
-		if event.is_pressed() and \
-			event.button_index == MOUSE_BUTTON_RIGHT:
-				var mousePos = get_viewport().get_mouse_position()
-				var camera_3d = get_viewport().get_camera_3d()
-				var from = camera_3d.project_ray_origin(mousePos)
-				var to = from + camera_3d.project_ray_normal(mousePos) * 1000
-				var space = get_world_3d().direct_space_state
-				var rayQuery = PhysicsRayQueryParameters3D.new()
-				rayQuery.from = from
-				rayQuery.to = to
-				var result = space.intersect_ray(rayQuery)
-				if not result.is_empty():
-					var chunk = result['collider']
-					# collider is already the rigidbody
-					if chunk is GroundChunk:
-						chunk.hit()
-
-func start_game():
-	game_started = true
-	
-	#var sites = make_island(island_radius, delaunay_step, 
-	#delaunay_noise, mesh_seed)
-	var sites = make_island(island_radius, delaunay_step, delaunay_noise)
-
-	mesh_root = Node.new()
-	mesh_root.name = "MeshRoot"
-	add_child(mesh_root)
+func init_island(seed):
+	var sites = make_island(Settings.ISLAND_RADIUS,
+		delaunay_step, delaunay_noise, seed)
 
 	for site in sites:
 		var chunk = ground_chunk.instantiate()
-		mesh_root.add_child(chunk)
+		chunk_root.add_child(chunk)
 		chunk.set_shape(site.polygon)
-	
+
+func start_game():	
 	var crumble_timer = Timer.new()
 	add_child(crumble_timer)
 	crumble_timer.name = 'Crumble Timer'
@@ -132,22 +92,6 @@ func make_island(radius: float, step_size: float,
 func crumble_step():
 	crumble_radius -= crumble_step_size
 	
-	for chunk in mesh_root.get_children():
+	for chunk in chunk_root.get_children():
 		chunk.radial_crumble(crumble_radius)
 
-
-
-
-
-
-### Archive
-func get_polygon_area(vertices: PackedVector2Array) -> float:
-	var area: float = 0.0
-	var n: int = vertices.size()
-
-	for i in range(n):
-		var j = (i + 1) % n
-		area += vertices[i].x * vertices[j].y
-		area -= vertices[j].x * vertices[i].y
-
-	return abs(area) / 2.0

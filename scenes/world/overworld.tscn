@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://du7g0v2b07ywc"]
+[gd_scene load_steps=13 format=3 uid="uid://du7g0v2b07ywc"]
 
 [ext_resource type="Script" path="res://scenes/world/world_camera.gd" id="1_0tqhe"]
 [ext_resource type="PackedScene" uid="uid://bneapx68qdf77" path="res://scenes/world/arena.tscn" id="2_yxqng"]
 [ext_resource type="Script" path="res://scenes/world/game_controller.gd" id="3_31kcv"]
 [ext_resource type="PackedScene" uid="uid://bmylpelnr50lw" path="res://scenes/gui/placeholder_menu_overlay.tscn" id="4_wre41"]
+[ext_resource type="PackedScene" uid="uid://bc8x7f2av1vxp" path="res://hero_picker.tscn" id="5_r1lvg"]
 
 [sub_resource type="Gradient" id="Gradient_238p4"]
 offsets = PackedFloat32Array(0.511628, 1)
@@ -32,28 +33,43 @@ sky_rotation = Vector3(-3.57792, 0, 0)
 
 [node name="Overworld" type="Node3D"]
 
-[node name="ThirdPersonCam" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.422618, 0.906308, 0, -0.906308, 0.422618, 0, 400, 160)
-script = ExtResource("1_0tqhe")
-
-[node name="SkyBox" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_hoq5u")
-
-[node name="Sun" type="DirectionalLight3D" parent="SkyBox"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
-
-[node name="Arena" parent="." instance=ExtResource("2_yxqng")]
-
 [node name="GameController" type="Node3D" parent="."]
 script = ExtResource("3_31kcv")
 
 [node name="Entities" type="Node3D" parent="GameController"]
 
-[node name="MenuOverlay" parent="." instance=ExtResource("4_wre41")]
+[node name="Arena" parent="GameController" instance=ExtResource("2_yxqng")]
 
-[node name="InputRaycastTargetBody" type="StaticBody3D" parent="."]
+[node name="Misc" type="Node3D" parent="."]
+
+[node name="ThirdPersonCam" type="Camera3D" parent="Misc"]
+transform = Transform3D(1, 0, 0, 0, 0.422618, 0.906308, 0, -0.906308, 0.422618, 0, 400, 160)
+script = ExtResource("1_0tqhe")
+
+[node name="SkyBox" type="WorldEnvironment" parent="Misc"]
+environment = SubResource("Environment_hoq5u")
+
+[node name="Sun" type="DirectionalLight3D" parent="Misc/SkyBox"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+
+[node name="InputRaycastTargetBody" type="StaticBody3D" parent="Misc"]
 collision_layer = 8
 collision_mask = 0
 
-[node name="WorldBoundaryPlane" type="CollisionShape3D" parent="InputRaycastTargetBody"]
+[node name="WorldBoundaryPlane" type="CollisionShape3D" parent="Misc/InputRaycastTargetBody"]
 shape = SubResource("WorldBoundaryShape3D_4dlaj")
+
+[node name="GUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuOverlay" parent="GUI" instance=ExtResource("4_wre41")]
+layout_mode = 1
+
+[node name="HeroPicker" parent="GUI" instance=ExtResource("5_r1lvg")]
+visible = false
+layout_mode = 1

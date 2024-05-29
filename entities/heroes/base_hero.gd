@@ -4,7 +4,7 @@ extends CharacterBody3D
 
 @onready var paper = $Paper
 @onready var ring: MeshInstance3D = $Base/Ring
-@onready var target_line: MeshInstance3D = $TargetLine
+@onready var target_line: MeshInstance3D = $Base/TargetLine
 
 # 6 columns, 5 rows
 @export var sprite_sheet: Texture2D
@@ -30,27 +30,49 @@ const sheet_col_count = 6; const sprite_dim = 91
 			at.region = rect
 			p.set_sprite(at)
 
-var speed = 200
 var controller_id = 1
-
+var speed = 50
 var target: Vector3 = Vector3.ZERO
 
+enum Status {
+	IDLE,
+	MOVE_TO,
+	MOVE_IN,
+	CASTING,
+	STUNNED,
+	FALLING,
+	DEAD
+}
 
 func _ready():
 	character = character
 
-func create(c_id: int, initial_pos: Vector3):
+func create(c_id: int, name: String, initial_pos: Vector3):
 	controller_id = c_id
-	self.name = str(c_id)
+	self.name = name
 	if c_id == Network.multiplayer.get_unique_id():
 		ring = get_node("Base/Ring")
 		# Inspector -> Resource -> Local to Scene
 		ring.get_mesh().surface_get_material(0).albedo_color = Color.GREEN
+	if name in names:
+		var i = names[name]
+		character = i
+	else:
+		character = 29
 	position = initial_pos
 	target = position
 	# position = Vector2(randf_range(0,500), randf_range(0,500))
 	print("%s created at %s" % [c_id, initial_pos])
 	return State.new(position, target).serialize()
+
+var names = {
+	"Abaddon": 0,
+	"Alchemist": 1,
+	"A. Apparition": 2,
+	"Anti-Mage": 3,
+	"Arc Warden": 4,
+	"Axe": 5,
+}
 
 func simulate(state, input: Dictionary):
 	position = state["position"]

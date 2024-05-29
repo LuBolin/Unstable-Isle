@@ -6,9 +6,12 @@ const POLL_PER_FRAME: float = 5
 
 # effectively a constant
 var IP_ADDRESS : String = "127.0.0.1"
+# var IP_ADDRESS : String = "192.168.1.17"
+# var IP_ADDRESS : String = "116.14.251.190"
 const PORT : int = 22322
 
 
+# never contains server
 var player_list = {}
 
 
@@ -21,6 +24,7 @@ func _ready():
 
 func create_client() -> void:
 	var peer : ENetMultiplayerPeer = ENetMultiplayerPeer.new()
+	print(IP_ADDRESS)
 	peer.create_client(IP_ADDRESS, PORT)
 	multiplayer.multiplayer_peer = peer
 	print(multiplayer)
@@ -63,9 +67,27 @@ func _on_server_disconnected():
 
 
 ## TODO game state functions
+signal start_prep_signal
+signal pick_hero_signal
+
 signal start_game_signal
 signal receive_server_frame
 signal receive_client_input
+
+
+@rpc("authority", "call_remote", "reliable", 0)
+func start_prep(seed):
+	print("Start prep rpc on %s" % [str(multiplayer.get_unique_id())])
+	start_prep_signal.emit(seed)
+
+@rpc("any_peer", "call_remote", "reliable", 1)
+func pick_hero(hero_choice, sender_id = null):
+	# print("Sending input of %s, %s" % [player_input['frame'], player_input['target']])
+	if sender_id == null:
+		sender_id = multiplayer.get_remote_sender_id()
+	pick_hero_signal.emit(hero_choice, sender_id)
+
+
 
 @rpc("authority", "call_local", "reliable", 0)
 func start_game():

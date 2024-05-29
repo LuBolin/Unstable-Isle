@@ -1,7 +1,6 @@
 extends Node3D
 
 @onready var player_node = preload("res://entities/heroes/base_hero.tscn")
-var started = false
 
 # saves last X frames
 # buffer 0.1 seconds, 60fps -> 6 physics frames
@@ -10,23 +9,61 @@ const BUFFER_SIZE = 30
 var buffer: Array[FrameState] = []
 var current_frame: int = 0
 
+@onready var arena: ArenaController = $Arena
+@onready var menu_overlay = $"../GUI/MenuOverlay"
+@onready var hero_picker = $"../GUI/HeroPicker"
+
+
+enum PHASE{
+	HOLD,
+	PREP,
+	GAME
+}
+
+var game_phase: PHASE = PHASE.HOLD
+
 func _ready():
+	Network.start_prep_signal.connect(start_prep)
 	Network.start_game_signal.connect(start_game)
+	Network.pick_hero_signal.connect(pick_hero)
 	Network.receive_server_frame.connect(receive_truth)
 	Network.receive_client_input.connect(receive_input)
 
-func start_game():
-	if started:
+var hero_choices = {}
+
+func _input(event):
+	if event is InputEventKey:
+		if event.is_pressed():
+			if event.keycode == KEY_P:
+				print(game_phase)
+
+func start_prep(island_seed):
+	if game_phase == PHASE.PREP:
 		return
+	game_phase = PHASE.PREP
+	print("Prepping " + str(multiplayer.get_unique_id()))
+	menu_overlay.set_visible(false)
+	if(multiplayer.is_server()):
+		Network.start_prep.rpc(island_seed)
+	else:
+		hero_picker.set_visible(true)
+	for p in Network.player_list:
+		hero_choices[p] = null
+	arena.init_island(island_seed)
+
+func start_game():
+	if game_phase == PHASE.GAME:
+		return
+	game_phase = PHASE.GAME
+	hero_picker.set_visible(false)
 	print("Starting " + str(multiplayer.get_unique_id()))
-	started = true
 	var start_states = {} # dict of player states
 	var start_inputs = {} # empty
 	if(multiplayer.is_server()):
 		Network.start_game.rpc()
 	
 	# radius is 400
-	var distance_from_center = (3.0 / 4.0) * 400.0
+	var distance_from_center = Settings.SPAWN_RADIUS_PERCENT * Settings.ISLAND_RADIUS
 	var angle_increment = 2.0 * PI / len(Network.player_list)
 	
 	for i in Network.player_list:
@@ -35,14 +72,36 @@ func start_game():
 		var z = distance_from_center * sin(angle)
 		var safety_y = 5
 		var pos = Vector3(x, safety_y, z)
-		start_states[i] = create_player(i, pos)
+		var name = hero_choices[i]
+		start_states[i] = create_player(i, name, pos)
 		print("Creating player: " + str(i))
 	buffer.append(FrameState.new(0, start_states, start_inputs))
 	print("Started " + str(multiplayer.get_unique_id()))
+	arena.start_game()
+
+func pick_hero(hero: String, id):
+	if game_phase != PHASE.PREP:
+		return
+	print("%s picking %s" % [id, hero])
+	print("Choices before: ")
+	print(hero_choices)
+	if id in hero_choices:
+		if hero_choices[id] == null:
+			hero_choices[id] = hero
+			Network.pick_hero.rpc(hero, id)
+	var all_picked = true
+	for p_id in hero_choices:
+		if hero_choices[p_id] == null:
+			all_picked = false
+			break
+	if all_picked:
+		Network.start_game_signal.emit()
+	print("Choices after: ")
+	print(hero_choices)
 
 ## Actual game loop
 func _physics_process(delta):
-	if not started:
+	if game_phase != PHASE.GAME:
 		return
 	
 	if (buffer.size() > BUFFER_SIZE):
@@ -169,9 +228,9 @@ func poll_and_send():
 	for i in range(MAKE_SURE):
 		Network.send_input.rpc_id(1, last_input)
 
-func create_player(id, pos):
+func create_player(id, name, pos):
 	var player = player_node.instantiate()
-	var init_state = player.create(id, pos)
+	var init_state = player.create(id, name, pos)
 	$Entities.add_child(player)
 	return init_state
 
