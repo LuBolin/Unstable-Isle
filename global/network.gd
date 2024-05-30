@@ -27,15 +27,11 @@ func create_client() -> void:
 	print(IP_ADDRESS)
 	peer.create_client(IP_ADDRESS, PORT)
 	multiplayer.multiplayer_peer = peer
-	print(multiplayer)
-	print(multiplayer.multiplayer_peer)
 
 func create_server() -> void:
 	var peer : ENetMultiplayerPeer = ENetMultiplayerPeer.new()
 	peer.create_server(PORT, MAX_PLAYERS)
 	multiplayer.multiplayer_peer = peer
-	print(multiplayer)
-	print(multiplayer.multiplayer_peer)
 
 func terminate_multiplayer() -> void:
 	multiplayer.multiplayer_peer = null
@@ -105,7 +101,6 @@ func receive_state():
 
 @rpc("any_peer", "call_remote", "unreliable", 1)
 func send_input(player_input):
-	# print("Sending input of %s, %s" % [player_input['frame'], player_input['target']])
 	var sender_id = multiplayer.get_remote_sender_id()
 	receive_client_input.emit(player_input, sender_id)
 

@@ -22,6 +22,7 @@ config/windows_native_icon="res://resources/misc/icon.ico"
 Settings="*res://global/settings.gd"
 Network="*res://global/network.gd"
 InputPoller="*res://global/input_poller.gd"
+Serializables="*res://global/serializables.gd"
 
 [editor_plugins]
 

@@ -1,17 +1,19 @@
 class_name ArenaController
 extends Node3D
 
+@onready var chunk_root = $ChunkRoot
 @export var ground_chunk: PackedScene
 
-@onready var chunk_root = $ChunkRoot
+const ArenaState = Serializables.ArenaState
 
 # radius = 400
-var delaunay_step = 25
+# var delaunay_step = 25
+var delaunay_step = 50
 var delaunay_noise = 20
 
 var crumble_radius = Settings.ISLAND_RADIUS
-var crumble_step_size = 10
-var crumble_period = 5.0
+var crumble_step_size = 20
+var crumble_period = 15.0
 
 var chunk_states: Array[GroundChunk.CHUNK_STATE] = []
 
@@ -33,15 +35,6 @@ func init_island(seed):
 	chunk_states.clear()
 	chunk_states.resize(len(sites))
 	chunk_states.fill(GroundChunk.CHUNK_STATE.Stable)
-
-func start_game():
-	if multiplayer.is_server():
-		var crumble_timer = Timer.new()
-		add_child(crumble_timer)
-		crumble_timer.name = 'Crumble Timer'
-		crumble_timer.wait_time = crumble_period
-		crumble_timer.timeout.connect(self.crumble_step)
-		crumble_timer.start()
 
 func make_island(radius: float, step_size: float, 
 	axis_variance: float = 30, seed = null):
@@ -99,9 +92,25 @@ func make_island(radius: float, step_size: float,
 	print("Site count: ", site_count)
 	return sites
 
+# Server Functions
+func start_game():
+	if multiplayer.is_server():
+		var crumble_timer = Timer.new()
+		add_child(crumble_timer)
+		crumble_timer.name = 'Crumble Timer'
+		crumble_timer.wait_time = crumble_period
+		crumble_timer.timeout.connect(self.crumble_step)
+		crumble_timer.start()
+
 func crumble_step():
 	crumble_radius -= crumble_step_size
 	
 	for chunk in chunk_root.get_children():
 		chunk.radial_crumble(crumble_radius)
 
+# Client Functions
+func update_state(arena_state: ArenaState):
+	var chunks = arena_state.chunks
+	for i in len(chunks):
+		var c: GroundChunk = chunk_root.get_child(i)
+		c.state = chunks[i]

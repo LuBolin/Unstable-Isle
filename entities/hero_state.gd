@@ -1,4 +1,4 @@
-class_name HeroBaseState
+class_name HeroState
 extends Node
 
 @export
@@ -14,11 +14,11 @@ func enter():
 func exit():
 	pass
 
-func process_input(event: InputEvent) -> HeroBaseState:
+func process_input(event: InputEvent) -> HeroState:
 	return null
 
-func process_physics(delta: float) -> HeroBaseState:
+func process_physics(delta: float) -> HeroState:
 	return null
 
-func process_frame(delta: float) -> HeroBaseState:
+func process_frame(delta: float) -> HeroState:
 	return null

@@ -4,9 +4,14 @@ var input_queue = []
 
 const CAP = 300
 
-var cam_control_keys = [
+var CAM_CONTROL_INPUTS = [
 	KEY_W, KEY_A, KEY_S, KEY_D,
-	MOUSE_BUTTON_WHEEL_UP, MOUSE_BUTTON_WHEEL_DOWN
+	MOUSE_BUTTON_WHEEL_UP, MOUSE_BUTTON_WHEEL_DOWN,
+]
+
+const VALID_INPUTS = [
+	KEY_Q, # KEY_W, KEY_E, KEY_R,
+	MOUSE_BUTTON_RIGHT # movement
 ]
 
 func _input(event):
@@ -14,12 +19,11 @@ func _input(event):
 		return
 	if event is InputEvent and event.is_pressed():
 		var key = KEY_NONE
-		if event is InputEventMouseButton \
-			and event.button_index == MOUSE_BUTTON_LEFT:
+		if event is InputEventMouseButton:
 			key = event.button_index
 		elif event is InputEventKey:
 			key = event.keycode
-		if key in cam_control_keys:
+		if key not in VALID_INPUTS:
 			return
 		
 		var mousePos = get_viewport().get_mouse_position()
@@ -34,13 +38,14 @@ func _input(event):
 		var result: Dictionary = space.intersect_ray(rayQuery)
 		if not result.is_empty():
 			var target = result['position']
+			target = Vector2(target.x, target.z)
 			input_queue.append({"target": target, "key": key})
 
 
-func poll_game_input(frame) -> Dictionary:
+func poll_game_input(frame) -> Serializables.PlayerInput:
 	if input_queue.is_empty():
-		return {}
+		return null
 	var input = input_queue.pop_front()
 	input['frame'] = frame
-	print("Polled: %s " % [input])
-	return input
+	# print("Polled: %s " % [input])
+	return Serializables.PlayerInput.decode(input)

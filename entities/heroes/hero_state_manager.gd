@@ -1,21 +1,21 @@
 extends Node3D
 
 @export
-var starting_state: HeroBaseState
+var starting_state: HeroState
 
 @onready
 var hero: Hero = $".."
 
-var current_state: HeroBaseState
+var current_state: HeroState
 
 func init(parent: Hero):
 	for child in get_children():
-		if not (child is HeroBaseState):
+		if not (child is HeroState):
 			continue
 		child.parent = parent
 	change_state(starting_state)
 
-func change_state(new_state: HeroBaseState):
+func change_state(new_state: HeroState):
 	if current_state:
 		current_state.exit()
 	current_state = new_state

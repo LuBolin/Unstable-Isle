@@ -1,5 +1,10 @@
 extends Node3D
 
+const FrameState = Serializables.FrameState
+const PlayerInput = Serializables.PlayerInput
+const GameState = Serializables.GameState
+const ArenaState = Serializables.ArenaState
+
 @onready var player_node = preload("res://entities/heroes/base_hero.tscn")
 
 # saves last X frames
@@ -34,12 +39,35 @@ func _ready():
 func _input(event):
 	if game_phase != PHASE.GAME:
 		return
+	
+	# trigger hits on server side
+	# for ground_chunk debugging
+	if multiplayer.is_server() \
+		and event.is_pressed() \
+		and event is InputEventMouseButton \
+		and event.button_index == MOUSE_BUTTON_LEFT:
+		
+		var mousePos = get_viewport().get_mouse_position()
+		var camera_3d = get_viewport().get_camera_3d()
+		var from = camera_3d.project_ray_origin(mousePos)
+		var to = from + camera_3d.project_ray_normal(mousePos) * 1000
+		var space = get_world_3d().direct_space_state
+		var rayQuery = PhysicsRayQueryParameters3D.new()
+		rayQuery.from = from
+		rayQuery.to = to
+		var result = space.intersect_ray(rayQuery)
+		if not result.is_empty():
+			var chunk = result['collider']
+			# collider is already the rigidbody
+			if chunk is GroundChunk:
+				chunk.hit()
+
 
 func start_prep(island_seed):
 	if game_phase == PHASE.PREP:
 		return
 	game_phase = PHASE.PREP
-	print("Prepping " + str(multiplayer.get_unique_id()))
+	# print("Prepping " + str(multiplayer.get_unique_id()))
 	menu_overlay.set_visible(false)
 	if(multiplayer.is_server()):
 		Network.start_prep.rpc(island_seed)
@@ -55,8 +83,6 @@ func start_game():
 	game_phase = PHASE.GAME
 	hero_picker.set_visible(false)
 	print("Starting " + str(multiplayer.get_unique_id()))
-	var start_states = {} # dict of player states
-	var start_inputs = {} # empty
 	if(multiplayer.is_server()):
 		Network.start_game.rpc()
 	
@@ -64,15 +90,22 @@ func start_game():
 	var distance_from_center = Settings.SPAWN_RADIUS_PERCENT * Settings.ISLAND_RADIUS
 	var angle_increment = 2.0 * PI / len(Network.player_list)
 	
-	for i in Network.player_list:
-		var angle = i * angle_increment
+	var players = {}
+	var spawn_count = 0
+	for id in Network.player_list:
+		var angle = spawn_count * angle_increment
 		var x = distance_from_center * cos(angle)
 		var z = distance_from_center * sin(angle)
 		var safety_y = 5
-		var pos = Vector3(x, safety_y, z)
-		var name = hero_choices[i]
-		start_states[i] = create_player(i, name, pos)
-		print("Creating player: " + str(i))
+		# to be updated in team mode
+		# for teams to spawn near each other
+		var spawn_position = Vector3(x, safety_y, z)
+		var name = hero_choices[id]
+		players[id] = create_player(id, name, spawn_position)
+		spawn_count += 1
+	var arena_state: ArenaState = ArenaState.new(arena.chunk_states)
+	var start_states: GameState = GameState.new(arena_state, players)
+	var start_inputs = {} # empty dict of PlayerInput
 	buffer.append(FrameState.new(0, start_states, start_inputs))
 	print("Started " + str(multiplayer.get_unique_id()))
 	arena.start_game()
@@ -103,13 +136,16 @@ func _physics_process(delta):
 		buffer.pop_front()
 	
 	current_frame += 1
-	var new_frame_state = _simulate_frame(buffer[-1])
+	var arena_chunk_states = arena.chunk_states
+	var new_frame_state: FrameState = _simulate_frame(buffer[-1])
+	new_frame_state.states.arena.chunks = arena_chunk_states
 	buffer.append(new_frame_state)
 	if (multiplayer.is_server()):
 		if current_frame in future_inputs:
-			print(future_inputs[current_frame])
 			for i in future_inputs[current_frame]:
-				receive_input(i[0], i[1])
+				# re-serialize, since receive_input
+				# normally handles input from rpc
+				receive_input(i[0].serialize(), i[1])
 			future_inputs.erase(current_frame)
 		Network.send_frame.rpc(new_frame_state.serialize())
 
@@ -122,20 +158,20 @@ func _physics_process(delta):
 
 var future_inputs = {}
 
-func receive_input(input: Dictionary, id):
-	print("Received input: %s %s" % [input['frame'], input['target']])
-	if input['frame'] > current_frame:
-		print(future_inputs)
-		if input['frame'] in future_inputs:
-			if not [input, id] in future_inputs[input['frame']]:
-				future_inputs[input['frame']].append([input, id])
+func receive_input(input_dict: Dictionary, id):
+	var input: PlayerInput = PlayerInput.decode(input_dict)
+	# print("Received input: %s %s" % [input.frame, input.target])
+	if input.frame > current_frame:
+		if input.frame in future_inputs:
+			if not [input, id] in future_inputs[input.frame]:
+				future_inputs[input.frame].append([input, id])
 		else:
-			future_inputs[input['frame']] = [[input, id]]
-		print("Rejected. input %s, current %s" % [input['frame'], current_frame])
+			future_inputs[input.frame] = [[input, id]]
+		# print("Rejected. input %s, current %s" % [input.frame, current_frame])
 		# ahead, wrong.
 		return
-	elif input['frame'] < buffer[0]['frame']:
-		print("Rejected. input %s, current %s" % [input['frame'], buffer[0]['frame']])
+	elif input.frame < buffer[0].frame:
+		print("Rejected. input %s, current %s" % [input.frame, buffer[0].frame])
 		# too old
 		return
 	# frames[10,11,12,13,14]
@@ -144,14 +180,12 @@ func receive_input(input: Dictionary, id):
 	# input is at 11
 	for i in range(len(buffer)):
 		var fs = buffer[i]
-		if fs['frame'] == input['frame']:
+		if fs.frame == input.frame:
 			# duplicate
-			if id in fs['inputs'] and fs['inputs'][id] == input:
+			if id in fs.inputs and fs.inputs[id] == input:
 				return
-			print("Processing input: %s %s" % [input['frame'], input['target']])
-			fs['inputs'][id] = input
+			fs.inputs[id] = input
 			receive_truth(buffer[i].serialize())
-			return
 
 
 # tolerate being up to 1/2 of buffer ahead of servcer
@@ -160,30 +194,28 @@ const LEAD_TOLERANCE = BUFFER_SIZE * 0.5
 # if frame time within buffer, resimulate from there
 # else clear buffer and insert frame
 func receive_truth(fs_dict: Dictionary):
-	var fs = FrameState.new(fs_dict['frame'], fs_dict['states'], fs_dict['inputs'])
+	var fs: FrameState = FrameState.decode(fs_dict)
 	# if frame ahead of local, receive without simulating
 	# basically simulate only up to most recent
-	if fs['frame'] > current_frame:
-		current_frame = fs['frame']
-		state_update(fs['states'], {})
+
+	if fs.frame > current_frame:
+		current_frame = fs.frame
+		state_update(fs.states, {})
 		buffer = [fs]
 		return
 	# somehow too far ahead
-	elif fs['frame'] < current_frame - LEAD_TOLERANCE:
-		current_frame = fs['frame']
-		state_update(fs['states'], {})
+	elif fs.frame < current_frame - LEAD_TOLERANCE:
+		current_frame = fs.frame
+		state_update(fs.states, {})
 		buffer = [fs]
 		return
-	#print("I am %s. Received truth frame of %s while current is %s. Frames is of size %s"\
-		 #% [multiplayer.get_unique_id(), fs_dict['frame'], current_frame, len(buffer)])
-	# print("Receiving frame: %s" % [frame])
-	var truth_frame = fs['frame']
+	var truth_frame = fs.frame
 	var index = 0
 	while index < len(buffer):
 		var f = buffer[index]
-		if f['frame'] < truth_frame:
+		if f.frame < truth_frame:
 			index += 1
-		elif f['frame'] == truth_frame:
+		elif f.frame == truth_frame:
 			break
 	
 	buffer[index] = fs
@@ -200,14 +232,15 @@ func _simulate_frame(fs: FrameState) -> FrameState:
 	return FrameState.new(new_frame, new_fs, {})
 
 ## Given states and inputs, updates state of all children and returns state array
-func state_update(states, inputs):
-	for child in $Entities.get_children():
+func state_update(states: GameState, inputs: Dictionary):
+	for child : Hero in $Entities.get_children():
 		var id = child.controller_id
-		if id in states:
-			var input = {}
+		if id in states.players:
+			var input: PlayerInput = null
 			if id in inputs:
 				input = inputs[id]
-			states[id] = child.simulate(states[id], input)
+			states.players[id] = child.simulate(states.players[id], input)
+	arena.update_state(states.arena)
 	return states
 
 
@@ -217,35 +250,15 @@ func state_update(states, inputs):
 
 const MAKE_SURE = 10
 func poll_and_send():
-	var last_input = InputPoller.poll_game_input(current_frame)
-	if last_input.is_empty():
+	var last_input: PlayerInput = InputPoller.poll_game_input(current_frame)
+	if not last_input:
 		return
 	buffer[buffer.size() - 1].inputs[multiplayer.get_unique_id()] = last_input
 	for i in range(MAKE_SURE):
-		Network.send_input.rpc_id(1, last_input)
+		Network.send_input.rpc_id(1, last_input.serialize())
 
 func create_player(id, name, pos):
 	var player = player_node.instantiate()
 	var init_state = player.create(id, name, pos)
 	$Entities.add_child(player)
 	return init_state
-
-
-class FrameState:
-	var frame = 0
-	# dict of state of each entity
-	# everything stored is serialized
-	var states = {}
-	# dict of state of each player's input using id
-	# everything stored is serialized
-	var inputs = {}
-	func _init(f, s, i):
-		frame = f
-		states = s
-		inputs = i
-	func serialize():
-		return {
-			"frame" : frame,
-			"states" : states,
-			"inputs" : inputs
-		}

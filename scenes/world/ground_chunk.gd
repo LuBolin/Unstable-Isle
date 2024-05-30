@@ -22,7 +22,7 @@ var state: CHUNK_STATE = CHUNK_STATE.Stable :
 			return
 		state = new_state
 		if new_state != CHUNK_STATE.Stable:
-			if arena_controller and index_in_parent:
+			if arena_controller and index_in_parent != null:
 				arena_controller.chunk_states[index_in_parent] = new_state
 		if new_state == CHUNK_STATE.Unstable:
 			# simulate to turn red
@@ -36,6 +36,8 @@ func _ready():
 func initialize(arena: ArenaController, index: int):
 	arena_controller = arena
 	index_in_parent = index
+	$IndexLabel.set_text(str(index))
+
 
 func set_shape(poly: PackedVector2Array, thickness: float = 16.0):
 	self.polygon = poly
@@ -160,7 +162,8 @@ func crumble():
 	timer.wait_time = 25.0
 	timer.one_shot = true
 	add_child(timer)
-	timer.timeout.connect(func(): self.queue_free())
+	# timer.timeout.connect(func(): self.queue_free())
+	timer.timeout.connect(func(): self.set_process(false))
 	timer.start()
 
 func hit(strength = 1):
