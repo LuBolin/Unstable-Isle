@@ -5,12 +5,15 @@ extends Node3D
 
 @onready var chunk_root = $ChunkRoot
 
-var delaunay_step = 40
+# radius = 400
+var delaunay_step = 25
 var delaunay_noise = 20
 
 var crumble_radius = Settings.ISLAND_RADIUS
 var crumble_step_size = 10
 var crumble_period = 5.0
+
+var chunk_states: Array[GroundChunk.CHUNK_STATE] = []
 
 func _ready():
 	# start_game()
@@ -20,18 +23,25 @@ func init_island(seed):
 	var sites = make_island(Settings.ISLAND_RADIUS,
 		delaunay_step, delaunay_noise, seed)
 
-	for site in sites:
-		var chunk = ground_chunk.instantiate()
+	for i in range(len(sites)):
+		var site = sites[i]
+		var chunk: GroundChunk = ground_chunk.instantiate()
+		chunk.initialize(self, i)
 		chunk_root.add_child(chunk)
 		chunk.set_shape(site.polygon)
 
-func start_game():	
-	var crumble_timer = Timer.new()
-	add_child(crumble_timer)
-	crumble_timer.name = 'Crumble Timer'
-	crumble_timer.wait_time = crumble_period
-	crumble_timer.timeout.connect(self.crumble_step)
-	crumble_timer.start()
+	chunk_states.clear()
+	chunk_states.resize(len(sites))
+	chunk_states.fill(GroundChunk.CHUNK_STATE.Stable)
+
+func start_game():
+	if multiplayer.is_server():
+		var crumble_timer = Timer.new()
+		add_child(crumble_timer)
+		crumble_timer.name = 'Crumble Timer'
+		crumble_timer.wait_time = crumble_period
+		crumble_timer.timeout.connect(self.crumble_step)
+		crumble_timer.start()
 
 func make_island(radius: float, step_size: float, 
 	axis_variance: float = 30, seed = null):

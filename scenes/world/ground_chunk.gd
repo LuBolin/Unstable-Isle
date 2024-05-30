@@ -1,7 +1,7 @@
 class_name GroundChunk
 extends RigidBody3D
 
-enum STATE {
+enum CHUNK_STATE {
 	Stable,
 	Unstable,
 	Crumbled
@@ -13,11 +13,29 @@ enum STATE {
 @export var outline_pass: Shader
 @export var island_text: Texture2D
 
+var arena_controller: ArenaController
+var index_in_parent: int
 var polygon: PackedVector2Array
-var state: STATE = STATE.Stable
+var state: CHUNK_STATE = CHUNK_STATE.Stable :
+	set(new_state):
+		if new_state <= state:
+			return
+		state = new_state
+		if new_state != CHUNK_STATE.Stable:
+			if arena_controller and index_in_parent:
+				arena_controller.chunk_states[index_in_parent] = new_state
+		if new_state == CHUNK_STATE.Unstable:
+			# simulate to turn red
+			self.hit(0)
+		elif new_state == CHUNK_STATE.Crumbled:
+			self.crumble()
 
 func _ready():
 	self.set_freeze_enabled(true)
+
+func initialize(arena: ArenaController, index: int):
+	arena_controller = arena
+	index_in_parent = index
 
 func set_shape(poly: PackedVector2Array, thickness: float = 16.0):
 	self.polygon = poly
@@ -117,8 +135,8 @@ func set_shape(poly: PackedVector2Array, thickness: float = 16.0):
 	mesh_instance.set_meta("polygon", poly)
 
 func crumble():
-	if state != STATE.Crumbled:
-		state = STATE.Crumbled
+	if state != CHUNK_STATE.Crumbled:
+		state = CHUNK_STATE.Crumbled
 	# self.set_process_mode(PROCESS_MODE_ALWAYS)
 	self.set_freeze_enabled(false)
 	var mat = mesh_instance.get_active_material(0) # standard material
@@ -147,7 +165,7 @@ func crumble():
 
 func hit(strength = 1):
 	state += strength
-	if state >= STATE.Crumbled:
+	if state >= CHUNK_STATE.Crumbled:
 		crumble()
 	else:
 		var mat = mesh_instance.get_active_material(0) # standard material
@@ -159,7 +177,7 @@ func hit(strength = 1):
 const min_crumble_delay = 0.1
 const max_crumble_delay = 5.0
 func radial_crumble(crumble_radius: float):
-	if state == STATE.Crumbled:
+	if state == CHUNK_STATE.Crumbled:
 		return
 	var enclosed = true
 	for point in self.polygon:

@@ -2,7 +2,7 @@ extends Camera3D
 
 const CAM_ANGLE: int = -65
 const CAM_MAX_HEIGHT: int = 400
-const CAM_MIN_HEIGHT: int = 200
+const CAM_MIN_HEIGHT: int = 150
 const move_speed = 10.0
 const scroll_scale = 2.0
 

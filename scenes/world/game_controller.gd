@@ -28,14 +28,12 @@ func _ready():
 	Network.pick_hero_signal.connect(pick_hero)
 	Network.receive_server_frame.connect(receive_truth)
 	Network.receive_client_input.connect(receive_input)
-
-var hero_choices = {}
+	menu_overlay.set_visible(true)
+	hero_picker.set_visible(false)
 
 func _input(event):
-	if event is InputEventKey:
-		if event.is_pressed():
-			if event.keycode == KEY_P:
-				print(game_phase)
+	if game_phase != PHASE.GAME:
+		return
 
 func start_prep(island_seed):
 	if game_phase == PHASE.PREP:
@@ -79,12 +77,10 @@ func start_game():
 	print("Started " + str(multiplayer.get_unique_id()))
 	arena.start_game()
 
+var hero_choices = {}
 func pick_hero(hero: String, id):
 	if game_phase != PHASE.PREP:
 		return
-	print("%s picking %s" % [id, hero])
-	print("Choices before: ")
-	print(hero_choices)
 	if id in hero_choices:
 		if hero_choices[id] == null:
 			hero_choices[id] = hero
@@ -96,8 +92,7 @@ func pick_hero(hero: String, id):
 			break
 	if all_picked:
 		Network.start_game_signal.emit()
-	print("Choices after: ")
-	print(hero_choices)
+
 
 ## Actual game loop
 func _physics_process(delta):
@@ -117,6 +112,7 @@ func _physics_process(delta):
 				receive_input(i[0], i[1])
 			future_inputs.erase(current_frame)
 		Network.send_frame.rpc(new_frame_state.serialize())
+
 	else: # is client
 		var batch = Network.POLL_PER_FRAME
 		for i in range(batch):
@@ -192,7 +188,7 @@ func receive_truth(fs_dict: Dictionary):
 	
 	buffer[index] = fs
 	for i in range(index, len(buffer)-1):
-		var cur_fs = buffer[i]
+		var cur_fs: FrameState = buffer[i]
 		var next_inputs = buffer[i+1].inputs
 		var next_fs = _simulate_frame(cur_fs)
 		next_fs.inputs = next_inputs
