@@ -1,10 +1,12 @@
 class_name HeroState
-extends Node
+extends Node3D
 
-@export
-var animation_name: String
-var gravity: int = ProjectSettings.get_setting("physics/3d/default_gravity")
+@export var animation_name: String
 
+const PlayerInput = Serializables.PlayerInput
+
+var hero: Hero
+var pending_state: HeroState = null
 
 func enter():
 	#parent.animations.play(self.name)
@@ -22,3 +24,9 @@ func process_physics(delta: float) -> HeroState:
 
 func process_frame(delta: float) -> HeroState:
 	return null
+
+func simulate_input(input: PlayerInput):
+	pass
+
+func serialize():
+	pass

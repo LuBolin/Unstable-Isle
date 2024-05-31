@@ -2,10 +2,11 @@ extends Node3D
 
 const FrameState = Serializables.FrameState
 const PlayerInput = Serializables.PlayerInput
+const PlayerState = Serializables.PlayerState
 const GameState = Serializables.GameState
 const ArenaState = Serializables.ArenaState
 
-@onready var player_node = preload("res://entities/heroes/base_hero.tscn")
+@onready var player_node = preload("res://entities/heroes/common/base_hero.tscn")
 
 # saves last X frames
 # buffer 0.1 seconds, 60fps -> 6 physics frames
@@ -107,6 +108,7 @@ func start_game():
 	var start_states: GameState = GameState.new(arena_state, players)
 	var start_inputs = {} # empty dict of PlayerInput
 	buffer.append(FrameState.new(0, start_states, start_inputs))
+	# print("Client at init: ",buffer[0].states.players.values()[0].hero_state)
 	print("Started " + str(multiplayer.get_unique_id()))
 	arena.start_game()
 
@@ -197,7 +199,6 @@ func receive_truth(fs_dict: Dictionary):
 	var fs: FrameState = FrameState.decode(fs_dict)
 	# if frame ahead of local, receive without simulating
 	# basically simulate only up to most recent
-
 	if fs.frame > current_frame:
 		current_frame = fs.frame
 		state_update(fs.states, {})
@@ -239,6 +240,7 @@ func state_update(states: GameState, inputs: Dictionary):
 			var input: PlayerInput = null
 			if id in inputs:
 				input = inputs[id]
+			# print(states.players, " ", states.players[id])
 			states.players[id] = child.simulate(states.players[id], input)
 	arena.update_state(states.arena)
 	return states

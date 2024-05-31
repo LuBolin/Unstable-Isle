@@ -25,6 +25,7 @@ func _input(event):
 func _process(delta: float) -> void:
 	if panning:
 		var pan_dirn_v2 = get_viewport().get_mouse_position() - pan_origin
+		pan_dirn_v2 *= -1
 		pan_dirn_v2 /= 100.0 # less make tanh less abrupt
 		# tanh scaled to (-1, 1)
 		var pan_dirn_v3: Vector3 = Vector3(

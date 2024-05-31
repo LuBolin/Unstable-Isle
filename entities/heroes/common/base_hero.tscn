@@ -1,0 +1,156 @@
+[gd_scene load_steps=13 format=3 uid="uid://dqmbhtd1nghrs"]
+
+[ext_resource type="Script" path="res://entities/heroes/common/base_hero.gd" id="1_u3u46"]
+[ext_resource type="Texture2D" uid="uid://cta8wexdqynry" path="res://resources/sheet.png" id="2_fcu13"]
+[ext_resource type="PackedScene" uid="uid://dxukvbn3aiys5" path="res://entities/paper.tscn" id="3_6gfm8"]
+[ext_resource type="Script" path="res://entities/heroes/common/states/hero_state_manager.gd" id="4_t5e1k"]
+[ext_resource type="Script" path="res://entities/heroes/common/states/idle_state.gd" id="5_ma5la"]
+[ext_resource type="Script" path="res://entities/heroes/common/states/move_state.gd" id="6_7j8ce"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_nag1g"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_1q0os"]
+top_radius = 12.0
+bottom_radius = 12.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_okujh"]
+resource_local_to_scene = true
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_eldxs"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_okujh")
+inner_radius = 13.0
+outer_radius = 15.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_v2fqt"]
+resource_local_to_scene = true
+top_radius = 4.0
+bottom_radius = 4.0
+height = 0.001
+
+[sub_resource type="FontFile" id="FontFile_3qmkq"]
+cache/0/32/0/ascent = 0.0
+cache/0/32/0/descent = 0.0
+cache/0/32/0/underline_position = 0.0
+cache/0/32/0/underline_thickness = 0.0
+cache/0/32/0/scale = 1.0
+cache/0/32/0/kerning_overrides/32/0 = Vector2(0, 0)
+cache/0/32/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/32/0/kerning_overrides/500/0 = Vector2(0, 0)
+cache/0/32/0/kerning_overrides/1000/0 = Vector2(0, 0)
+cache/0/32/0/kerning_overrides/1200/0 = Vector2(0, 0)
+cache/0/32/0/kerning_overrides/2000/0 = Vector2(0, 0)
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/32/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/500/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/1000/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/1200/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/2000/0 = Vector2(0, 0)
+cache/0/500/0/ascent = 0.0
+cache/0/500/0/descent = 0.0
+cache/0/500/0/underline_position = 0.0
+cache/0/500/0/underline_thickness = 0.0
+cache/0/500/0/scale = 1.0
+cache/0/500/0/kerning_overrides/32/0 = Vector2(0, 0)
+cache/0/500/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/500/0/kerning_overrides/500/0 = Vector2(0, 0)
+cache/0/500/0/kerning_overrides/1000/0 = Vector2(0, 0)
+cache/0/500/0/kerning_overrides/1200/0 = Vector2(0, 0)
+cache/0/500/0/kerning_overrides/2000/0 = Vector2(0, 0)
+cache/0/1000/0/ascent = 0.0
+cache/0/1000/0/descent = 0.0
+cache/0/1000/0/underline_position = 0.0
+cache/0/1000/0/underline_thickness = 0.0
+cache/0/1000/0/scale = 1.0
+cache/0/1000/0/kerning_overrides/32/0 = Vector2(0, 0)
+cache/0/1000/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/1000/0/kerning_overrides/500/0 = Vector2(0, 0)
+cache/0/1000/0/kerning_overrides/1000/0 = Vector2(0, 0)
+cache/0/1000/0/kerning_overrides/1200/0 = Vector2(0, 0)
+cache/0/1000/0/kerning_overrides/2000/0 = Vector2(0, 0)
+cache/0/1200/0/ascent = 0.0
+cache/0/1200/0/descent = 0.0
+cache/0/1200/0/underline_position = 0.0
+cache/0/1200/0/underline_thickness = 0.0
+cache/0/1200/0/scale = 1.0
+cache/0/1200/0/kerning_overrides/32/0 = Vector2(0, 0)
+cache/0/1200/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/1200/0/kerning_overrides/500/0 = Vector2(0, 0)
+cache/0/1200/0/kerning_overrides/1000/0 = Vector2(0, 0)
+cache/0/1200/0/kerning_overrides/1200/0 = Vector2(0, 0)
+cache/0/1200/0/kerning_overrides/2000/0 = Vector2(0, 0)
+cache/0/2000/0/ascent = 0.0
+cache/0/2000/0/descent = 0.0
+cache/0/2000/0/underline_position = 0.0
+cache/0/2000/0/underline_thickness = 0.0
+cache/0/2000/0/scale = 1.0
+cache/0/2000/0/kerning_overrides/32/0 = Vector2(0, 0)
+cache/0/2000/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/2000/0/kerning_overrides/500/0 = Vector2(0, 0)
+cache/0/2000/0/kerning_overrides/1000/0 = Vector2(0, 0)
+cache/0/2000/0/kerning_overrides/1200/0 = Vector2(0, 0)
+cache/0/2000/0/kerning_overrides/2000/0 = Vector2(0, 0)
+
+[node name="Hero" type="CharacterBody3D"]
+script = ExtResource("1_u3u46")
+sprite_sheet = ExtResource("2_fcu13")
+character = 1
+
+[node name="Base" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_nag1g")
+
+[node name="Circle" type="MeshInstance3D" parent="Base"]
+mesh = SubResource("CylinderMesh_1q0os")
+skeleton = NodePath("")
+
+[node name="Ring" type="MeshInstance3D" parent="Base"]
+mesh = SubResource("TorusMesh_eldxs")
+skeleton = NodePath("")
+
+[node name="TargetLine" type="MeshInstance3D" parent="Base"]
+mesh = SubResource("CylinderMesh_v2fqt")
+skeleton = NodePath("../..")
+
+[node name="Paper" parent="." instance=ExtResource("3_6gfm8")]
+transform = Transform3D(28, 0, 0, 0, 28, 0, 0, 0, 28, 0, 10, -4)
+
+[node name="HealthLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 19.2479, -11)
+visible = false
+outline_modulate = Color(1, 0, 0, 1)
+text = "Health: X"
+font = SubResource("FontFile_3qmkq")
+font_size = 2000
+outline_size = 127
+
+[node name="StateManager" type="Node3D" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("4_t5e1k")
+starting_state = NodePath("Idle")
+
+[node name="Idle" type="Node3D" parent="StateManager" node_paths=PackedStringArray("move_state")]
+script = ExtResource("5_ma5la")
+move_state = NodePath("../Move")
+
+[node name="Move" type="Node3D" parent="StateManager" node_paths=PackedStringArray("idle_state")]
+script = ExtResource("6_7j8ce")
+idle_state = NodePath("../Idle")
+
+[node name="Cast" type="Node3D" parent="StateManager"]
+
+[node name="Fall" type="Node3D" parent="StateManager"]
+
+[node name="Death" type="Node3D" parent="StateManager"]
+
+[node name="HealthLabel" type="Label3D" parent="StateManager"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 19.2479, -11)
+outline_modulate = Color(1, 0, 0, 1)
+text = "State: None"
+font = SubResource("FontFile_3qmkq")
+font_size = 2000
+outline_size = 127

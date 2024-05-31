@@ -1,5 +1,7 @@
 extends Node
 
+var state_managers = {}
+
 class ArenaState:
 	# k, v: index, state
 	var chunks: Array # [GroundChunk.CHUNK_STATE]
@@ -20,37 +22,45 @@ class ArenaState:
 
 class PlayerState:
 	var position: Vector3
-	# temporary variable, will be wrapped in MoveState later
-	var target: Vector2
+	var health: int
+	# pending_state, if any, is wrapped within hero_state
 	var hero_state: HeroState
-	# derived entities
-	# e.g.: projectiles, remnants
+	var statuses: Dictionary
+	# derived entities. e.g.: projectiles, remnants
 	var derivatives: Dictionary
 	
 	# Hero State still W.I.P.
 	# Derivates still W.I.P.
-	func _init(p: Vector3, t: Vector2, hs: HeroState, d: Dictionary):
+	func _init(p: Vector3, h: int, 
+		hs: HeroState, sts: Dictionary, d: Dictionary):
 		position = p
-		target = t
+		health = h
 		hero_state = hs
+		statuses = sts
 		derivatives = d
 	
-	static func decode(dict: Dictionary):
-		return PlayerState.new(
-			dict['position'],
-			dict['target'],
-			dict['hero_state'],
-			dict['derivatives']
-		)
+	static func decode(dict: Dictionary, p_id: int):
+		if p_id in Serializables.state_managers:
+			var sm: StateManager = Serializables.state_managers[p_id]
+			var to_return = PlayerState.new(
+				dict['position'],
+				dict['health'],
+				sm.decode(dict['hero_state']),
+				dict['hero_statuses'],
+				dict['derivatives']
+			)
+			return to_return
+		else:
+			push_error("Bad decode")
 	
 	func serialize():
 		return {
 			'position': position, 
-			'target': target,
-			'hero_state': null,
+			'health': health,
+			'hero_state': hero_state.serialize(),
+			'hero_statuses': HeroStatus.serialize(statuses),
 			'derivatives': {},
 		}
-
 
 class GameState:
 	var arena: ArenaState
@@ -66,7 +76,7 @@ class GameState:
 		var a = ArenaState.decode(dict['arena'])
 		var p = dict['players']
 		for p_id in p:
-			p[p_id] = PlayerState.decode(p[p_id])
+			p[p_id] = PlayerState.decode(p[p_id], p_id)
 		return GameState.new(a, p)
 	
 	func serialize():
