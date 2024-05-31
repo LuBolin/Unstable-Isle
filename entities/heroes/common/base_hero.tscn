@@ -121,8 +121,7 @@ skeleton = NodePath("../..")
 transform = Transform3D(28, 0, 0, 0, 28, 0, 0, 0, 28, 0, 10, -4)
 
 [node name="HealthLabel" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 19.2479, -11)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 25.2479, -20)
 outline_modulate = Color(1, 0, 0, 1)
 text = "Health: X"
 font = SubResource("FontFile_3qmkq")
@@ -150,7 +149,7 @@ idle_state = NodePath("../Idle")
 [node name="HealthLabel" type="Label3D" parent="StateManager"]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 19.2479, -11)
 outline_modulate = Color(1, 0, 0, 1)
-text = "State: None"
+text = "Idle"
 font = SubResource("FontFile_3qmkq")
 font_size = 2000
 outline_size = 127
