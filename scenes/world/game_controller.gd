@@ -66,7 +66,6 @@ func _input(event):
 			if chunk is GroundChunk:
 				chunk.hit()
 
-
 func start_prep(island_seed):
 	print("start prep", Game.players)
 	if game_phase == PHASE.PREP:
@@ -82,6 +81,8 @@ func start_prep(island_seed):
 	arena.init_island(island_seed)
 	Round.reset()
 	for child in entities.get_children(): child.queue_free()
+	current_frame = 0
+	buffer.clear()
 
 func start_round():
 	if game_phase == PHASE.GAME:
