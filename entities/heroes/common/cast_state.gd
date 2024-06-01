@@ -1,8 +1,13 @@
-class_name IdleState
+class_name CastState
 extends HeroState
 
+# Cast at target
+var target: Vector2 = Vector2.ZERO
+# or
+# Cast in direction
+var direction: Vector2 = Vector2.ZERO
+
 func enter():
-	hero.velocity = Vector3.ZERO
 	pass
 
 func exit():
@@ -11,15 +16,13 @@ func exit():
 func process_input(event: InputEvent) -> HeroState:
 	return null
 
+func clean_up():
+	pass
+
+
 func process_physics(delta: float) -> HeroState:
-	if hero.interrupted:
-		hero.interrupted = false
-		return null
-	
-	hero.move_and_slide() # force is_on_floor to update
-	var airborne = not hero.is_on_floor()
-	if airborne:
-		return sm.fall_state
+	#for now if in state, we just cast bullet
+	$Spells.create_bullet(target, input_frame)
 	if pending_state:
 		return pending_state
 	return null
@@ -27,16 +30,22 @@ func process_physics(delta: float) -> HeroState:
 func process_frame(delta: float) -> HeroState:
 	return null
 
+var input_frame = 0
 func simulate_input(input: PlayerInput):
 	if not input:
 		return
 	if input.key == MOUSE_BUTTON_RIGHT:
 		return sm.move_state
 	if input.key == 81:
-		return sm.cast_state
+		target = input.target
+		input_frame = input.frame
 
 func decode(dict: Dictionary):
+	target = dict['target']
 	return self
 
 func serialize():
-	return {'state_name': 'Idle'}
+	return {
+		'state_name': 'Cast',
+		'target': self.target,
+	}

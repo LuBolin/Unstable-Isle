@@ -10,6 +10,7 @@ const PlayerInput = Serializables.PlayerInput
 @export var idle_state: HeroState
 @export var move_state: HeroState
 @export var fall_state: HeroState
+@export var cast_state: HeroState
 
 var current_state: HeroState
 

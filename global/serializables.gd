@@ -59,7 +59,7 @@ class PlayerState:
 			'health': health,
 			'hero_state': hero_state.serialize(),
 			'hero_statuses': HeroStatus.serialize(statuses),
-			'derivatives': {},
+			'derivatives': derivatives,
 		}
 
 class GameState:
