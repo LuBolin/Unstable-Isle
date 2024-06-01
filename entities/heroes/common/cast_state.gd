@@ -1,11 +1,13 @@
 class_name CastState
 extends HeroState
 
+
 # Cast at target
 var target: Vector2 = Vector2.ZERO
 # or
 # Cast in direction
 var direction: Vector2 = Vector2.ZERO
+
 
 func enter():
 	pass
@@ -15,6 +17,7 @@ func exit():
 
 func process_input(event: InputEvent) -> HeroState:
 	return null
+
 
 func clean_up():
 	pass
@@ -29,6 +32,7 @@ func process_physics(delta: float) -> HeroState:
 
 func process_frame(delta: float) -> HeroState:
 	return null
+
 
 var input_frame = 0
 func simulate_input(input: PlayerInput):

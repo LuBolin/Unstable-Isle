@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://entities/heroes/common/states/idle_state.gd" id="5_ma5la"]
 [ext_resource type="Script" path="res://entities/heroes/common/states/move_state.gd" id="6_7j8ce"]
 [ext_resource type="Script" path="res://entities/heroes/common/fall_state.gd" id="7_8fb72"]
+
 [ext_resource type="Script" path="res://entities/heroes/common/cast_state.gd" id="8_stua5"]
 [ext_resource type="Script" path="res://entities/heroes/common/Spells.gd" id="9_4l6oq"]
 [ext_resource type="Script" path="res://entities/heroes/common/hero_unit_manager.gd" id="10_qqqta"]
@@ -132,13 +133,17 @@ font = SubResource("FontFile_3qmkq")
 font_size = 2000
 outline_size = 127
 
-[node name="StateManager" type="Node3D" parent="." node_paths=PackedStringArray("starting_state", "idle_state", "move_state", "fall_state", "cast_state")]
+
+[node name="StateManager" type="Node3D" parent="." node_paths=PackedStringArray("starting_state", "idle_state", "move_state", "fall_state", "cast_state", "death_state")]
+
 script = ExtResource("4_t5e1k")
 starting_state = NodePath("Idle")
 idle_state = NodePath("Idle")
 move_state = NodePath("Move")
 fall_state = NodePath("Fall")
 cast_state = NodePath("Cast")
+death_state = NodePath("Death")
+
 
 [node name="Idle" type="Node3D" parent="StateManager"]
 script = ExtResource("5_ma5la")
@@ -173,6 +178,7 @@ script = ExtResource("8_stua5")
 script = ExtResource("9_4l6oq")
 
 [node name="Death" type="Node3D" parent="StateManager"]
+script = ExtResource("8_n8fs8")
 
 [node name="HealthLabel" type="Label3D" parent="StateManager"]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 19.2479, -11)

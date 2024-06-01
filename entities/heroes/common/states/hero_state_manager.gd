@@ -11,6 +11,7 @@ const PlayerInput = Serializables.PlayerInput
 @export var move_state: HeroState
 @export var fall_state: HeroState
 @export var cast_state: HeroState
+@export var death_state: HeroState
 
 var current_state: HeroState
 
@@ -30,6 +31,10 @@ func change_state(new_state: HeroState):
 	
 	if current_state:
 		current_state.exit()
+	#var s = multiplayer.get_unique_id() if multiplayer else "Not initialized"
+	#var n1 = current_state.name if current_state else "No State"
+	#var n2 = new_state.name
+	#print("I am %s. Changing state from %s to %s" % [s, n1, n2])
 	current_state = new_state
 	current_state.enter()
 	$HealthLabel.set_text(current_state.name)

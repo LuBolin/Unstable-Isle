@@ -6,8 +6,6 @@ const POLL_PER_FRAME: float = 5
 
 # effectively a constant
 var IP_ADDRESS : String = "127.0.0.1"
-# var IP_ADDRESS : String = "192.168.1.17"
-# var IP_ADDRESS : String = "116.14.251.190"
 const PORT : int = 22322
 
 
