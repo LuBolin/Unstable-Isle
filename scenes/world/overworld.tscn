@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://du7g0v2b07ywc"]
+[gd_scene load_steps=14 format=3 uid="uid://du7g0v2b07ywc"]
 
 [ext_resource type="Script" path="res://scenes/world/world_camera.gd" id="1_0tqhe"]
 [ext_resource type="PackedScene" uid="uid://bneapx68qdf77" path="res://scenes/world/arena.tscn" id="2_yxqng"]
 [ext_resource type="Script" path="res://scenes/world/game_controller.gd" id="3_31kcv"]
-[ext_resource type="PackedScene" uid="uid://bmylpelnr50lw" path="res://scenes/gui/placeholder_menu_overlay.tscn" id="4_wre41"]
-[ext_resource type="PackedScene" uid="uid://bc8x7f2av1vxp" path="res://hero_picker.tscn" id="5_r1lvg"]
+[ext_resource type="PackedScene" uid="uid://bmylpelnr50lw" path="res://scenes/gui/main_menu_overlay.tscn" id="4_wre41"]
+[ext_resource type="PackedScene" uid="uid://bc8x7f2av1vxp" path="res://scenes/gui/hero_picker.tscn" id="5_r1lvg"]
+[ext_resource type="PackedScene" uid="uid://jva47p3ypmpj" path="res://scenes/gui/round_info.tscn" id="6_a1h4u"]
 
 [sub_resource type="Gradient" id="Gradient_238p4"]
 offsets = PackedFloat32Array(0.511628, 1)
@@ -72,4 +73,7 @@ layout_mode = 1
 
 [node name="HeroPicker" parent="GUI" instance=ExtResource("5_r1lvg")]
 visible = false
+layout_mode = 1
+
+[node name="RoundInfo" parent="GUI" instance=ExtResource("6_a1h4u")]
 layout_mode = 1

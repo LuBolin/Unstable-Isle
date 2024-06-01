@@ -3,6 +3,7 @@ extends HeroState
 
 func enter():
 	print("%s died!" % [hero.name])
+	Round.hero_died.emit(hero.controller_id)
 	hero.hide()
 
 func exit():

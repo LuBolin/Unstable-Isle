@@ -15,9 +15,11 @@ const BUFFER_SIZE = 30
 var buffer: Array[FrameState] = []
 var current_frame: int = 0
 
+@onready var entities = $Entities
 @onready var arena: ArenaController = $Arena
 @onready var menu_overlay = $"../GUI/MenuOverlay"
 @onready var hero_picker = $"../GUI/HeroPicker"
+@onready var round_info = $"../GUI/RoundInfo"
 
 
 enum PHASE{
@@ -29,13 +31,14 @@ enum PHASE{
 var game_phase: PHASE = PHASE.HOLD
 
 func _ready():
-	Network.start_prep_signal.connect(start_prep)
-	Network.start_game_signal.connect(start_game)
-	Network.pick_hero_signal.connect(pick_hero)
-	Network.receive_server_frame.connect(receive_truth)
-	Network.receive_client_input.connect(receive_input)
+	Round.round_started.connect(start_round)
+	Round.received_server_frame.connect(receive_truth)
+	Round.received_client_input.connect(receive_input)
+	Round.prep_started.connect(start_prep)
+	Round.hero_picked.connect(pick_hero)
 	menu_overlay.set_visible(true)
 	hero_picker.set_visible(false)
+	round_info.set_visible(false)
 
 func _input(event):
 	if game_phase != PHASE.GAME:
@@ -65,6 +68,7 @@ func _input(event):
 
 
 func start_prep(island_seed):
+	print("start prep", Game.players)
 	if game_phase == PHASE.PREP:
 		return
 	game_phase = PHASE.PREP
@@ -74,26 +78,27 @@ func start_prep(island_seed):
 		Network.start_prep.rpc(island_seed)
 	else:
 		hero_picker.set_visible(true)
-	for p in Network.player_list:
-		hero_choices[p] = null
+		round_info.set_visible(true)
 	arena.init_island(island_seed)
+	Round.reset()
+	for child in entities.get_children(): child.queue_free()
 
-func start_game():
+func start_round():
 	if game_phase == PHASE.GAME:
 		return
 	game_phase = PHASE.GAME
 	hero_picker.set_visible(false)
 	print("Starting " + str(multiplayer.get_unique_id()))
 	if(multiplayer.is_server()):
-		Network.start_game.rpc()
+		Network.start_round.rpc()
 	
 	# radius is 400
 	var distance_from_center = Settings.SPAWN_RADIUS_PERCENT * Settings.ISLAND_RADIUS
-	var angle_increment = 2.0 * PI / len(Network.player_list)
+	var angle_increment = 2.0 * PI / len(Game.players)
 	
 	var players = {}
 	var spawn_count = 0
-	for id in Network.player_list:
+	for id in Game.players:
 		var angle = spawn_count * angle_increment
 		var x = distance_from_center * cos(angle)
 		var z = distance_from_center * sin(angle)
@@ -101,8 +106,8 @@ func start_game():
 		# to be updated in team mode
 		# for teams to spawn near each other
 		var spawn_position = Vector3(x, safety_y, z)
-		var name = hero_choices[id]
-		players[id] = create_player(id, name, spawn_position)
+		var hero_name = Round.hero_choices[id]
+		players[id] = create_player(id, hero_name, spawn_position)
 		spawn_count += 1
 	var arena_state: ArenaState = ArenaState.new(arena.chunk_states)
 	var start_states: GameState = GameState.new(arena_state, players)
@@ -110,23 +115,22 @@ func start_game():
 	buffer.append(FrameState.new(0, start_states, start_inputs))
 	# print("Client at init: ",buffer[0].states.players.values()[0].hero_state)
 	print("Started " + str(multiplayer.get_unique_id()))
-	arena.start_game()
+	arena.start_round()
 
-var hero_choices = {}
 func pick_hero(hero: String, id):
 	if game_phase != PHASE.PREP:
 		return
-	if id in hero_choices:
-		if hero_choices[id] == null:
-			hero_choices[id] = hero
+	if id in Round.hero_choices:
+		if Round.hero_choices[id] == null:
+			Round.hero_choices[id] = hero
 			Network.pick_hero.rpc(hero, id)
 	var all_picked = true
-	for p_id in hero_choices:
-		if hero_choices[p_id] == null:
+	for p_id in Round.hero_choices:
+		if Round.hero_choices[p_id] == null:
 			all_picked = false
 			break
 	if all_picked:
-		Network.start_game_signal.emit()
+		Round.round_started.emit()
 
 
 ## Actual game loop
@@ -234,7 +238,7 @@ func _simulate_frame(fs: FrameState) -> FrameState:
 
 ## Given states and inputs, updates state of all children and returns state array
 func state_update(states: GameState, inputs: Dictionary):
-	for child : Hero in $Entities.get_children():
+	for child : Hero in entities.get_children():
 		var id = child.controller_id
 		if id in states.players:
 			var input: PlayerInput = null
@@ -262,5 +266,5 @@ func poll_and_send():
 func create_player(id, name, pos):
 	var player = player_node.instantiate()
 	var init_state = player.create(id, name, pos)
-	$Entities.add_child(player)
+	entities.add_child(player)
 	return init_state

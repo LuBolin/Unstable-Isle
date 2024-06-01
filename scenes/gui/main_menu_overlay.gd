@@ -28,8 +28,7 @@ func _on_join_as_client():
 
 func _on_start_prep():
 	start_game_button.set_disabled(true)
-	Network.start_prep_signal.emit(randi())
-	#Network.start_game_signal.emit()
+	Round.prep_started.emit(randi())
 
 func _on_ip_editted(new_text: String):
 	# some ip_parsing later, don't care for now

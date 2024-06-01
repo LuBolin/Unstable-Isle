@@ -8,3 +8,5 @@ script = ExtResource("1_jg6vp")
 ground_chunk = ExtResource("2_aexai")
 
 [node name="ChunkRoot" type="Node3D" parent="."]
+
+[node name="CrumbleTimer" type="Timer" parent="."]

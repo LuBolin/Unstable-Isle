@@ -12,9 +12,8 @@ func init(b_id, ls):
 	id = b_id
 	lifespan = ls
 
-
 func simulate(unit_states, input: PlayerInput):
-	position = unit_states['position']
+	global_position = unit_states['position']
 	var d = unit_states['direction']
 	var dirn: Vector3 = Vector3(d.x, 0, d.y)
 	lifespan = unit_states['lifespan']
@@ -24,5 +23,5 @@ func simulate(unit_states, input: PlayerInput):
 	if lifespan < 0:
 		return null
 	return {'id' : id,\
-						'direction' : d,\
-						'position' : position, 'lifespan' : lifespan}
+		'direction' : d,\
+		'position' : global_position, 'lifespan' : lifespan}

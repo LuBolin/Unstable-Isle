@@ -23,6 +23,8 @@ Settings="*res://global/settings.gd"
 Network="*res://global/network.gd"
 InputPoller="*res://global/input_poller.gd"
 Serializables="*res://global/serializables.gd"
+Game="*res://global/game.gd"
+Round="*res://global/round.gd"
 
 [editor_plugins]
 

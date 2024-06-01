@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bc8x7f2av1vxp"]
 
-[ext_resource type="Script" path="res://hero_picker.gd" id="1_v3gvd"]
+[ext_resource type="Script" path="res://scenes/gui/hero_picker.gd" id="1_v3gvd"]
 
 [node name="HeroPicker" type="Control"]
 layout_mode = 3
@@ -67,13 +67,13 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Random" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="RandomButton" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 56
 text = "Random"
 
-[node name="Confirm" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="ConfirmButton" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_font_sizes/font_size = 56

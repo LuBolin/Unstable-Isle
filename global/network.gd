@@ -9,9 +9,6 @@ var IP_ADDRESS : String = "127.0.0.1"
 const PORT : int = 22322
 
 
-# never contains server
-var player_list = {}
-
 
 func _ready():
 	multiplayer.peer_connected.connect(_on_client_connected)
@@ -38,20 +35,21 @@ func terminate_multiplayer() -> void:
 ## Server connections
 func _on_client_connected(id):
 	if multiplayer.is_server():
-		player_list[id] = id
+		Game.players[id] = [str(id), 0]
 		print(str(id) + " connected to " + str(multiplayer.get_unique_id()))
 	else:
 		if not id == 1:
-			player_list[id] = id
+			Game.players[id] = [str(id), 0]
 
 func _on_client_disconnected(id):
-	player_list.erase(id)
+	Game.players.erase(id)
 	print(str(id) + " disconnect")
-	print(player_list.values())
+	print(Game.players.values())
 
 func _on_connected_success():
 	print("connect success")
-	player_list[multiplayer.get_unique_id()] = multiplayer.get_unique_id()
+	var id = multiplayer.get_unique_id()
+	Game.players[id] = [str(id), 0]
 
 func _on_connected_fail():
 	print("connect fail")
@@ -60,38 +58,29 @@ func _on_server_disconnected():
 	print("disconnect")
 
 
-## TODO game state functions
-signal start_prep_signal
-signal pick_hero_signal
-
-signal start_game_signal
-signal receive_server_frame
-signal receive_client_input
-
-
 @rpc("authority", "call_remote", "reliable", 0)
 func start_prep(seed):
 	print("Start prep rpc on %s" % [str(multiplayer.get_unique_id())])
-	start_prep_signal.emit(seed)
+	Round.prep_started.emit(seed)
 
 @rpc("any_peer", "call_remote", "reliable", 1)
 func pick_hero(hero_choice, sender_id = null):
 	# print("Sending input of %s, %s" % [player_input['frame'], player_input['target']])
 	if sender_id == null:
 		sender_id = multiplayer.get_remote_sender_id()
-	pick_hero_signal.emit(hero_choice, sender_id)
+	Round.hero_picked.emit(hero_choice, sender_id)
 
 
 
 @rpc("authority", "call_local", "reliable", 0)
-func start_game():
+func start_round():
 	print("Start game rpc on %s" % [str(multiplayer.get_unique_id())])
-	start_game_signal.emit()
+	Round.round_started.emit()
 
 # @rpc("authority", "call_remote", "unreliable", 0)
 @rpc("authority", "call_remote", "unreliable_ordered", 0)
 func send_frame(frame):
-	receive_server_frame.emit(frame)
+	Round.received_server_frame.emit(frame)
 
 func receive_state():
 	pass
@@ -100,7 +89,7 @@ func receive_state():
 @rpc("any_peer", "call_remote", "unreliable", 1)
 func send_input(player_input):
 	var sender_id = multiplayer.get_remote_sender_id()
-	receive_client_input.emit(player_input, sender_id)
+	Round.received_client_input.emit(player_input, sender_id)
 
 func receive_input():
 	pass
