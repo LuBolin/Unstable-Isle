@@ -131,12 +131,13 @@ font = SubResource("FontFile_3qmkq")
 font_size = 2000
 outline_size = 127
 
-[node name="StateManager" type="Node3D" parent="." node_paths=PackedStringArray("starting_state", "idle_state", "move_state", "fall_state", "death_state")]
+[node name="StateManager" type="Node3D" parent="." node_paths=PackedStringArray("starting_state", "idle_state", "move_state", "fall_state", "cast_state", "death_state")]
 script = ExtResource("4_t5e1k")
 starting_state = NodePath("Idle")
 idle_state = NodePath("Idle")
 move_state = NodePath("Move")
 fall_state = NodePath("Fall")
+cast_state = NodePath("Cast")
 death_state = NodePath("Death")
 
 [node name="Idle" type="Node3D" parent="StateManager"]
@@ -178,3 +179,6 @@ text = "Idle"
 font = SubResource("FontFile_3qmkq")
 font_size = 2000
 outline_size = 127
+
+[node name="Derivatives" type="Node3D" parent="."]
+top_level = true
