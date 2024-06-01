@@ -7,6 +7,10 @@ const PlayerInput = Serializables.PlayerInput
 @export var starting_state: HeroState
 @onready var hero: Hero = $".."
 
+@export var idle_state: HeroState
+@export var move_state: HeroState
+@export var fall_state: HeroState
+
 var current_state: HeroState
 
 func init(hero: Hero):
@@ -15,6 +19,7 @@ func init(hero: Hero):
 		if not (child is HeroState):
 			continue
 		child.hero = hero
+		child.sm = self
 	change_state(starting_state)
 
 func change_state(new_state: HeroState):
@@ -47,9 +52,7 @@ func simulate(hs: HeroState, input: PlayerInput):
 	# current_state.reset() ?
 	change_state(hs)
 	# current_state = hs
-	
-	# TODO: simulate statuses
-	
+
 	# arbituary non-null value
 	var new_state = 1
 	# a loop is required
@@ -61,11 +64,15 @@ func simulate(hs: HeroState, input: PlayerInput):
 		new_state = current_state.simulate_input(input)
 		if new_state:
 			change_state(new_state)
+			
+	hs.clean_up()
+	# TODO: simulate statuses
 	
 	var delta = get_physics_process_delta_time()
 	new_state = current_state.process_physics(delta)
 	if new_state:
 		change_state(new_state)
+
 
 func decode(hs_state: Dictionary) -> HeroState:
 	var state_name = hs_state['state_name']

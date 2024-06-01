@@ -13,7 +13,7 @@ var delaunay_noise = 20
 
 var crumble_radius = Settings.ISLAND_RADIUS
 var crumble_step_size = 20
-var crumble_period = 15.0
+var crumble_period = 10.0
 
 var chunk_states: Array[GroundChunk.CHUNK_STATE] = []
 

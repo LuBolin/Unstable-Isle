@@ -1,19 +1,26 @@
 class_name MoveState
 extends HeroState
 
-@export var idle_state: HeroState
-
-var speed = 50
+const DEFAULT_SPEED: float = 50
+var modified_speed: float
+# Move to target
 var target: Vector2 = Vector2.ZERO
+# or
+# Move in direction
+var direction: Vector2 = Vector2.ZERO
+
 
 func enter():
-	pass
+	hero.target_line.show()
 
 func exit():
-	pass
+	hero.target_line.hide()
 
 func process_input(event: InputEvent) -> HeroState:
 	return null
+
+func clean_up():
+	modified_speed = DEFAULT_SPEED
 
 func process_physics(delta: float) -> HeroState:
 	if hero.interrupted:
@@ -23,8 +30,20 @@ func process_physics(delta: float) -> HeroState:
 	var dirn: Vector3 = Vector3(
 		target.x - hero.position.x, 0,
 		target.y - hero.position.z)
+	$MovingTowardsVoidCheck.look_at(Vector3(target.x, hero.position.y, target.y))
+	
+	var moving_towards_void = false
+	for rc in $MovingTowardsVoidCheck.get_children():
+		if not rc is RayCast3D:
+			continue
+		if not rc.is_colliding():
+			moving_towards_void = true
+			break
+	if moving_towards_void:
+		modified_speed *= 0.2
+
 	if dirn.length() > 0:
-		var vel = dirn.normalized() * speed
+		var vel = dirn.normalized() * modified_speed
 		# set velocity before move_and_slide
 		hero.velocity = vel
 		hero.move_and_slide()
@@ -41,11 +60,14 @@ func process_physics(delta: float) -> HeroState:
 			hero.position.x = target.x
 			hero.position.z = target.y
 
+	var airborne = not hero.is_on_floor()
+	if airborne:
+		return sm.fall_state
 	if pending_state:
 		return pending_state
 	else:
 		if (Vector2(hero.position.x, hero.position.z) - target).length() == 0:
-			return idle_state
+			return sm.idle_state
 		return null
 
 func process_frame(delta: float) -> HeroState:

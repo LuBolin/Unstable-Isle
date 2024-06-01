@@ -24,6 +24,7 @@ const sheet_col_count = 6; const sprite_dim = 91
 			at.region = rect
 			p.set_sprite(at)
 
+@onready var target_line: MeshInstance3D = $Base/TargetLine
 
 var controller_id: int # netwprl unique id
 var health: int = 10 :
@@ -85,8 +86,6 @@ func simulate(state: PlayerState, input: PlayerInput):
 
 # Non-logic
 func draw_line(target: Vector3):
-	var target_line: MeshInstance3D = $Base/TargetLine
-	
 	var length = target.distance_to(Vector3.ZERO)
 
 	var mid_point = target / 2.0

@@ -6,6 +6,7 @@ extends Node3D
 const PlayerInput = Serializables.PlayerInput
 
 var hero: Hero
+var sm: StateManager
 var pending_state: HeroState = null
 
 func enter():
@@ -18,6 +19,9 @@ func exit():
 
 func process_input(event: InputEvent) -> HeroState:
 	return null
+
+func clean_up():
+	pass
 
 func process_physics(delta: float) -> HeroState:
 	return null
