@@ -37,6 +37,9 @@ var health: int = 10 :
 var interrupted = false
 var statuses: Dictionary = {}
 
+
+@onready var unit_manager: UnitManager = $UnitManager
+
 var names = {
 	"Abaddon": 0,
 	"Alchemist": 1,
@@ -54,6 +57,9 @@ func create(c_id: int, name: String, initial_pos: Vector3):
 
 	state_manager = $StateManager
 	state_manager.init(self)
+	
+	unit_manager = $UnitManager
+	unit_manager.init(self)
 
 	self.name = name
 	if c_id == Network.multiplayer.get_unique_id():
@@ -79,10 +85,11 @@ func simulate(state: PlayerState, input: PlayerInput):
 	var hs = state.hero_state # HeroState.decode(state.hero_state)
 	statuses = state.statuses # HeroStatus.decode(state.statuses)
 	state_manager.simulate(hs, input)
+	var unit_states = unit_manager.simulate(state.derivatives, input)
 	return PlayerState.new(
 		position, health, 
 		state_manager.current_state,
-		statuses, {})
+		statuses, unit_states)
 
 # Non-logic
 func draw_line(target: Vector3):

@@ -32,6 +32,8 @@ func simulate_input(input: PlayerInput):
 		return
 	if input.key == MOUSE_BUTTON_RIGHT:
 		return sm.move_state
+	if input.key == 81:
+		return sm.cast_state
 
 func decode(dict: Dictionary):
 	return self
