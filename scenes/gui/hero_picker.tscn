@@ -32,32 +32,32 @@ columns = 3
 [node name="Button" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
-text = "Abaddon"
+text = "Dwarf"
 
 [node name="Button2" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
-text = "Alchemist"
+text = "Elf Rogue"
 
 [node name="Button3" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
-text = "A. Apparition"
+text = "Ranger"
 
 [node name="Button4" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
-text = "Anti-Mage"
+text = "Burglar"
 
 [node name="Button5" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
-text = "Arc Warden"
+text = "Sword Knight"
 
 [node name="Button6" type="Button" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
-text = "Axe"
+text = "Sword Civilian"
 
 [node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer"]
 layout_mode = 2

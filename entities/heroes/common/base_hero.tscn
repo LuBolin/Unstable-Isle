@@ -1,7 +1,7 @@
 [gd_scene load_steps=18 format=3 uid="uid://dqmbhtd1nghrs"]
 
 [ext_resource type="Script" path="res://entities/heroes/common/base_hero.gd" id="1_u3u46"]
-[ext_resource type="Texture2D" uid="uid://cta8wexdqynry" path="res://resources/sheet.png" id="2_fcu13"]
+[ext_resource type="Texture2D" uid="uid://dr7jud3xwx4hd" path="res://resources/sheet.png" id="2_fcu13"]
 [ext_resource type="PackedScene" uid="uid://dxukvbn3aiys5" path="res://entities/paper.tscn" id="3_6gfm8"]
 [ext_resource type="Script" path="res://entities/heroes/common/states/hero_state_manager.gd" id="4_t5e1k"]
 [ext_resource type="Script" path="res://entities/heroes/common/states/idle_state.gd" id="5_ma5la"]
@@ -105,7 +105,7 @@ cache/0/2000/0/kerning_overrides/2000/0 = Vector2(0, 0)
 [node name="Hero" type="CharacterBody3D"]
 script = ExtResource("1_u3u46")
 sprite_sheet = ExtResource("2_fcu13")
-character = 1
+character = 8
 
 [node name="Base" type="CollisionShape3D" parent="."]
 shape = SubResource("CylinderShape3D_nag1g")
@@ -123,7 +123,7 @@ mesh = SubResource("CylinderMesh_v2fqt")
 skeleton = NodePath("../..")
 
 [node name="Paper" parent="." instance=ExtResource("3_6gfm8")]
-transform = Transform3D(28, 0, 0, 0, 28, 0, 0, 0, 28, 0, 10, -4)
+transform = Transform3D(80, 0, 0, 0, 80, 0, 0, 0, 80, 0, 10, -4)
 
 [node name="HealthLabel" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 25.2479, -20)

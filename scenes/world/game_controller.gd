@@ -77,7 +77,7 @@ func start_prep(island_seed):
 		Network.start_prep.rpc(island_seed)
 	else:
 		hero_picker.set_visible(true)
-		round_info.set_visible(true)
+	round_info.set_visible(true)
 	arena.init_island(island_seed)
 	Round.reset()
 	for child in entities.get_children(): child.queue_free()

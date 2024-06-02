@@ -7,12 +7,12 @@ const PlayerInput = Serializables.PlayerInput
 
 # 6 columns, 5 rows
 @export var sprite_sheet: Texture2D
-const sheet_col_count = 6; const sprite_dim = 91
+const sheet_col_count = 4; const sprite_dim = 32
 @export_range (0, 29) var character: int:
 	set(value):
 		character = value
-		var row = value / 6
-		var col = value % 6
+		var row = value / sheet_col_count
+		var col = value % sheet_col_count
 		var rect = Rect2(
 			col*sprite_dim, row*sprite_dim, sprite_dim, sprite_dim)
 		# don't use get_node here, errors are annoying
@@ -41,12 +41,12 @@ var statuses: Dictionary = {}
 @onready var unit_manager: UnitManager = $UnitManager
 
 var names = {
-	"Abaddon": 0,
-	"Alchemist": 1,
-	"A. Apparition": 2,
-	"Anti-Mage": 3,
-	"Arc Warden": 4,
-	"Axe": 5,
+	"Dwarf": 0,
+	"Elf Rogue": 1,
+	"Ranger": 2,
+	"Burglar": 3,
+	"Sword Knight": 4,
+	"Sword Civilian": 5,
 }
 
 func _ready():
