@@ -189,10 +189,11 @@ func receive_input(input_dict: Dictionary, id):
 		var fs = buffer[i]
 		if fs.frame == input.frame:
 			# duplicate
-			if id in fs.inputs and fs.inputs[id] == input:
+			if id in fs.inputs and fs.inputs[id].serialize() == input.serialize():
 				return
 			fs.inputs[id] = input
 			receive_truth(buffer[i].serialize())
+
 
 
 # tolerate being up to 1/2 of buffer ahead of servcer

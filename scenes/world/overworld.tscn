@@ -44,7 +44,7 @@ script = ExtResource("3_31kcv")
 [node name="Misc" type="Node3D" parent="."]
 
 [node name="ThirdPersonCam" type="Camera3D" parent="Misc"]
-transform = Transform3D(1, 0, 0, 0, 0.422618, 0.906308, 0, -0.906308, 0.422618, 0, 400, 160)
+transform = Transform3D(1, 0, 0, 0, 0.422618, 0.906308, 0, -0.906308, 0.422618, 0, 400, 200)
 script = ExtResource("1_0tqhe")
 
 [node name="SkyBox" type="WorldEnvironment" parent="Misc"]

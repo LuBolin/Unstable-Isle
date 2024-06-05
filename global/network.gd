@@ -71,7 +71,6 @@ func pick_hero(hero_choice, sender_id = null):
 	Round.hero_picked.emit(hero_choice, sender_id)
 
 
-
 @rpc("authority", "call_local", "reliable", 0)
 func start_round():
 	print("Start game rpc on %s" % [str(multiplayer.get_unique_id())])

@@ -15,7 +15,7 @@ var delaunay_noise = 20
 
 var crumble_radius = Settings.ISLAND_RADIUS
 var crumble_step_size = 20
-var crumble_period = 10.0
+var crumble_period = 20.0
 
 var chunk_states: Array[GroundChunk.CHUNK_STATE] = []
 
@@ -27,6 +27,8 @@ func init_island(seed):
 	for child in chunk_root.get_children(): child.queue_free()
 	if multiplayer.is_server():
 		crumble_timer.stop()
+	
+	crumble_radius = Settings.ISLAND_RADIUS
 	
 	var sites = make_island(Settings.ISLAND_RADIUS,
 		delaunay_step, delaunay_noise, seed)

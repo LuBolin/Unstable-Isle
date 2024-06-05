@@ -30,7 +30,8 @@ func process_physics(delta: float) -> HeroState:
 	var dirn: Vector3 = Vector3(
 		target.x - hero.position.x, 0,
 		target.y - hero.position.z)
-	$MovingTowardsVoidCheck.look_at(Vector3(target.x, hero.position.y, target.y))
+	if position != Vector3(target.x, hero.position.y, target.y):
+		$MovingTowardsVoidCheck.look_at(Vector3(target.x, hero.position.y, target.y))
 	
 	var moving_towards_void = false
 	for rc in $MovingTowardsVoidCheck.get_children():
