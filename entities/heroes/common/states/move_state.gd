@@ -80,10 +80,13 @@ func process_frame(delta: float) -> HeroState:
 func simulate_input(input: PlayerInput):
 	if not input:
 		return
-	if input.key == 81:
+	
+	if input.key in SpellList.cast_keys:
 		return sm.cast_state
+	
 	if input.key == MOUSE_BUTTON_RIGHT:
 		target = input.target
+	
 
 func decode(dict: Dictionary):
 	target = dict['target']

@@ -10,7 +10,8 @@ var CAM_CONTROL_INPUTS = [
 ]
 
 const VALID_INPUTS = [
-	KEY_Q, # KEY_W, KEY_E, KEY_R,
+	MOUSE_BUTTON_LEFT,
+	KEY_Q, KEY_W, KEY_E, KEY_R,
 	MOUSE_BUTTON_RIGHT # movement
 ]
 

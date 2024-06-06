@@ -54,7 +54,7 @@ func check_round_should_end():
 			alive_ids.append(id)
 	if len(alive_ids) > 1:
 		return
-	get_tree().create_timer(1).timeout.connect(
+	get_tree().create_timer(5).timeout.connect(
 		func():
 			var winner = alive_ids[0] if not alive_ids.is_empty() else null
 			Round.round_ended.emit(winner)

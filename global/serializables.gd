@@ -27,16 +27,16 @@ class PlayerState:
 	var hero_state: HeroState
 	var statuses: Dictionary
 	# derived entities. e.g.: projectiles, remnants
+	var derivatives_count: int
 	var derivatives: Dictionary
 	
-	# Hero State still W.I.P.
-	# Derivates still W.I.P.
 	func _init(p: Vector3, h: int, 
-		hs: HeroState, sts: Dictionary, d: Dictionary):
+		hs: HeroState, sts: Dictionary, d_count: int, d: Dictionary):
 		position = p
 		health = h
 		hero_state = hs
 		statuses = sts
+		derivatives_count = d_count
 		derivatives = d
 	
 	static func decode(dict: Dictionary, p_id: int):
@@ -47,7 +47,8 @@ class PlayerState:
 				dict['health'],
 				sm.decode(dict['hero_state']),
 				dict['hero_statuses'],
-				dict['derivatives']
+				dict['derivative_count'],
+				dict['derivatives'],
 			)
 			return to_return
 		else:
@@ -59,6 +60,7 @@ class PlayerState:
 			'health': health,
 			'hero_state': hero_state.serialize(),
 			'hero_statuses': HeroStatus.serialize(statuses),
+			'derivative_count': derivatives_count,
 			'derivatives': derivatives,
 		}
 

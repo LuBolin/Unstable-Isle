@@ -13,6 +13,7 @@ const PlayerInput = Serializables.PlayerInput
 @export var cast_state: HeroState
 @export var death_state: HeroState
 
+var prev_state: HeroState
 var current_state: HeroState
 
 func init(hero: Hero):
@@ -35,6 +36,7 @@ func change_state(new_state: HeroState):
 	#var n1 = current_state.name if current_state else "No State"
 	#var n2 = new_state.name
 	#print("I am %s. Changing state from %s to %s" % [s, n1, n2])
+	prev_state = current_state
 	current_state = new_state
 	current_state.enter()
 	$HealthLabel.set_text(current_state.name)
@@ -45,9 +47,11 @@ func _input(event):
 		change_state(new_state)
 
 func _physics_process(delta):
-	var new_state = current_state.process_physics(delta)
-	if new_state:
-		change_state(new_state)
+	#hero.spell_list.cooldown_tick(delta)
+	#var new_state = current_state.process_physics(delta)
+	#if new_state:
+		#change_state(new_state)
+	pass
 
 func _process(delta):
 	var new_state = current_state.process_frame(delta)
@@ -66,19 +70,24 @@ func simulate(hs: HeroState, input: PlayerInput):
 	# move then need to process right click to set target
 	# if state does not change in simulate_input,
 	# new_state will be null, and we continue
+	var visited = []
 	while new_state:
+		visited.append(current_state)
 		new_state = current_state.simulate_input(input)
 		if new_state:
 			change_state(new_state)
-			
+			# transition back, and end simulate input
+			if new_state in visited:
+				break
 	hs.clean_up()
 	# TODO: simulate statuses
 	
+	
 	var delta = get_physics_process_delta_time()
+	hero.spell_list.cooldown_tick(delta)
 	new_state = current_state.process_physics(delta)
 	if new_state:
 		change_state(new_state)
-
 
 func decode(hs_state: Dictionary) -> HeroState:
 	var state_name = hs_state['state_name']

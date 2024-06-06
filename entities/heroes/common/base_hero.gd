@@ -24,7 +24,10 @@ const sheet_col_count = 4; const sprite_dim = 32
 			at.region = rect
 			p.set_sprite(at)
 
+@export var spell_list: SpellList
+
 @onready var target_line: MeshInstance3D = $Base/TargetLine
+
 
 var controller_id: int # netwprl unique id
 var health: int = 10 :
@@ -34,11 +37,10 @@ var health: int = 10 :
 		if l:
 			l.set_text("Health: %s" % [str(health)])
 @onready var state_manager: StateManager = $StateManager
+@onready var unit_manager: UnitManager = $UnitManager
+
 var interrupted = false
 var statuses: Dictionary = {}
-
-
-@onready var unit_manager: UnitManager = $UnitManager
 
 var names = {
 	"Dwarf": 0,
@@ -76,7 +78,9 @@ func create(c_id: int, name: String, initial_pos: Vector3):
 	return PlayerState.new(
 		position, health, 
 		state_manager.current_state, 
-		statuses, {}
+		statuses, 
+		unit_manager.derivatives_count,
+		{}
 	)
 
 func simulate(state: PlayerState, input: PlayerInput):
@@ -84,12 +88,18 @@ func simulate(state: PlayerState, input: PlayerInput):
 	health = state.health
 	var hs = state.hero_state # HeroState.decode(state.hero_state)
 	statuses = state.statuses # HeroStatus.decode(state.statuses)
-	state_manager.simulate(hs, input)
+	unit_manager.derivatives_count = state.derivatives_count
+	
+	unit_manager.drop_freed(state.derivatives)
+	var new_units = state_manager.simulate(hs, input)
 	var unit_states = unit_manager.simulate(state.derivatives, input)
+	
 	return PlayerState.new(
 		position, health, 
 		state_manager.current_state,
-		statuses, unit_states)
+		statuses, 
+		unit_manager.derivatives_count,
+		unit_states)
 
 # Non-logic
 func draw_line(target: Vector3):

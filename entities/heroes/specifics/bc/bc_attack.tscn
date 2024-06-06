@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://b1wfe1oqn4at1"]
+
+[ext_resource type="Script" path="res://entities/heroes/specifics/bc/bc_attack.gd" id="1_6yfm1"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_hue5y"]
+radius = 6.0
+height = 12.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qwfw4"]
+radius = 6.0
+
+[node name="BcAttack" type="CharacterBody3D"]
+top_level = true
+script = ExtResource("1_6yfm1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_hue5y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_qwfw4")
