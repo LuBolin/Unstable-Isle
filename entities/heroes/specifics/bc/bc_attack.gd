@@ -46,10 +46,9 @@ func simulate(unit_states):
 	lifespan -= delta
 	if lifespan < 0:
 		return null
-	return serialize()
 
 
-func serialize():
+func get_state():
 	return {'id' : id,\
 		'direction' : direction,\
 		'position' : global_position,\

@@ -240,6 +240,7 @@ func _simulate_frame(fs: FrameState) -> FrameState:
 
 ## Given states and inputs, updates state of all children and returns state array
 func state_update(states: GameState, inputs: Dictionary):
+	var interactions = []
 	for child : Hero in entities.get_children():
 		var id = child.controller_id
 		if id in states.players:
@@ -247,7 +248,21 @@ func state_update(states: GameState, inputs: Dictionary):
 			if id in inputs:
 				input = inputs[id]
 			# print(states.players, " ", states.players[id])
-			states.players[id] = child.simulate(states.players[id], input)
+			var simulate_interactions = child.simulate(states.players[id], input)
+			interactions.append(simulate_interactions)
+	
+	#TODO add the interactions
+	for interaction in interactions:
+		print(interaction)
+		interactions.pop_front()
+		pass
+		#interaction.call()
+	
+	for child : Hero in entities.get_children():
+		var id = child.controller_id
+		if id in states.players:
+			states.players[id] = child.get_state()
+	
 	arena.update_state(states.arena)
 	return states
 
@@ -267,6 +282,7 @@ func poll_and_send():
 
 func create_player(id, name, pos):
 	var player = player_node.instantiate()
-	var init_state = player.create(id, name, pos)
+	player.create(id, name, pos)
+	var init_state = player.get_state()
 	entities.add_child(player)
 	return init_state
