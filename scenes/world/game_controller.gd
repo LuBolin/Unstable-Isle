@@ -254,13 +254,13 @@ func state_update(states: GameState, inputs: Dictionary):
 	#TODO add the interactions
 	for interaction in interactions:
 		interactions.pop_front()
-		pass
-		#interaction.call()
+		interaction.call()
 	
 	for child : Hero in entities.get_children():
 		var id = child.controller_id
 		if id in states.players:
 			states.players[id] = child.get_state()
+			print(child.get_state().derivatives)
 	
 	arena.update_state(states.arena)
 	return states

@@ -44,8 +44,8 @@ func simulate(unit_states):
 	
 	move_and_slide()
 	lifespan -= delta
-	#if lifespan < 0:
-	#	return null
+	if lifespan < 0:
+		return [queue_free]
 	return []
 
 

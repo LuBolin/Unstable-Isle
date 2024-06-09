@@ -10,9 +10,6 @@ func drop_freed(unit_states: Dictionary):
 			child.queue_free()
 
 func simulate(unit_states, input: PlayerInput):
-	if not multiplayer.is_server():
-		derivatives_count = unit_states["d_count"]
-		drop_freed(unit_states)
 	unit_states = unit_states["unit_states"]
 	var interactions = []
 	for child in get_children():
