@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://entities/heroes/common/base_hero.gd" id="1_u3u46"]
 [ext_resource type="Texture2D" uid="uid://dr7jud3xwx4hd" path="res://resources/sheet.png" id="2_fcu13"]
 [ext_resource type="PackedScene" uid="uid://dxukvbn3aiys5" path="res://entities/paper.tscn" id="3_6gfm8"]
-[ext_resource type="Resource" uid="uid://bilymvv3qxjke" path="res://entities/heroes/specifics/bc/bc_spell_list2.tres" id="3_l8vt3"]
+[ext_resource type="Resource" uid="uid://b72gux10wkrvq" path="res://entities/heroes/specifics/bc/bc_spell_list.tres" id="3_mm5lg"]
 [ext_resource type="Script" path="res://entities/heroes/common/states/hero_state_manager.gd" id="4_t5e1k"]
 [ext_resource type="Script" path="res://entities/heroes/common/states/idle_state.gd" id="5_ma5la"]
 [ext_resource type="Script" path="res://entities/heroes/common/states/move_state.gd" id="6_7j8ce"]
@@ -106,7 +106,7 @@ cache/0/2000/0/kerning_overrides/2000/0 = Vector2(0, 0)
 script = ExtResource("1_u3u46")
 sprite_sheet = ExtResource("2_fcu13")
 character = 8
-spell_list = ExtResource("3_l8vt3")
+spell_list = ExtResource("3_mm5lg")
 
 [node name="Base" type="CollisionShape3D" parent="."]
 shape = SubResource("CylinderShape3D_nag1g")

@@ -81,7 +81,6 @@ func simulate(state: PlayerState, input: PlayerInput):
 	health = state.health
 	var hs = state.hero_state # HeroState.decode(state.hero_state)
 	statuses = state.statuses # HeroStatus.decode(state.statuses)
-	#unit_manager.derivatives_count = state.derivatives_count
 	
 	var interactions = []
 	

@@ -248,12 +248,11 @@ func state_update(states: GameState, inputs: Dictionary):
 			if id in inputs:
 				input = inputs[id]
 			# print(states.players, " ", states.players[id])
-			var simulate_interactions = child.simulate(states.players[id], input)
-			interactions.append(simulate_interactions)
+			var interaction = child.simulate(states.players[id], input)
+			interactions += interaction
 	
 	#TODO add the interactions
 	for interaction in interactions:
-		print(interaction)
 		interactions.pop_front()
 		pass
 		#interaction.call()

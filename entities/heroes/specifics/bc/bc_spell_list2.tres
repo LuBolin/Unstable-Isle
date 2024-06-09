@@ -1,6 +1,0 @@
-[gd_resource type="Resource" script_class="SpellList" load_steps=2 format=3 uid="uid://bilymvv3qxjke"]
-
-[ext_resource type="Script" path="res://entities/heroes/common/spell_list.gd" id="1_urtw8"]
-
-[resource]
-script = ExtResource("1_urtw8")
