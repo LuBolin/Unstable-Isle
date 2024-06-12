@@ -11,24 +11,18 @@ config_version=5
 [application]
 
 config/name="Unstable Isle"
-run/main_scene="res://scenes/world/overworld.tscn"
+run/main_scene="res://game/game_room.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://resources/icon.png"
-config/macos_native_icon="res://resources/misc/icon.icns"
-config/windows_native_icon="res://resources/misc/icon.ico"
 
 [autoload]
 
 Settings="*res://global/settings.gd"
-Network="*res://global/network.gd"
-InputPoller="*res://global/input_poller.gd"
 Serializables="*res://global/serializables.gd"
-Game="*res://global/game.gd"
-Round="*res://global/round.gd"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/copilot/plugin.cfg", "res://addons/gdDelaunay/plugin.cfg")
+enabled=PackedStringArray("res://addons/gdDelaunay/plugin.cfg")
 
 [input]
 

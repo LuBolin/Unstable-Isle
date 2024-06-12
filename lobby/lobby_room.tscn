@@ -1,0 +1,66 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2445cb3yytcb"]
+
+[ext_resource type="Script" path="res://lobby/lobby_room.gd" id="1_p8ttk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sk3my"]
+bg_color = Color(0.0117647, 0.0431373, 0.0745098, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="LobbyRoom" type="Button"]
+custom_minimum_size = Vector2(0, 80)
+size_flags_horizontal = 3
+size_flags_vertical = 0
+script = ExtResource("1_p8ttk")
+
+[node name="BackgroundPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_sk3my")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer"]
+clip_contents = true
+layout_mode = 2
+alignment = 1
+
+[node name="TopRow" type="HBoxContainer" parent="MarginContainer/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RoomID" type="Label" parent="MarginContainer/VBox/TopRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Room: 12345"
+vertical_alignment = 2
+
+[node name="PlayerCount" type="Label" parent="MarginContainer/VBox/TopRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "4/6"
+vertical_alignment = 2
+
+[node name="GameStatus" type="Label" parent="MarginContainer/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "In Game"
+vertical_alignment = 2
