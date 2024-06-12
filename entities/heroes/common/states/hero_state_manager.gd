@@ -54,9 +54,10 @@ func _physics_process(delta):
 	pass
 
 func _process(delta):
-	var new_state = current_state.process_frame(delta)
-	if new_state:
-		change_state(new_state)
+	#var new_state = current_state.process_frame(delta)
+	#if new_state:
+	#	change_state(new_state)
+	pass
 
 func simulate(hs: HeroState, input: PlayerInput):
 	# current_state.reset() ?

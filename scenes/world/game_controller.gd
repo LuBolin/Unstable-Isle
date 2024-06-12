@@ -260,7 +260,6 @@ func state_update(states: GameState, inputs: Dictionary):
 		var id = child.controller_id
 		if id in states.players:
 			states.players[id] = child.get_state()
-			print(child.get_state().derivatives)
 	
 	arena.update_state(states.arena)
 	return states

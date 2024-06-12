@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dqmbhtd1nghrs"]
+[gd_scene load_steps=19 format=3 uid="uid://dqmbhtd1nghrs"]
 
 [ext_resource type="Script" path="res://entities/heroes/common/base_hero.gd" id="1_u3u46"]
 [ext_resource type="Texture2D" uid="uid://dr7jud3xwx4hd" path="res://resources/sheet.png" id="2_fcu13"]
@@ -11,6 +11,8 @@
 [ext_resource type="Script" path="res://entities/heroes/common/cast_state.gd" id="8_stua5"]
 [ext_resource type="Script" path="res://entities/heroes/common/death_state.gd" id="10_34uet"]
 [ext_resource type="Script" path="res://entities/heroes/common/hero_unit_manager.gd" id="10_qqqta"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_0tu44"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_nag1g"]
 
@@ -107,6 +109,10 @@ script = ExtResource("1_u3u46")
 sprite_sheet = ExtResource("2_fcu13")
 character = 8
 spell_list = ExtResource("3_mm5lg")
+
+[node name="Hitbox" type="CollisionShape3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 19.7219, 0)
+shape = SubResource("CylinderShape3D_0tu44")
 
 [node name="Base" type="CollisionShape3D" parent="."]
 shape = SubResource("CylinderShape3D_nag1g")
