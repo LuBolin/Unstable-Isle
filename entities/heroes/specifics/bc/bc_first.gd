@@ -28,6 +28,7 @@ func init(b_id: int, dirn: Vector2):
 	direction = dirn
 
 func simulate(unit_states):
+	var interactions = []
 	global_position = unit_states['position']
 	direction = unit_states['direction']
 	var dirn: Vector3 = Vector3(direction.x, 0, direction.y)
@@ -42,14 +43,19 @@ func simulate(unit_states):
 	if not transform.origin.is_equal_approx(look_target):
 		look_at(look_target)
 	
-	move_and_slide()
+	var collision = move_and_collide(velocity * delta)
+	if collision:
+		if collision.get_collider() is Hero:
+			var target : Hero = collision.get_collider()
+			interactions.append(func(): target.health -= 2)
+			lifespan = -1	#remove
 	lifespan -= delta
 	if lifespan < 0:
-		return null
-	return serialize()
+		interactions.append(func(): queue_free())
+	return interactions
 
 
-func serialize():
+func get_state():
 	return {'id' : id,\
 		'direction' : direction,\
 		'position' : global_position,\

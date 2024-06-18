@@ -54,9 +54,10 @@ func _physics_process(delta):
 	pass
 
 func _process(delta):
-	var new_state = current_state.process_frame(delta)
-	if new_state:
-		change_state(new_state)
+	#var new_state = current_state.process_frame(delta)
+	#if new_state:
+	#	change_state(new_state)
+	pass
 
 func simulate(hs: HeroState, input: PlayerInput):
 	# current_state.reset() ?
@@ -85,9 +86,13 @@ func simulate(hs: HeroState, input: PlayerInput):
 	
 	var delta = get_physics_process_delta_time()
 	hero.spell_list.cooldown_tick(delta)
-	new_state = current_state.process_physics(delta)
-	if new_state:
-		change_state(new_state)
+	#new_state = current_state.process_physics(delta)
+	#if new_state:
+	#	change_state(new_state)
+	var interactions = []
+	var state_interactions = current_state.process_physics(delta)
+	interactions += state_interactions
+	return interactions
 
 func decode(hs_state: Dictionary) -> HeroState:
 	var state_name = hs_state['state_name']

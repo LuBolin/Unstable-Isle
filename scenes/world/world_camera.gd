@@ -1,6 +1,6 @@
 extends Camera3D
 
-const CAM_ANGLE: int = -65
+const CAM_ANGLE: int = -90#-65
 const CAM_MAX_HEIGHT: int = 400
 const CAM_MIN_HEIGHT: int = 150
 const pan_speed = 5.0

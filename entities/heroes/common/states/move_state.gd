@@ -22,10 +22,10 @@ func process_input(event: InputEvent) -> HeroState:
 func clean_up():
 	modified_speed = DEFAULT_SPEED
 
-func process_physics(delta: float) -> HeroState:
+func process_physics(delta: float) -> Array:
 	if hero.interrupted:
 		hero.interrupted = false
-		return null
+		return []
 	
 	var dirn: Vector3 = Vector3(
 		target.x - hero.position.x, 0,
@@ -63,13 +63,13 @@ func process_physics(delta: float) -> HeroState:
 
 	var airborne = not hero.is_on_floor()
 	if airborne:
-		return sm.fall_state
+		return [func(): sm.change_state(sm.fall_state)]
 	if pending_state:
-		return pending_state
+		return [func(): sm.change_state(pending_state)]
 	else:
 		if (Vector2(hero.position.x, hero.position.z) - target).length() == 0:
-			return sm.idle_state
-		return null
+			return [func(): sm.change_state(sm.idle_state)]
+		return []
 
 func process_frame(delta: float) -> HeroState:
 	var t = Vector3(target.x, hero.position.y, target.y)

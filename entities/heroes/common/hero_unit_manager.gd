@@ -3,10 +3,6 @@ extends Node3D
 
 const PlayerInput = Serializables.PlayerInput
 
-var hero : Hero
-
-func init(h: Hero):
-	hero = h
 
 func drop_freed(unit_states: Dictionary):
 	for child in get_children():
@@ -14,19 +10,22 @@ func drop_freed(unit_states: Dictionary):
 			child.queue_free()
 
 func simulate(unit_states, input: PlayerInput):
-	var end_states = {}
+	unit_states = unit_states["unit_states"]
+	var interactions = []
 	for child in get_children():
 		if child.id in unit_states:
 			var unit_state = unit_states[child.id]
-			var end_state = child.simulate(unit_state)
-			if end_state:
-				end_states[unit_state['id']] = end_state
-		else:
-			# child.simulate(child.serialize())
-			end_states[child.id] = child.serialize()
-	return end_states
+			var interaction = child.simulate(unit_state)
+			interactions += interaction
+	return interactions
 
 func _physics_process(delta):
 	pass
 
 var derivatives_count = 0
+
+func get_state():
+	var end_states = {}
+	for child in get_children():
+		end_states[child.id] = child.get_state()
+	return {"d_count" : derivatives_count, "unit_states" : end_states}

@@ -61,7 +61,7 @@ func create(c_id: int, name: String, initial_pos: Vector3):
 	state_manager.init(self)
 	
 	unit_manager = $UnitManager
-	unit_manager.init(self)
+	#unit_manager.init(self)
 
 	self.name = name
 	if c_id == Network.multiplayer.get_unique_id():
@@ -75,31 +75,31 @@ func create(c_id: int, name: String, initial_pos: Vector3):
 		character = 29
 	position = initial_pos
 	print("%s created at %s" % [c_id, initial_pos])
-	return PlayerState.new(
-		position, health, 
-		state_manager.current_state, 
-		statuses, 
-		unit_manager.derivatives_count,
-		{}
-	)
 
 func simulate(state: PlayerState, input: PlayerInput):
 	position = state.position
 	health = state.health
 	var hs = state.hero_state # HeroState.decode(state.hero_state)
 	statuses = state.statuses # HeroStatus.decode(state.statuses)
-	unit_manager.derivatives_count = state.derivatives_count
 	
-	unit_manager.drop_freed(state.derivatives)
-	var new_units = state_manager.simulate(hs, input)
-	var unit_states = unit_manager.simulate(state.derivatives, input)
+	var interactions = []
+	unit_manager.derivatives_count = state.derivatives["d_count"]
+	unit_manager.drop_freed(state.derivatives["unit_states"])
+	var sm_interactions = state_manager.simulate(hs, input)
+	interactions += (sm_interactions)
 	
+	var unit_interactions = unit_manager.simulate(state.derivatives, input)
+	interactions += unit_interactions
+	
+	return interactions
+
+func get_state():
 	return PlayerState.new(
 		position, health, 
-		state_manager.current_state,
+		state_manager.current_state, 
 		statuses, 
-		unit_manager.derivatives_count,
-		unit_states)
+		unit_manager.get_state()
+	)
 
 # Non-logic
 func draw_line(target: Vector3):

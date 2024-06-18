@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://entities/heroes/specifics/bc/bc_first.gd" id="1_e12p0"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mcc4s"]
-radius = 1.5
+radius = 3.369
 height = 14.8
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8cllq"]
