@@ -86,9 +86,13 @@ func simulate(hs: HeroState, input: PlayerInput):
 	
 	var delta = get_physics_process_delta_time()
 	hero.spell_list.cooldown_tick(delta)
-	new_state = current_state.process_physics(delta)
-	if new_state:
-		change_state(new_state)
+	#new_state = current_state.process_physics(delta)
+	#if new_state:
+	#	change_state(new_state)
+	var interactions = []
+	var state_interactions = current_state.process_physics(delta)
+	interactions += state_interactions
+	return interactions
 
 func decode(hs_state: Dictionary) -> HeroState:
 	var state_name = hs_state['state_name']

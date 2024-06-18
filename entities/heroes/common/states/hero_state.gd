@@ -23,8 +23,8 @@ func process_input(event: InputEvent) -> HeroState:
 func clean_up():
 	pass
 
-func process_physics(delta: float) -> HeroState:
-	return null
+func process_physics(delta: float) -> Array:
+	return []
 
 func process_frame(delta: float) -> HeroState:
 	return null

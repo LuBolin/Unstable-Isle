@@ -26,17 +26,22 @@ func clean_up():
 	pass
 
 
-func process_physics(delta: float) -> HeroState:
+func process_physics(delta: float) -> Array:
+	var interactions = []
 	cast_point -= delta
 	if cast_point <= 0:
 		spell.effect.call(hero, target)
+		#interactions.append(func(): spell.effect.call(hero, target))
 		if pending_state:
-			return pending_state
-		return sm.idle_state
+			interactions.append(func(): sm.change_state(pending_state))
+			return interactions
+		interactions.append(func(): sm.change_state(sm.idle_state))
+		return interactions
 
 	if pending_state:
-		return pending_state
-	return null
+		interactions.append(func(): sm.change_state(pending_state))
+		return interactions
+	return interactions
 
 func process_frame(delta: float) -> HeroState:
 	return null

@@ -49,8 +49,9 @@ func simulate(unit_states):
 	var collision = move_and_collide(velocity * delta)
 	if collision:
 		if collision.get_collider() is Hero:
-			interactions.append(func(): print("hit him"))
-			lifespan = 0
+			var target : Hero = collision.get_collider()
+			interactions.append(func(): target.health -= 1)
+			lifespan = -1	#remove
 	
 	lifespan -= delta
 	if lifespan < 0:
