@@ -16,10 +16,19 @@ var client_specifics: Node:
 
 var mutiplayer: SceneMultiplayer = SceneMultiplayer.new()
 
+signal self_disconnected
+signal room_closed
+
 enum PHASE{
-	HOLD,
-	PREP,
-	GAME
+	HOLD, # game have not started, clients can still join as player
+	PREP, # picking phase
+	GAME # game phase
+}
+
+const PHASE_NAMES = {
+	PHASE.HOLD: "Waiting",
+	PHASE.PREP: "Preparing",
+	PHASE.GAME: "In Game",
 }
 
 var game_phase: PHASE = PHASE.HOLD
@@ -40,17 +49,48 @@ func _enter_tree():
 func create_room(port: int):
 	network.create_server(port)
 	
+	self.set_visible(false)
 	# turn off _process
 	propagate_call('set_process',[false])
 	for c in client_specifics.get_children():
 		c.queue_free()
 
 func join_room(ip: String, port: int):
-	print("%s joining %s:%s" % [multiplayer.get_unique_id(),ip, port])
+	# print("%s joining %s:%s" % [multiplayer.get_unique_id(),ip, port])
+	self.set_visible(true)
 	network.create_client(ip, port)
+
+func request_start_game(requester_id):
+	if not mutiplayer.is_server():
+		return
+	if not requester_id == owner_id:
+		return
+	var game_seed = randi()
+	network.start_prep.rpc(game_seed)
+
+func request_close_room(requester_id):
+	print("Requested to close, by ", requester_id)
+	if not mutiplayer.is_server():
+		return
+	if not requester_id == owner_id:
+		return
+	close_room()
+
+func close_room():
+	if not mutiplayer.is_server():
+		return
+	for p in players:
+		multiplayer.multiplayer_peer.disconnect_peer(p)
+	room_closed.emit()
+
+func disconnect_self():
+	multiplayer.multiplayer_peer.close()
+	self_disconnected.emit()
 
 # for lobby_room
 func serialize():
 	var v = {}
 	v['port'] = network.port
+	v['player_count'] = players.size()
+	v['phase'] = PHASE_NAMES[game_phase]
 	return v

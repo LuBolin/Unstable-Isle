@@ -13,7 +13,6 @@ func _ready():
 	game_room.round.round_started.connect(start_round)
 
 func start_prep(seed: int):
-	menu_overlay.set_visible(false)
 	hero_picker.set_visible(not game_room.network.multiplayer.is_server())
 	round_info.set_visible(true)
 

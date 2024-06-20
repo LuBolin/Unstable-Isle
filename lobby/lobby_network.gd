@@ -40,7 +40,6 @@ func request_join_room(port, client_id = null):
 
 @rpc("authority", 'call_remote', 'reliable')
 func client_join_room(ip, port):
-	print("Authorized to join room: ", ip, " ", port)
 	lobby.join_room(ip, port)
 
 @rpc("authority", "call_local", "reliable")

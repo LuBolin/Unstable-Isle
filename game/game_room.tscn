@@ -84,14 +84,14 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("5_r84ri")
 
-[node name="MenuOverlay" parent="ClientSpecifics/GUI" instance=ExtResource("4_wre41")]
+[node name="RoundInfo" parent="ClientSpecifics/GUI" instance=ExtResource("6_a1h4u")]
 layout_mode = 1
 
 [node name="HeroPicker" parent="ClientSpecifics/GUI" instance=ExtResource("5_r1lvg")]
 visible = false
 layout_mode = 1
 
-[node name="RoundInfo" parent="ClientSpecifics/GUI" instance=ExtResource("6_a1h4u")]
+[node name="MenuOverlay" parent="ClientSpecifics/GUI" instance=ExtResource("4_wre41")]
 layout_mode = 1
 
 [node name="InputPoller" type="Node3D" parent="ClientSpecifics"]

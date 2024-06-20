@@ -123,12 +123,6 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MaxChars" type="Label" parent="Lobby/LobbyGUI/LogIn/Positioning/LogIn"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 12
-text = "Maximum of 10 characters"
-horizontal_alignment = 2
-
 [node name="HBoxContainer" type="HBoxContainer" parent="Lobby/LobbyGUI/LogIn/Positioning/LogIn"]
 layout_mode = 2
 alignment = 1
@@ -140,7 +134,7 @@ text = "Username: "
 [node name="UsernameEdit" type="LineEdit" parent="Lobby/LobbyGUI/LogIn/Positioning/LogIn/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-max_length = 10
+max_length = 12
 
 [node name="StartButton" type="Button" parent="Lobby/LobbyGUI/LogIn/Positioning/LogIn"]
 layout_mode = 2

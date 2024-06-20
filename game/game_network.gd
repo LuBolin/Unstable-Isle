@@ -38,10 +38,9 @@ func create_client(ip: String, p: int):
 func terminate_multiplayer() -> void:
 	game_room.mutiplayer.multiplayer_peer = null
 
+
 @rpc("authority", "call_remote", "reliable")
 func update_player_list(players_dict):
-	print("Update player list called on ", game_room.multiplayer.get_unique_id())
-	print("Updating to ", players_dict)
 	# triggers setter
 	game_room.players = players_dict
 
@@ -49,7 +48,17 @@ func update_player_list(players_dict):
 func update_room_owner(id):
 	game_room.owner_id = id
 
-@rpc("authority", "call_remote", "reliable")
+@rpc("any_peer", "call_remote", "reliable")
+func request_start_game():
+	var sender_id = game_room.mutiplayer.get_remote_sender_id()
+	game_room.request_start_game(sender_id)
+
+@rpc("any_peer", "call_remote", "reliable")
+func request_close_room():
+	var sender_id = game_room.mutiplayer.get_remote_sender_id()
+	game_room.request_close_room(sender_id)
+
+@rpc("authority", "call_local", "reliable")
 func start_prep(seed):
 	print("Start prep rpc on %s" % [str(game_room.mutiplayer.get_unique_id())])
 	game_room.round.prep_started.emit(seed)
@@ -91,8 +100,13 @@ func _on_client_connected(id):
 
 func _on_client_disconnected(id):
 	game_room.players.erase(id)
-	print(str(id) + " disconnect")
-	print(game_room.players.values())
+	if game_room.players.is_empty():
+		game_room.close_room()
+	else:
+		if id == game_room.owner_id:
+			game_room.owner_id = game_room.players.keys()[0]
+			update_room_owner.rpc(game_room.owner_id)
+		update_player_list.rpc(game_room.players)
 
 func _on_connected_success():
 	print("connect success")
@@ -103,4 +117,5 @@ func _on_connected_fail():
 	print("connect fail")
 
 func _on_server_disconnected():
-	print("disconnect")
+	print("Server disconnect")
+	game_room.disconnect_self()

@@ -22,9 +22,10 @@ func _on_create_room():
 func refresh_lobby_rooms(rooms):
 	for c in rooms_grid.get_children():
 		c.queue_free()
+	# print("Refresh with ", rooms)
 	for port in rooms:
-		# var other_var = rooms[port]['other_var']
-		var room: LobbyRoom = LobbyRoom.create(port)
+		var room_info = rooms[port]
+		var room: LobbyRoom = LobbyRoom.create(room_info)
 		rooms_grid.add_child(room)
 		room.join_room.connect(grid_room_pressed)
 

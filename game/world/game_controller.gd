@@ -23,43 +23,42 @@ var game_room: GameRoom:
 
 
 func _ready():
+	game_room.round.prep_started.connect(start_prep)
+	game_room.round.hero_picked.connect(pick_hero)
 	game_room.round.round_started.connect(start_round)
 	game_room.round.received_server_frame.connect(receive_truth)
 	game_room.round.received_client_input.connect(receive_input)
-	game_room.round.prep_started.connect(start_prep)
-	game_room.round.hero_picked.connect(pick_hero)
 
 func _input(event):
 	if game_room.game_phase != PHASE.GAME:
 		return
-	
-	# trigger hits on server side
-	# for ground_chunk debugging
-	if multiplayer.is_server() \
-		and event.is_pressed() \
-		and event is InputEventMouseButton \
-		and event.button_index == MOUSE_BUTTON_LEFT:
-		
-		var mousePos = get_viewport().get_mouse_position()
-		var camera_3d = get_viewport().get_camera_3d()
-		var from = camera_3d.project_ray_origin(mousePos)
-		var to = from + camera_3d.project_ray_normal(mousePos) * 1000
-		var space = get_world_3d().direct_space_state
-		var rayQuery = PhysicsRayQueryParameters3D.new()
-		rayQuery.from = from
-		rayQuery.to = to
-		var result = space.intersect_ray(rayQuery)
-		if not result.is_empty():
-			var chunk = result['collider']
-			# collider is already the rigidbody
-			if chunk is GroundChunk:
-				chunk.hit()
+	## trigger hits on server side
+	## for ground_chunk debugging
+	#if multiplayer.is_server() \
+		#and event.is_pressed() \
+		#and event is InputEventMouseButton \
+		#and event.button_index == MOUSE_BUTTON_LEFT:
+		#
+		#var mousePos = get_viewport().get_mouse_position()
+		#var camera_3d = get_viewport().get_camera_3d()
+		#var from = camera_3d.project_ray_origin(mousePos)
+		#var to = from + camera_3d.project_ray_normal(mousePos) * 1000
+		#var space = get_world_3d().direct_space_state
+		#var rayQuery = PhysicsRayQueryParameters3D.new()
+		#rayQuery.from = from
+		#rayQuery.to = to
+		#var result = space.intersect_ray(rayQuery)
+		#if not result.is_empty():
+			#var chunk = result['collider']
+			## collider is already the rigidbody
+			#if chunk is GroundChunk:
+				#chunk.hit()
 
 func start_prep(island_seed):
-	print("start prep", game_room.players)
 	if game_room.game_phase == PHASE.PREP:
 		return
 	game_room.game_phase = PHASE.PREP
+	print("Prep started on ", game_room.multiplayer.get_unique_id())
 	# print("Prepping " + str(multiplayer.get_unique_id()))
 	if(game_room.mutiplayer.is_server()):
 		game_room.network.start_prep.rpc(island_seed)

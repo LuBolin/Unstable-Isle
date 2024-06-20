@@ -13,12 +13,11 @@ var port: int
 var player_count: int
 var status: String
 
-static func create(port: int, 
-	p_count: int = 0, status: String = "W.I.P."):
+static func create(room_info: Dictionary):
 	var room = lobby_room.instantiate()
-	room.port = port
-	room.player_count = p_count
-	room.status = status
+	room.port = room_info['port']
+	room.player_count = room_info['player_count']
+	room.status = room_info['phase']
 	return room
 
 func _ready():
