@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxukvbn3aiys5"]
+
+[ext_resource type="Script" path="res://game/entities/paper.gd" id="1_bkro6"]
+
+[node name="Paper" type="Node3D"]
+script = ExtResource("1_bkro6")
+
+[node name="Render" type="Node3D" parent="."]
+
+[node name="Sprite" type="Sprite3D" parent="Render"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
+texture_filter = 2

@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="BlazeChronSpellList" load_steps=2 format=3 uid="uid://b72gux10wkrvq"]
+
+[ext_resource type="Script" path="res://game/entities/heroes/specifics/bc/bc_spell_list.gd" id="1_aerta"]
+
+[resource]
+script = ExtResource("1_aerta")

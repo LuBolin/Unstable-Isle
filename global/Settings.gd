@@ -15,6 +15,10 @@ const SKY_BOX_ANGLE: int = -205
 
 const GRAVITY: int = 200
 
+
+## Server constants
+const POLL_PER_FRAME: float = 5
+
 # Layers
 # 1: Physics
 # 4: Input World Boundary Plane

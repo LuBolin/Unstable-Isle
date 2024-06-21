@@ -1,0 +1,17 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://chv8tthirups8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahdce"]
+bg_color = Color(0.0941176, 0.113725, 0.164706, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_f44oq"]
+
+[resource]
+default_font = SubResource("SystemFont_f44oq")
+default_font_size = 24
+HeaderLarge/font_sizes/font_size = 48
+HeaderMedium/font_sizes/font_size = 36
+MarginContainer/constants/margin_bottom = 20
+MarginContainer/constants/margin_left = 20
+MarginContainer/constants/margin_right = 20
+MarginContainer/constants/margin_top = 20
+Panel/styles/panel = SubResource("StyleBoxFlat_ahdce")
