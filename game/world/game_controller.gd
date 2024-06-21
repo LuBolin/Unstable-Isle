@@ -7,6 +7,9 @@ const PlayerState = Serializables.PlayerState
 const GameState = Serializables.GameState
 const ArenaState = Serializables.ArenaState
 
+# @onready var player_node = preload("res://game/entities/heroes/common/base_hero.tscn")
+var player_node = load("res://game/entities/heroes/common/base_hero.tscn")
+
 const PHASE = game_room.PHASE
 
 # saves last X frames
@@ -257,9 +260,11 @@ func poll_and_send():
 	for i in range(MAKE_SURE):
 		game_room.network.send_input.rpc_id(1, last_input.serialize())
 
-func create_player(id, name, pos):
-	var player = player_node.instantiate()
-	player.create(id, name, pos)
+func create_player(id, player_name, pos):
+	var is_self = game_room.network.multiplayer.get_unique_id() == id
+	var player: Hero = Hero.create(id, player_name, pos, is_self)
+	player.hero_died.connect(
+		func(id): game_room.network.hero_died.emit(id))
 	var init_state = player.get_state()
 	entities.add_child(player)
-	return player.serialize()
+	return init_state

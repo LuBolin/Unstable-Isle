@@ -129,7 +129,6 @@ func draw_line(target: Vector3):
 	# Rotate 90 degrees around the x-axis and then align with target
 	target_line.rotation_degrees = Vector3(90, 0, -angle * 180 / PI)
 
-
 # Movement
 func move(target: Vector2, delta: float):
 	movement.move(target, delta)

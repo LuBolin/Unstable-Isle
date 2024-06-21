@@ -20,7 +20,7 @@ static func create(hero: Hero, target: Vector2):
 	
 	var manager: UnitManager = hero.unit_manager
 	bullet.init(
-		manager.derivatives_count, direction, hero)
+		manager.derivatives_count, dirn, hero)
 	manager.add_child(bullet)
 	manager.derivatives_count += 1
 

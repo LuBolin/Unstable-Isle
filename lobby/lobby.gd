@@ -38,6 +38,9 @@ func _ready():
 	is_lobby_host = launch_as_lobby_server()
 	if is_lobby_host:
 		refresh_rooms_timer.timeout.connect(update_clients_about_rooms)
+		# minimize host window
+		get_tree().create_timer(0.1).timeout.connect(
+			func(): get_tree().root.mode = Window.MODE_MINIMIZED)
 	else:
 		launch_as_lobby_client()
 
