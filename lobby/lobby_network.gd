@@ -11,7 +11,6 @@ func _ready():
 	lobby.mutiplayer.connected_to_server.connect(_on_connected_success)
 	lobby.mutiplayer.connection_failed.connect(_on_connected_fail)
 	lobby.mutiplayer.server_disconnected.connect(_on_server_disconnected)
-	print("MP: ", lobby.multiplayer.get_unique_id())
 
 @rpc("any_peer", "call_remote", "reliable")
 func request_create_room():

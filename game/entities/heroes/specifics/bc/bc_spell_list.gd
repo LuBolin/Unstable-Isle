@@ -11,7 +11,21 @@ func _init():
 	
 	# first spell and attack are same for now
 	first_spell = Spell.new(
-		0.5, 3.0, "first_spell",
+		0.4, 3.0, "first_spell",
+		func (hero: Hero, target: Vector2):
+			BcFirst.create(hero, target)
+			first_spell.current_cooldown = first_spell.cooldown
+	)
+	
+	second_spell = Spell.new(
+		0.8, 8.0, "second_spell",
+		func (hero: Hero, target: Vector2):
+			BcFirst.create(hero, target)
+			first_spell.current_cooldown = first_spell.cooldown
+	)
+	
+	ulti_spell = Spell.new(
+		1.5, 20.0, "ulti_spell",
 		func (hero: Hero, target: Vector2):
 			BcFirst.create(hero, target)
 			first_spell.current_cooldown = first_spell.cooldown
