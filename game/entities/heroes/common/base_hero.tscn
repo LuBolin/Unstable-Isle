@@ -1,8 +1,6 @@
-[gd_scene load_steps=21 format=3 uid="uid://dqmbhtd1nghrs"]
+[gd_scene load_steps=19 format=3 uid="uid://dqmbhtd1nghrs"]
 
 [ext_resource type="Script" path="res://game/entities/heroes/common/base_hero.gd" id="1_vaswu"]
-[ext_resource type="Texture2D" uid="uid://dr7jud3xwx4hd" path="res://resources/sheet.png" id="2_e5his"]
-[ext_resource type="Resource" uid="uid://dqhgqufvrde0b" path="res://game/entities/heroes/specifics/bc/bc_spell_list.tres" id="3_mm5lg"]
 [ext_resource type="PackedScene" uid="uid://dxukvbn3aiys5" path="res://game/entities/paper.tscn" id="4_54hav"]
 [ext_resource type="Script" path="res://game/entities/heroes/common/states/hero_state_manager.gd" id="5_xogyf"]
 [ext_resource type="Script" path="res://game/entities/heroes/common/states/idle_state.gd" id="6_umsh3"]
@@ -108,11 +106,7 @@ cache/0/2000/0/kerning_overrides/1200/0 = Vector2(0, 0)
 cache/0/2000/0/kerning_overrides/2000/0 = Vector2(0, 0)
 
 [node name="Hero" type="CharacterBody3D"]
-visible = false
 script = ExtResource("1_vaswu")
-sprite_sheet = ExtResource("2_e5his")
-character = 8
-spell_list = ExtResource("3_mm5lg")
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 19.7219, 0)

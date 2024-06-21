@@ -96,16 +96,8 @@ func get_state():
 		state_manager.current_state, 
 		status_manager.get_state(), 
 		unit_manager.get_state(),
-		statuses, 
-		unit_manager.get_state(),
 		spell_list.get_current_cooldowns(),
 	)
-
-
-# Movement
-func move(target: Vector2, delta: float):
-	movement.move(target, delta)
-
 
 # Non-logic
 func draw_line(target: Vector3):
