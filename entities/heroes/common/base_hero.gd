@@ -38,6 +38,7 @@ var health: int = 10 :
 			l.set_text("Health: %s" % [str(health)])
 @onready var state_manager: StateManager = $StateManager
 @onready var unit_manager: UnitManager = $UnitManager
+var movement
 
 var interrupted = false
 var statuses: Dictionary = {}
@@ -62,6 +63,9 @@ func create(c_id: int, name: String, initial_pos: Vector3):
 	
 	unit_manager = $UnitManager
 	#unit_manager.init(self)
+	
+	movement = $Movement
+	movement.init(self)
 
 	self.name = name
 	if c_id == Network.multiplayer.get_unique_id():
@@ -115,3 +119,8 @@ func draw_line(target: Vector3):
 	var angle = atan2(direction.x, direction.z)
 	# Rotate 90 degrees around the x-axis and then align with target
 	target_line.rotation_degrees = Vector3(90, 0, -angle * 180 / PI)
+
+
+# Movement
+func move(target: Vector2, delta: float):
+	movement.move(target, delta)
