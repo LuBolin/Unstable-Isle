@@ -16,7 +16,7 @@ func _ready():
 	close_room_button.pressed.connect(_on_close_room)
 	game_room.round.prep_started.connect(start_prep)
 
-func start_prep(seed: int):
+func start_prep(_game_seed: int):
 	start_game_button.hide()
 
 func _on_start_game():

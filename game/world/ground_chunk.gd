@@ -131,8 +131,8 @@ func set_shape(poly: PackedVector2Array, thickness: float = 16.0):
 	mesh_instance.mesh.surface_set_material(0, new_mat.call())
 
 	# Calculate the position to place the mesh in the scene
-	var position = Vector3(centroid.x, 0, centroid.y)
-	self.global_position = position
+	var _position = Vector3(centroid.x, 0, centroid.y)
+	self.global_position = _position
 	
 	mesh_instance.set_meta("polygon", poly)
 

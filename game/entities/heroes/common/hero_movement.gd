@@ -14,7 +14,6 @@ func init(h : Hero) -> void:
 	modified_speed = DEFAULT_SPEED
 
 func move(target: Vector2, delta: float) -> void:
-	print(target)
 	var dirn: Vector3 = Vector3(
 		target.x - hero.position.x, 0,
 		target.y - hero.position.z)

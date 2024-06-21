@@ -13,7 +13,7 @@ func _ready():
 	game_room.round.hero_died.connect(_hero_died)
 	game_room.round.round_ended.connect(_round_ended)
 
-func _prep_started(seed):
+func _prep_started(_game_seed):
 	player_list.clear()
 	round_result_label.hide()
 

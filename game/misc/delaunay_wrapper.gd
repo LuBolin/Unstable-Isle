@@ -12,7 +12,6 @@ func circle_crop(site: VoronoiSite, circle: PackedVector2Array) -> PackedVector2
 func make_bound_circle(roundness: int = 32):
 	var radius = min(_rect.size.x, _rect.size.y) / 2.0
 	var center = _rect.position + _rect.size / 2.0
-	# print(center, radius)
 	var bound_circle = PackedVector2Array()
 	var angle_step  = 2.0 * PI / roundness
 	

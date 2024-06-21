@@ -136,10 +136,10 @@ class FrameState:
 			or not 'states' in dict \
 			or not 'inputs' in dict :
 				return null
-		var states = GameState.decode(dict['states'])
-		var inputs = dict['inputs']
+		var _states = GameState.decode(dict['states'])
+		var _inputs = dict['inputs']
 		var frame_state = FrameState.new(
-			dict['frame'], states, inputs)
+			dict['frame'], _states, _inputs)
 		return frame_state
 		
 	func serialize():

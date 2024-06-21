@@ -48,5 +48,4 @@ func poll_game_input(frame) -> Serializables.PlayerInput:
 		return null
 	var input = input_queue.pop_front()
 	input['frame'] = frame
-	# print("Polled: %s " % [input])
 	return Serializables.PlayerInput.decode(input)

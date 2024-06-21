@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="HeroAssetHolder" load_steps=3 format=3 uid="uid://bg7rdic2affu0"]
+
+[ext_resource type="Texture2D" uid="uid://bgmlcpt8y5p3v" path="res://game/entities/heroes/specifics/dwarf/dwarf.png" id="1_a4dad"]
+[ext_resource type="Script" path="res://game/entities/heroes/common/hero_asset_holder.gd" id="1_iypli"]
+
+[resource]
+script = ExtResource("1_iypli")
+hero_name = "Dwarf"
+picker_texture = ExtResource("1_a4dad")

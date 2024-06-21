@@ -12,7 +12,7 @@ func _ready():
 	game_room.round.prep_started.connect(start_prep)
 	game_room.round.round_started.connect(start_round)
 
-func start_prep(seed: int):
+func start_prep(_game_seed: int):
 	hero_picker.set_visible(not game_room.network.multiplayer.is_server())
 	round_info.set_visible(true)
 

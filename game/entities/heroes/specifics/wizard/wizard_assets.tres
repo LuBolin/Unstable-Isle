@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="HeroAssetHolder" load_steps=3 format=3 uid="uid://tuchrp66o1e7"]
+
+[ext_resource type="Texture2D" uid="uid://bsujwiafa6sbv" path="res://game/entities/heroes/specifics/wizard/wizard.png" id="1_bf6r3"]
+[ext_resource type="Script" path="res://game/entities/heroes/common/hero_asset_holder.gd" id="1_ckoev"]
+
+[resource]
+script = ExtResource("1_ckoev")
+hero_name = "Wizard"
+picker_texture = ExtResource("1_bf6r3")

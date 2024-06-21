@@ -82,8 +82,8 @@ func make_island(radius: float, step_size: float,
 	var triangles = delaunay.triangulate()
 	
 	var sites = delaunay.make_voronoi(triangles)
-	var borders_count = 0
-	var rescued_count = 0
+	#var borders_count = 0
+	#var rescued_count = 0
 	var bounding_circle = delaunay.make_bound_circle(32)
 	
 	var site_count = sites.size()
