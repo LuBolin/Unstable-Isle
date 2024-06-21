@@ -16,3 +16,8 @@ func _init():
 			BcFirst.create(hero, target)
 			first_spell.current_cooldown = first_spell.cooldown
 	)
+
+func ret_status(case):
+	match case:
+		"BcSlow":
+			return BcSlow.new()

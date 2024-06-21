@@ -13,6 +13,13 @@ func init(h : Hero) -> void:
 	hero = h
 	modified_speed = DEFAULT_SPEED
 
+func reset():
+	modified_speed = DEFAULT_SPEED
+
+func modify_speed(percentage):
+	modified_speed = percentage
+	print(modified_speed)
+
 func move(target: Vector2, delta: float) -> void:
 	var dirn: Vector3 = Vector3(
 		target.x - hero.position.x, 0,
@@ -29,7 +36,7 @@ func move(target: Vector2, delta: float) -> void:
 			break
 	if moving_towards_void:
 		modified_speed *= 0.2
-
+	print(modified_speed)
 	if dirn.length() > 0:
 		var vel = dirn.normalized() * modified_speed
 		# set velocity before move_and_slide

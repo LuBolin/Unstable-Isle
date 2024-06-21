@@ -39,6 +39,7 @@ var health: int = 10 :
 			l.set_text("Health: %s" % [str(health)])
 @onready var state_manager: StateManager = $StateManager
 @onready var unit_manager: UnitManager = $UnitManager
+@onready var status_manager: StatusManager = $StatusManager
 var movement
 
 var interrupted = false
@@ -74,6 +75,9 @@ func init(c_id: int, name: String,
 	unit_manager = $UnitManager
 	#unit_manager.init(self)
 	
+	status_manager = $StatusManager
+	status_manager.init(self)
+	
 	movement = $Movement
 	movement.init(self)
 
@@ -94,15 +98,20 @@ func simulate(state: PlayerState, input: PlayerInput):
 	health = state.health
 	var hs = state.hero_state # HeroState.decode(state.hero_state)
 	statuses = state.statuses # HeroStatus.decode(state.statuses)
+	movement.reset()
 	
 	var interactions = []
 	unit_manager.derivatives_count = state.derivatives["d_count"]
 	unit_manager.drop_freed(state.derivatives["unit_states"])
+	status_manager.drop_freed(statuses["unit_statuses"])
 	var sm_interactions = state_manager.simulate(hs, input)
 	interactions += (sm_interactions)
 	
 	var unit_interactions = unit_manager.simulate(state.derivatives, input)
 	interactions += unit_interactions
+	
+	var status_interactions = status_manager.simulate(statuses, input)
+	interactions += status_interactions
 	
 	return interactions
 
@@ -110,7 +119,7 @@ func get_state():
 	return PlayerState.new(
 		position, health, 
 		state_manager.current_state, 
-		statuses, 
+		status_manager.get_state(), 
 		unit_manager.get_state()
 	)
 
@@ -129,6 +138,13 @@ func draw_line(target: Vector3):
 	# Rotate 90 degrees around the x-axis and then align with target
 	target_line.rotation_degrees = Vector3(90, 0, -angle * 180 / PI)
 
+#status
+func apply_status(status : HeroStatus):
+	status_manager.apply_status(status)
+
 # Movement
 func move(target: Vector2, delta: float):
 	movement.move(target, delta)
+
+func modify_speed(percentage):
+	movement.modify_speed(percentage)

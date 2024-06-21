@@ -16,14 +16,12 @@ func simulate(unit_states, input: PlayerInput):
 		if child.id in unit_states:
 			var unit_state = unit_states[child.id]
 			var interaction = child.simulate(unit_state)
+			unit_states.erase(child.id)
 			interactions += interaction
+	for state in unit_states:
+		pass
 	return interactions
 
-func serialize():
-	var unit_states = {}
-	for c in get_children():
-		unit_states[c.id] = c.serialize()
-	return unit_states
 
 func _physics_process(delta):
 	pass

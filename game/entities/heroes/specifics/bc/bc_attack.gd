@@ -51,6 +51,10 @@ func simulate(unit_states):
 		if collision.get_collider() is Hero:
 			var target : Hero = collision.get_collider()
 			interactions.append(func(): target.health -= 1)
+			var slow = BcSlow.new()
+			slow.create(hero, 5)
+			#interactions.append(func(): target.apply_status(slow))
+			target.apply_status(slow)
 			lifespan = -1	#remove
 	
 	lifespan -= delta

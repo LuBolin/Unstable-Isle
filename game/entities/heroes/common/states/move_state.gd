@@ -1,8 +1,6 @@
 class_name MoveState
 extends HeroState
 
-const DEFAULT_SPEED: float = 50
-var modified_speed: float
 # Move to target
 var target: Vector2 = Vector2.ZERO
 # or
@@ -19,8 +17,6 @@ func exit():
 func process_input(event: InputEvent) -> HeroState:
 	return null
 
-func clean_up():
-	modified_speed = DEFAULT_SPEED
 
 func process_physics(delta: float) -> Array:
 	if hero.interrupted:
