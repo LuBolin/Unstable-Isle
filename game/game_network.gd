@@ -95,8 +95,8 @@ func _on_client_connected(id):
 		game_room.players[id] = [str(id), 0]
 	#elif not id == 1:
 		#game_room.players[id] = [str(id), 0]
-	update_room_owner.rpc_id(id, game_room.owner_id)
-	update_player_list.rpc(game_room.players)
+		update_room_owner.rpc_id(id, game_room.owner_id)
+		update_player_list.rpc(game_room.players)
 
 func _on_client_disconnected(id):
 	game_room.players.erase(id)

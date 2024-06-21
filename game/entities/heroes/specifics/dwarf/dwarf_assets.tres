@@ -7,3 +7,7 @@
 script = ExtResource("1_iypli")
 hero_name = "Dwarf"
 picker_texture = ExtResource("1_a4dad")
+atk_description = "Swing a big axe"
+fst_description = "First Spell"
+scd_description = "Second Spell"
+ult_description = "Ultimate"

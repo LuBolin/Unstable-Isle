@@ -19,6 +19,7 @@ extends Resource
 @export var fst_description: String = "First Spell"
 @export var scd_description: String = "Second Spell"
 @export var ult_description: String = "Ultimate"
+@export var spell_list: SpellList
 
 var texture_width: int = 64
 var texture_size: Vector2 = Vector2(texture_width, texture_width)

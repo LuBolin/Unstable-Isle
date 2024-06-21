@@ -7,3 +7,7 @@
 script = ExtResource("2_nfupg")
 hero_name = "Ranger"
 picker_texture = ExtResource("1_7f8l4")
+atk_description = "Basic Attack"
+fst_description = "First Spell"
+scd_description = "Powershot"
+ult_description = "Ultimate"

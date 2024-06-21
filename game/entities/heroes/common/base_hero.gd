@@ -2,29 +2,13 @@
 class_name Hero
 extends CharacterBody3D
 
+signal hero_died(id)
+
 const PlayerState = Serializables.PlayerState
 const PlayerInput = Serializables.PlayerInput
 
-# 6 columns, 5 rows
-@export var sprite_sheet: Texture2D
-const sheet_col_count = 4; const sprite_dim = 32
-@export_range (0, 29) var character: int:
-	set(value):
-		character = value
-		var row = value / sheet_col_count
-		var col = value % sheet_col_count
-		var rect = Rect2(
-			col*sprite_dim, row*sprite_dim, sprite_dim, sprite_dim)
-		# don't use get_node here, errors are annoying
-		# this is an editor helper only anyways
-		var p = get_node_or_null("Paper")
-		if p:
-			var at = AtlasTexture.new()
-			at.atlas = sprite_sheet
-			at.region = rect
-			p.set_sprite(at)
-
-@export var spell_list: SpellList
+var hero_assets: HeroAssetHolder
+var spell_list: SpellList
 
 @onready var target_line: MeshInstance3D = $Base/TargetLine
 
@@ -45,28 +29,15 @@ var movement
 var interrupted = false
 var statuses: Dictionary = {}
 
-signal hero_died(id)
-
-var names = {
-	"Dwarf": 0,
-	"Elf Rogue": 1,
-	"Ranger": 2,
-	"Burglar": 3,
-	"Sword Knight": 4,
-	"Sword Civilian": 5,
-}
-
-func _ready():
-	character = character
-
-static func create(c_id: int, name: String, 
+static func create(c_id: int, hero_name: String, 
 	initial_pos: Vector3, is_self: bool):
 	var hero = hero_node.instantiate()
-	hero.init(c_id, name, initial_pos, is_self)
+	var assets: HeroAssetHolder = get_hero_asset_holder(hero_name)
+	hero.init(c_id, hero_name, initial_pos, is_self, assets)
 	return hero
 
 func init(c_id: int, name: String, 
-	initial_pos: Vector3, is_self: bool):
+	initial_pos: Vector3, is_self: bool, hah: HeroAssetHolder):
 	controller_id = c_id
 
 	state_manager = $StateManager
@@ -81,16 +52,16 @@ func init(c_id: int, name: String,
 	movement = $Movement
 	movement.init(self)
 
+	hero_assets = hah
+	spell_list = hero_assets.spell_list
+	
+	get_node("Paper").set_texture(hero_assets.portrait_icon)
+
 	self.name = name
 	if is_self:
 		var ring = get_node("Base/Ring")
 		# Inspector -> Resource -> Local to Scene
 		ring.get_mesh().surface_get_material(0).albedo_color = Color.GREEN
-	if name in names:
-		var i = names[name]
-		character = i
-	else:
-		character = 29
 	position = initial_pos
 
 func simulate(state: PlayerState, input: PlayerInput):
@@ -99,6 +70,10 @@ func simulate(state: PlayerState, input: PlayerInput):
 	var hs = state.hero_state # HeroState.decode(state.hero_state)
 	statuses = state.statuses # HeroStatus.decode(state.statuses)
 	movement.reset()
+	for spell in state.spell_cooldowns.keys():
+		# "spell_name": current_cooldown
+		var current_cd = state.spell_cooldowns[spell]
+		spell_list.get(spell).current_cooldown = current_cd
 	
 	var interactions = []
 	unit_manager.derivatives_count = state.derivatives["d_count"]
@@ -120,8 +95,17 @@ func get_state():
 		position, health, 
 		state_manager.current_state, 
 		status_manager.get_state(), 
-		unit_manager.get_state()
+		unit_manager.get_state(),
+		statuses, 
+		unit_manager.get_state(),
+		spell_list.get_current_cooldowns(),
 	)
+
+
+# Movement
+func move(target: Vector2, delta: float):
+	movement.move(target, delta)
+
 
 # Non-logic
 func draw_line(target: Vector3):
@@ -148,3 +132,9 @@ func move(target: Vector2, delta: float):
 
 func modify_speed(percentage):
 	movement.modify_speed(percentage)
+
+const path_to_hero_asset = "res://game/entities/heroes/specifics/%s/%s_assets.tres"
+static func get_hero_asset_holder(hero_name: String):
+	var path = path_to_hero_asset % [hero_name, hero_name]
+	var data: HeroAssetHolder = load(path)
+	return data.duplicate(true)

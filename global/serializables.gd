@@ -28,14 +28,16 @@ class PlayerState:
 	var statuses: Dictionary
 	# derived entities. e.g.: projectiles, remnants
 	var derivatives: Dictionary
+	var spell_cooldowns: Dictionary
 	
 	func _init(p: Vector3, h: int, 
-		hs: HeroState, sts: Dictionary, d: Dictionary):
+		hs: HeroState, sts: Dictionary, d: Dictionary, sc:Dictionary):
 		position = p
 		health = h
 		hero_state = hs
 		statuses = sts
 		derivatives = d
+		spell_cooldowns = sc
 	
 	static func decode(dict: Dictionary, p_id: int):
 		if p_id in Serializables.state_managers:
@@ -46,6 +48,7 @@ class PlayerState:
 				sm.decode(dict['hero_state']),
 				dict['hero_statuses'],
 				dict['derivatives'],
+				dict['spell_cooldowns'],
 			)
 			return to_return
 		else:
@@ -58,6 +61,7 @@ class PlayerState:
 			'hero_state': hero_state.serialize(),
 			'hero_statuses': statuses,
 			'derivatives': derivatives,
+			'spell_cooldowns': spell_cooldowns,
 		}
 
 class GameState:

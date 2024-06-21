@@ -35,6 +35,22 @@ func get_spell(input_key: Key):
 	else:
 		return null
 
+func get_all_cooldowns():
+	return [
+		[attack.cooldown, attack.current_cooldown],
+		[first_spell.cooldown, first_spell.current_cooldown],
+		[second_spell.cooldown, second_spell.current_cooldown],
+		[ulti_spell.cooldown, ulti_spell.current_cooldown],
+	]
+
+func get_current_cooldowns():
+	return {
+		'attack': attack.current_cooldown,
+		'first_spell': first_spell.current_cooldown,
+		'second_spell': second_spell.current_cooldown,
+		'ulti_spell': ulti_spell.current_cooldown
+	}
+
 # ticked in StateManager.process_physics
 func cooldown_tick(delta: float):
 	for spell in all_spells:

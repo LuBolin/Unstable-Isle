@@ -7,3 +7,7 @@
 script = ExtResource("1_ckoev")
 hero_name = "Wizard"
 picker_texture = ExtResource("1_bf6r3")
+atk_description = "Wizard Basic Attack"
+fst_description = "Wizard First Spell"
+scd_description = "Wizard Second Spell"
+ult_description = "Thundegod's Wrath"

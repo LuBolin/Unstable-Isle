@@ -108,6 +108,7 @@ cache/0/2000/0/kerning_overrides/1200/0 = Vector2(0, 0)
 cache/0/2000/0/kerning_overrides/2000/0 = Vector2(0, 0)
 
 [node name="Hero" type="CharacterBody3D"]
+visible = false
 script = ExtResource("1_vaswu")
 sprite_sheet = ExtResource("2_e5his")
 character = 8
