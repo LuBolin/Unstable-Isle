@@ -1,11 +1,18 @@
 extends Node3D
 
+const PlayerInput = Serializables.PlayerInput
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+func drop_freed(unit_statuses: Dictionary):
+	for child in get_children():
+		if not child.id in unit_statuses:
+			child.queue_free()
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func simulate(unit_statuses, input: PlayerInput):
+	unit_statuses = unit_statuses["unit_statuses"]
+	var interactions = []
+	for child in get_children():
+		if child.id in unit_statuses:
+			var unit_status = unit_statuses[child.id]
+			var interaction = child.simulate(unit_status)
+			interactions += interaction
+	return interactions

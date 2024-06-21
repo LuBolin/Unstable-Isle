@@ -1,4 +1,4 @@
-class_name BcStatuses
+class_name BcSlow
 extends HeroStatus
 
 
@@ -7,5 +7,3 @@ extends HeroStatus
 # state of the status (most important is probably time, but might have others)
 # Return a function that applies some effect to self
 
-func attack_dot(unit):
-	return func(): unit.

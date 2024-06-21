@@ -27,40 +27,8 @@ func process_physics(delta: float) -> Array:
 		hero.interrupted = false
 		return []
 	
-	var dirn: Vector3 = Vector3(
-		target.x - hero.position.x, 0,
-		target.y - hero.position.z)
-	if position != Vector3(target.x, hero.position.y, target.y):
-		$MovingTowardsVoidCheck.look_at(Vector3(target.x, hero.position.y, target.y))
+	hero.move(target, delta)
 	
-	var moving_towards_void = false
-	for rc in $MovingTowardsVoidCheck.get_children():
-		if not rc is RayCast3D:
-			continue
-		if not rc.is_colliding():
-			moving_towards_void = true
-			break
-	if moving_towards_void:
-		modified_speed *= 0.2
-
-	if dirn.length() > 0:
-		var vel = dirn.normalized() * modified_speed
-		# set velocity before move_and_slide
-		hero.velocity = vel
-		hero.move_and_slide()
-		
-		# overshot
-		var new_delta : Vector3 = Vector3(
-			target.x - hero.position.x, 0,
-			target.y - hero.position.z)
-		var angle_diff = abs(new_delta\
-			.signed_angle_to(vel, Vector3.UP))
-		# closer to PI than 0 or 2PI
-		var overshot = angle_diff > PI/2.0 and angle_diff < 3.0/2.0 * PI
-		if overshot:
-			hero.position.x = target.x
-			hero.position.z = target.y
-
 	var airborne = not hero.is_on_floor()
 	if airborne:
 		return [func(): sm.change_state(sm.fall_state)]
