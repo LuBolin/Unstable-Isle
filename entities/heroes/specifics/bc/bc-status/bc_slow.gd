@@ -23,7 +23,7 @@ func simulate(hero, state):
 	hero.modify_speed(1)
 	duration -= delta
 	if duration < 0:
-		interactions.append(func(): queue_free())
+		interactions.append(func(): queue_free(); print("done"))
 	return interactions
 
 func get_state():

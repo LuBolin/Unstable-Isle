@@ -170,6 +170,9 @@ func receive_input(input_dict: Dictionary, id):
 	# current = 14
 	# input is at 11
 	for i in range(len(buffer)):
+		#we modify buffer in receive_truth which might cause an out of bounds error
+		if i >= len(buffer):
+			continue
 		var fs = buffer[i]
 		if fs.frame == input.frame:
 			# duplicate

@@ -18,8 +18,8 @@ func apply_status(status : HeroStatus):
 	add_child(status)
 
 func simulate(unit_statuses, input: PlayerInput):
-	#print(get_children().size())
 	unit_statuses = unit_statuses["unit_statuses"]
+	print(unit_statuses)
 	var interactions = []
 	for child in get_children():
 		if child.id in unit_statuses:
@@ -42,4 +42,5 @@ func get_state():
 	var end_states = {}
 	for child in get_children():
 		end_states[child.id] = child.get_state()
+	print(end_states)
 	return {"unit_statuses" : end_states}
