@@ -245,9 +245,6 @@ func state_update(states: GameState, inputs: Dictionary):
 		var id = child.controller_id
 		if id in states.players:
 			states.players[id] = child.get_state()
-			if multiplayer.is_server():
-				print(child.status_manager.get_children())
-				print(child.status_manager.get_state())
 	
 	arena.update_state(states.arena)
 	return states

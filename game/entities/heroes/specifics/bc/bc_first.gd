@@ -51,7 +51,7 @@ func simulate(unit_states):
 			lifespan = -1	#remove
 	lifespan -= delta
 	if lifespan < 0:
-		interactions.append(func(): queue_free())
+		interactions.append(func(): free())
 	return interactions
 
 
