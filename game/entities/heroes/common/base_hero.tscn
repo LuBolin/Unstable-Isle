@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://game/entities/heroes/common/hero_movement.gd" id="13_aiud7"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_0tu44"]
+height = 4.0
 radius = 1.0
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_nag1g"]
@@ -109,7 +110,7 @@ cache/0/2000/0/kerning_overrides/2000/0 = Vector2(0, 0)
 script = ExtResource("1_vaswu")
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 19.7219, 0)
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 20, 0)
 shape = SubResource("CylinderShape3D_0tu44")
 
 [node name="Base" type="CollisionShape3D" parent="."]

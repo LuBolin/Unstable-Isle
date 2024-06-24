@@ -1,0 +1,42 @@
+[gd_scene load_steps=2 format=3 uid="uid://b06ij0eytsui1"]
+
+[ext_resource type="Script" path="res://game/gui/gameroom_chat.gd" id="1_2ay2i"]
+
+[node name="Chat" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2ay2i")
+
+[node name="three_fourth" type="Control" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="ChatVBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="two_thirds" type="Control" parent="ChatVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="ChatHistory" type="ScrollContainer" parent="ChatVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ChatHistoryVBox" type="VBoxContainer" parent="ChatVBox/ChatHistory"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 2
+
+[node name="ChatInput" type="LineEdit" parent="ChatVBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+expand_to_text_length = true
+clear_button_enabled = true

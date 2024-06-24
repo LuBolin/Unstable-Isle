@@ -8,6 +8,7 @@ var game_room: GameRoom:
 @onready var hero_picker = $HeroPicker
 @onready var round_info = $RoundInfo
 @onready var hero_info_hud = $HeroInfoHUD
+@onready var chat = $Chat
 
 func _ready():
 	game_room.round.prep_started.connect(start_prep)

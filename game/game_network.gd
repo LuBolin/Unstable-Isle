@@ -84,6 +84,17 @@ func send_input(player_input):
 	var sender_id = game_room.mutiplayer.get_remote_sender_id()
 	game_room.round.received_client_input.emit(player_input, sender_id)
 
+@rpc("any_peer", "call_remote", "reliable")
+func send_chat(chat_msg):
+	if not game_room.mutiplayer.is_server():
+		return
+	var sender_id = game_room.mutiplayer.get_remote_sender_id()
+	var msg = str(sender_id) + ":  " + chat_msg
+	broadcast_chat.rpc(msg)
+
+@rpc ("authority", "call_remote", "reliable")
+func broadcast_chat(chat_msg):
+	game_room.gui.chat.receive_msg(chat_msg)
 
 
 ## Server connections

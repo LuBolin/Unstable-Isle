@@ -14,6 +14,7 @@ var poller: InputPoller:
 var client_specifics: Node:
 	get: client_specifics = client_specifics if client_specifics else get_node("ClientSpecifics"); return client_specifics
 
+
 var mutiplayer: SceneMultiplayer = SceneMultiplayer.new()
 
 signal self_disconnected

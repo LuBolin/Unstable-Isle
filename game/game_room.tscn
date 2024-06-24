@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cq3fw2li54bru"]
+[gd_scene load_steps=21 format=3 uid="uid://cq3fw2li54bru"]
 
 [ext_resource type="Script" path="res://game/world/world_camera.gd" id="1_0tqhe"]
 [ext_resource type="Script" path="res://game/game_room.gd" id="1_b4ycu"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bc8x7f2av1vxp" path="res://game/gui/hero_picker.tscn" id="5_r1lvg"]
 [ext_resource type="Script" path="res://game/gameroom_gui_controller.gd" id="5_r84ri"]
 [ext_resource type="PackedScene" uid="uid://jva47p3ypmpj" path="res://game/gui/round_info.tscn" id="6_a1h4u"]
+[ext_resource type="PackedScene" uid="uid://b06ij0eytsui1" path="res://game/gui/gameroom_chat.tscn" id="8_kmi4j"]
 [ext_resource type="Script" path="res://game/game_network.gd" id="8_lgayb"]
 [ext_resource type="Script" path="res://game/game_round.gd" id="9_yo23v"]
 [ext_resource type="Script" path="res://game/input_poller.gd" id="11_15ryg"]
@@ -84,6 +85,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("5_r84ri")
+
+[node name="Chat" parent="ClientSpecifics/GUI" instance=ExtResource("8_kmi4j")]
+layout_mode = 1
 
 [node name="HeroInfoHUD" parent="ClientSpecifics/GUI" instance=ExtResource("11_obc47")]
 layout_mode = 1
