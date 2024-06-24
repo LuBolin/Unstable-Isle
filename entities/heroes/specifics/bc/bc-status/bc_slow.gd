@@ -22,8 +22,10 @@ func simulate(hero, state):
 	h_id = state["h_id"]
 	hero.modify_speed(1)
 	duration -= delta
+	var node = self
+	var parent = get_parent()
 	if duration < 0:
-		interactions.append(func(): queue_free(); print("done"))
+		interactions.append(func(): free())
 	return interactions
 
 func get_state():
