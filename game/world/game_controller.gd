@@ -108,8 +108,9 @@ func pick_hero(hero: String, id):
 	if game_room.game_phase != PHASE.PREP:
 		return
 	if id in game_room.round.hero_choices:
-		if game_room.round.hero_choices[id] == null:
-			game_room.round.hero_choices[id] = hero
+		# if game_room.round.hero_choices[id] == null:
+		game_room.round.hero_choices[id] = hero
+		if game_room.mutiplayer.is_server():
 			game_room.network.pick_hero.rpc(hero, id)
 	var all_picked = true
 	for p_id in game_room.round.hero_choices:

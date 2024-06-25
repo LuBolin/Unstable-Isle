@@ -1,0 +1,173 @@
+[gd_scene load_steps=6 format=3 uid="uid://bqoa02rehrcau"]
+
+[ext_resource type="Theme" uid="uid://chv8tthirups8" path="res://lobby/base_ui_theme.tres" id="1_gs7h1"]
+[ext_resource type="Script" path="res://lobby/lobby.gd" id="2_83rwl"]
+[ext_resource type="Script" path="res://lobby/lobby_gui.gd" id="3_yh7kv"]
+[ext_resource type="Script" path="res://lobby/lobby_login.gd" id="4_kkprd"]
+[ext_resource type="Script" path="res://lobby/lobby_network.gd" id="4_xlaaj"]
+
+[node name="Wrapper" type="Node"]
+
+[node name="Lobby" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_gs7h1")
+script = ExtResource("2_83rwl")
+
+[node name="BackgroundPanel" type="Panel" parent="Lobby"]
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LobbyGUI" type="MarginContainer" parent="Lobby"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_yh7kv")
+
+[node name="MainAndSideHBox" type="HBoxContainer" parent="Lobby/LobbyGUI"]
+layout_mode = 2
+
+[node name="MainVBox" type="VBoxContainer" parent="Lobby/LobbyGUI/MainAndSideHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.0
+
+[node name="Label" type="Label" parent="Lobby/LobbyGUI/MainAndSideHBox/MainVBox"]
+layout_mode = 2
+theme_type_variation = &"HeaderMedium"
+text = "Rooms"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Main" type="PanelContainer" parent="Lobby/LobbyGUI/MainAndSideHBox/MainVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RoomsGrid" type="GridContainer" parent="Lobby/LobbyGUI/MainAndSideHBox/MainVBox/Main"]
+layout_mode = 2
+columns = 2
+
+[node name="Controls" type="VBoxContainer" parent="Lobby/LobbyGUI/MainAndSideHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Lobby/LobbyGUI/MainAndSideHBox/Controls"]
+layout_mode = 2
+theme_type_variation = &"HeaderMedium"
+text = "Controls:"
+vertical_alignment = 1
+
+[node name="Username" type="RichTextLabel" parent="Lobby/LobbyGUI/MainAndSideHBox/Controls"]
+layout_mode = 2
+bbcode_enabled = true
+text = "Username"
+fit_content = true
+scroll_active = false
+
+[node name="Spacer" type="Control" parent="Lobby/LobbyGUI/MainAndSideHBox/Controls"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="QuickJoinButton" type="Button" parent="Lobby/LobbyGUI/MainAndSideHBox/Controls"]
+layout_mode = 2
+text = "Quick Join"
+
+[node name="CreateRoomButton" type="Button" parent="Lobby/LobbyGUI/MainAndSideHBox/Controls"]
+layout_mode = 2
+text = "Create Room"
+
+[node name="LogIn" type="Control" parent="Lobby/LobbyGUI"]
+layout_mode = 2
+script = ExtResource("4_kkprd")
+
+[node name="GameTitle" type="Label" parent="Lobby/LobbyGUI/LogIn"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -62.5
+offset_right = 62.5
+offset_bottom = 28.0
+grow_horizontal = 2
+theme_type_variation = &"HeaderLarge"
+text = "Unstable Isle"
+horizontal_alignment = 1
+
+[node name="Positioning" type="GridContainer" parent="Lobby/LobbyGUI/LogIn"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -33.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 3
+
+[node name="left_third" type="Control" parent="Lobby/LobbyGUI/LogIn/Positioning"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LogIn" type="VBoxContainer" parent="Lobby/LobbyGUI/LogIn/Positioning"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MaxChars" type="Label" parent="Lobby/LobbyGUI/LogIn/Positioning/LogIn"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Maximum of 10 characters"
+horizontal_alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Lobby/LobbyGUI/LogIn/Positioning/LogIn"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Lobby/LobbyGUI/LogIn/Positioning/LogIn/HBoxContainer"]
+layout_mode = 2
+text = "Username: "
+
+[node name="UsernameEdit" type="LineEdit" parent="Lobby/LobbyGUI/LogIn/Positioning/LogIn/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_length = 10
+
+[node name="StartButton" type="Button" parent="Lobby/LobbyGUI/LogIn/Positioning/LogIn"]
+layout_mode = 2
+text = "Start"
+
+[node name="right_third" type="Control" parent="Lobby/LobbyGUI/LogIn/Positioning"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MessageLabel" type="RichTextLabel" parent="Lobby"]
+visible = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Error: Failed to connect to server."
+fit_content = true
+
+[node name="LobbyNetwork" type="Node" parent="Lobby"]
+script = ExtResource("4_xlaaj")
+
+[node name="RefreshRoomsTimer" type="Timer" parent="Lobby"]
+wait_time = 3.0
+autostart = true
+
+[node name="Rooms" type="Node" parent="."]

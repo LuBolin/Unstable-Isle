@@ -28,7 +28,6 @@ func _ready():
 func _on_hero_button_clicked(
 	button: Button, hero_choice: HeroAssetHolder):
 	for b in hero_grid.get_children():
-		print(b.modulate, " ", b.self_modulate)
 		if b == button:
 			b.set_modulate(Color.GREEN)
 		else:

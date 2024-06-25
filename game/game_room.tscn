@@ -89,15 +89,15 @@ script = ExtResource("5_r84ri")
 [node name="Chat" parent="ClientSpecifics/GUI" instance=ExtResource("8_kmi4j")]
 layout_mode = 1
 
+[node name="HeroPicker" parent="ClientSpecifics/GUI" instance=ExtResource("5_r1lvg")]
+visible = false
+layout_mode = 1
+
 [node name="HeroInfoHUD" parent="ClientSpecifics/GUI" instance=ExtResource("11_obc47")]
 layout_mode = 1
 mouse_filter = 2
 
 [node name="RoundInfo" parent="ClientSpecifics/GUI" instance=ExtResource("6_a1h4u")]
-layout_mode = 1
-
-[node name="HeroPicker" parent="ClientSpecifics/GUI" instance=ExtResource("5_r1lvg")]
-visible = false
 layout_mode = 1
 
 [node name="MenuOverlay" parent="ClientSpecifics/GUI" instance=ExtResource("4_wre41")]

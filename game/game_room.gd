@@ -14,7 +14,7 @@ var poller: InputPoller:
 var client_specifics: Node:
 	get: client_specifics = client_specifics if client_specifics else get_node("ClientSpecifics"); return client_specifics
 
-
+var username: String
 var mutiplayer: SceneMultiplayer = SceneMultiplayer.new()
 
 signal self_disconnected
@@ -35,7 +35,7 @@ const PHASE_NAMES = {
 var game_phase: PHASE = PHASE.HOLD
 
 # 'owner': id
-# id: ['name', score]
+# id: ['username', score]
 var owner_id: int
 var players = {}:
 	set(v):
@@ -56,9 +56,10 @@ func create_room(port: int):
 	for c in client_specifics.get_children():
 		c.queue_free()
 
-func join_room(ip: String, port: int):
+func join_room(ip: String, port: int, username: String):
 	# print("%s joining %s:%s" % [multiplayer.get_unique_id(),ip, port])
 	self.set_visible(true)
+	self.username = username
 	network.create_client(ip, port)
 
 func request_start_game(requester_id):

@@ -43,6 +43,7 @@ func terminate_multiplayer() -> void:
 func update_player_list(players_dict):
 	# triggers setter
 	game_room.players = players_dict
+	print("Update player list: ", players_dict)
 
 @rpc("authority", "call_remote", "reliable")
 func update_room_owner(id):
@@ -89,13 +90,27 @@ func send_chat(chat_msg):
 	if not game_room.mutiplayer.is_server():
 		return
 	var sender_id = game_room.mutiplayer.get_remote_sender_id()
-	var msg = str(sender_id) + ":  " + chat_msg
+	if sender_id not in game_room.players:
+		return # how did this happen ???
+	var sender_name = game_room.players[sender_id]['username']
+	var msg = sender_name + ":  " + chat_msg
 	broadcast_chat.rpc(msg)
 
 @rpc ("authority", "call_remote", "reliable")
 func broadcast_chat(chat_msg):
 	game_room.gui.chat.receive_msg(chat_msg)
 
+@rpc ("authority", "call_remote", "reliable")
+func request_username():
+	receive_username.rpc_id(1, game_room.username)
+
+@rpc ("any_peer", "call_remote", "reliable")
+func receive_username(username: String):
+	if game_room.mutiplayer.is_server():
+		var sender_id = game_room.mutiplayer.get_remote_sender_id()
+		game_room.players[sender_id]['username'] = username
+		game_room.players[sender_id]
+		update_player_list.rpc(game_room.players)
 
 ## Server connections
 func _on_client_connected(id):
@@ -103,11 +118,12 @@ func _on_client_connected(id):
 	if game_room.mutiplayer.is_server():
 		if not game_room.owner_id:
 			game_room.owner_id = id
-		game_room.players[id] = [str(id), 0]
-	#elif not id == 1:
-		#game_room.players[id] = [str(id), 0]
+		game_room.players[id] = {'score': 0}
 		update_room_owner.rpc_id(id, game_room.owner_id)
-		update_player_list.rpc(game_room.players)
+		request_username.rpc_id(id)
+		# request name
+		# receive name
+		# then update the rest
 
 func _on_client_disconnected(id):
 	game_room.players.erase(id)

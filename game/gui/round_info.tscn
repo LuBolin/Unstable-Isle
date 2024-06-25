@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://jva47p3ypmpj"]
+[gd_scene load_steps=4 format=3 uid="uid://jva47p3ypmpj"]
 
 [ext_resource type="Script" path="res://game/gui/round_info.gd" id="1_g4ynt"]
+[ext_resource type="Texture2D" uid="uid://bsujwiafa6sbv" path="res://game/entities/heroes/specifics/wizard/wizard.png" id="2_esn00"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n4n2b"]
+atlas = ExtResource("2_esn00")
+region = Rect2(0, 0, 64, 64)
 
 [node name="RoundInfo" type="Control"]
 layout_mode = 3
@@ -26,10 +31,37 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Players"
 
-[node name="PlayerList" type="ItemList" parent="VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Old" type="ItemList" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 26
 auto_height = true
+
+[node name="PlayerList" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PlayerList"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/PlayerList/HBoxContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_n4n2b")
+expand_mode = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/PlayerList/HBoxContainer"]
+layout_mode = 2
+text = "asd"
+
+[node name="Control" type="Control" parent="VBoxContainer/PlayerList/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="VBoxContainer/PlayerList/HBoxContainer"]
+layout_mode = 2
+text = "asd"
 
 [node name="RoundResultLabel" type="Label" parent="."]
 visible = false

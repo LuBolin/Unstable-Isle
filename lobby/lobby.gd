@@ -68,7 +68,7 @@ func create_room():
 func join_room(ip, port):
 	var room: GameRoom = game_room.instantiate()
 	rooms_container.add_child(room)
-	room.join_room(ip, port)
+	room.join_room(ip, port, username)
 	# only the game, which is node3d, will still be visible
 	self.set_visible(false)
 	server_instances[port] = room
@@ -146,7 +146,7 @@ func update_clients_about_rooms():
 
 # Lobby Client Specific
 func _on_logged_in(username: String):
-	username = username
+	self.username = username
 	username_label.set_text("[color=orange][u]"+username+"[/u][/color]")
 	login.hide()
 	main_lobby_gui.show()
