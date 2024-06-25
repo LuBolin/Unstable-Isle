@@ -12,10 +12,12 @@ func init(h: Hero):
 func drop_freed(unit_statuses: Dictionary):
 	for child in get_children():
 		if not child.id in unit_statuses:
-			print("freeing", child.id)
 			child.queue_free()
 
 func apply_status(status : HeroStatus):
+	for child in get_children():
+		if child.id == status.id:
+			child.queue_free()
 	add_child(status)
 
 func simulate(unit_statuses, input: PlayerInput):
@@ -28,8 +30,6 @@ func simulate(unit_statuses, input: PlayerInput):
 			interactions += interaction
 			unit_statuses.erase(child.id)
 	for id in unit_statuses:
-		if multiplayer.is_server():
-			print("status creation")
 		#super scuffed rn to get smth working
 		var entities = hero.get_parent()
 		for entity in entities.get_children():
@@ -43,7 +43,5 @@ func simulate(unit_statuses, input: PlayerInput):
 func get_state():
 	var end_states = {}
 	for child in get_children():
-		if multiplayer.is_server():
-			print("status_man get_state", child.get_state())
 		end_states[child.id] = child.get_state()
 	return {"unit_statuses" : end_states}

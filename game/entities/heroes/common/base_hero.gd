@@ -79,14 +79,16 @@ func simulate(state: PlayerState, input: PlayerInput):
 	unit_manager.derivatives_count = state.derivatives["d_count"]
 	unit_manager.drop_freed(state.derivatives["unit_states"])
 	status_manager.drop_freed(statuses["unit_statuses"])
-	var sm_interactions = state_manager.simulate(hs, input)
-	interactions += (sm_interactions)
+	
+	var status_interactions = status_manager.simulate(statuses, input)
+	interactions += status_interactions
+	
+	var state_interactions = state_manager.simulate(hs, input)
+	interactions += (state_interactions)
 	
 	var unit_interactions = unit_manager.simulate(state.derivatives, input)
 	interactions += unit_interactions
 	
-	var status_interactions = status_manager.simulate(statuses, input)
-	interactions += status_interactions
 	
 	return interactions
 
