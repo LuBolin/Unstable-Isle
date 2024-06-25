@@ -17,7 +17,7 @@ func reset():
 	modified_speed = DEFAULT_SPEED
 
 func modify_speed(percentage):
-	modified_speed = percentage
+	modified_speed *= percentage
 
 func move(target: Vector2, delta: float) -> void:
 	var dirn: Vector3 = Vector3(

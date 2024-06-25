@@ -20,12 +20,12 @@ func simulate(hero, state):
 	var delta = get_physics_process_delta_time()
 	duration = state["duration"]
 	h_id = state["h_id"]
-	hero.modify_speed(1)
+	hero.modify_speed(0.1)
 	duration -= delta
 	var node = self
 	var parent = get_parent()
 	if duration < 0:
-		interactions.append(func(): free())
+		interactions.append(func(): parent.remove_child(node); queue_free())
 	return interactions
 
 func get_state():

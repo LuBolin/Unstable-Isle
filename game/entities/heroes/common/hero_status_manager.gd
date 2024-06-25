@@ -15,6 +15,9 @@ func drop_freed(unit_statuses: Dictionary):
 			child.queue_free()
 
 func apply_status(status : HeroStatus):
+	for child in get_children():
+		if child.id == status.id:
+			child.queue_free()
 	add_child(status)
 
 func simulate(unit_statuses, input: PlayerInput):
