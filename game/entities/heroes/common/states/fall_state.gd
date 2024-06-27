@@ -3,7 +3,7 @@ extends HeroState
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-const FALL_TIME: float = 5.0
+const FALL_TIME: float = 2.0
 var fall_countdown: float
 
 func enter():

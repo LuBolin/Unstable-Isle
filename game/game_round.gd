@@ -13,21 +13,53 @@ signal received_client_input
 var game_room: GameRoom:
 	get: game_room = game_room if game_room else get_node(".."); return game_room
 
-var hero_choices = {
-	# id: "hero_name"
-}
+const draw_wait_duration = 0.2
+var draw_wait_cooldown = null
 
-var is_dead_dict = {
-	# id: dead_or_alive_boolean
-}
+# id: "hero_name"
+var hero_choices = {}
+# id: dead_or_alive_boolean
+var is_dead_dict = {}
+
 
 func _ready():
-	hero_died.connect(
-		func(id): is_dead_dict[id] = true)
+	hero_died.connect(_on_hero_died)
 
 func reset():
 	hero_choices.clear()
 	is_dead_dict.clear()
+	draw_wait_cooldown = null
+	is_dead_dict.clear()
 	for id in game_room.players:
 		hero_choices[id] = null
-		is_dead_dict[id] = false
+
+func _on_hero_died(id):
+	is_dead_dict[id] = true
+	check_round_should_end()
+
+func check_round_should_end(): # server side only
+	if not game_room.mutiplayer.is_server():
+		return
+	var alive_count = len(game_room.players) - len(is_dead_dict)
+	if alive_count > 1:
+		return
+	elif alive_count == 1:
+		draw_wait_cooldown = draw_wait_duration
+	else:
+		draw_wait_cooldown == 0
+
+# if this is not the sesrver,
+# draw_wait_cooldown will always be null
+func _physics_process(delta):
+	if draw_wait_cooldown == null:
+		return
+	draw_wait_cooldown -= delta
+	if draw_wait_cooldown > 0:
+		return
+	
+	var winner_id = null
+	for id in game_room.players:
+		if id not in is_dead_dict:
+			winner_id = id
+			break
+	game_room.network.announce_result.rpc(winner_id)

@@ -32,13 +32,9 @@ func _round_started():
 	print("Game round assigned")
 	round_result_label.hide()
 	update_player_list()
-	
-	# for debug with single player lobbies
-	check_round_should_end()
 
 func _hero_died(_id_of_dead_hero):
 	update_player_list()
-	check_round_should_end()
 
 func update_player_list():
 	if game_room.game_phase == game_room.PHASE.HOLD:
@@ -60,7 +56,6 @@ func update_player_list_in_hold():
 		var item = scoreboard_object.new(p_name, p_score)
 		player_list.add_child(item)
 
-
 func update_player_list_in_prep():
 	clear_player_list()
 	for id in game_room.players:
@@ -75,13 +70,12 @@ func update_player_list_in_prep():
 		var item = scoreboard_object.new(p_name, p_score, texture)
 		player_list.add_child(item)
 
-
 func update_player_list_in_game():
 	clear_player_list()
 	var alives = []
 	var deads = []
 	for id in game_room.players:
-		if game_room.round.is_dead_dict[id]:
+		if id in game_room.round.is_dead_dict:
 			deads.append(id)
 		else:
 			alives.append(id)
@@ -107,20 +101,6 @@ func update_player_list_in_game():
 			asset_holder.portrait_icon if asset_holder else null
 		var item = scoreboard_object.new(p_name, p_score, texture, true)
 		player_list.add_child(item)
-
-func check_round_should_end():
-	var alive_ids = []
-	for id in game_room.round.is_dead_dict:
-		var dead = game_room.round.is_dead_dict[id]
-		if not dead:
-			alive_ids.append(id)
-	if len(alive_ids) > 1:
-		return
-	get_tree().create_timer(3).timeout.connect(
-		func():
-			var winner = alive_ids[0] if not alive_ids.is_empty() else null
-			game_room.round.round_ended.emit(winner)
-	)
 
 func _round_ended(id):
 	round_result_label.show()

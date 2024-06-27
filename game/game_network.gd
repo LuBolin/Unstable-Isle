@@ -112,6 +112,11 @@ func receive_username(username: String):
 		game_room.players[sender_id]
 		update_player_list.rpc(game_room.players)
 
+@rpc("authority", "call_local", "reliable")
+func announce_result(winner_id):
+	print("Winner announced: ", str(winner_id))
+	game_room.round.round_ended.emit(winner_id)
+
 ## Server connections
 func _on_client_connected(id):
 	print("On client connected.")

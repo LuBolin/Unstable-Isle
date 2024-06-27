@@ -266,7 +266,7 @@ func poll_and_send():
 
 func create_player(id, player_name, pos):
 	var is_self = game_room.network.multiplayer.get_unique_id() == id
-	var player: Hero = Hero.create(id, player_name, pos, is_self)
+	var player: Hero = Hero.create(id, player_name, pos, is_self, game_room)
 	player.hero_died.connect(
 		func(id): game_room.round.hero_died.emit(id))
 	var init_state = player.get_state()

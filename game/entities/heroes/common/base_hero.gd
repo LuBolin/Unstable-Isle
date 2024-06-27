@@ -21,6 +21,7 @@ var health: int = 10 :
 		var l = get_node_or_null("HealthLabel")
 		if l:
 			l.set_text("Health: %s" % [str(health)])
+var game_room: GameRoom
 @onready var state_manager: StateManager = $StateManager
 @onready var unit_manager: UnitManager = $UnitManager
 @onready var status_manager: StatusManager = $StatusManager
@@ -30,14 +31,15 @@ var interrupted = false
 var statuses: Dictionary = {}
 
 static func create(c_id: int, hero_name: String, 
-	initial_pos: Vector3, is_self: bool):
+	initial_pos: Vector3, is_self: bool, gr: GameRoom):
 	var hero = hero_node.instantiate()
 	var assets: HeroAssetHolder = get_hero_asset_holder(hero_name)
-	hero.init(c_id, hero_name, initial_pos, is_self, assets)
+	hero.init(c_id, hero_name, initial_pos, is_self, assets, gr)
 	return hero
 
 func init(c_id: int, name: String, 
-	initial_pos: Vector3, is_self: bool, hah: HeroAssetHolder):
+	initial_pos: Vector3, is_self: bool, 
+	hah: HeroAssetHolder, gr: GameRoom):
 	controller_id = c_id
 
 	state_manager = $StateManager
@@ -54,6 +56,8 @@ func init(c_id: int, name: String,
 
 	hero_assets = hah
 	spell_list = hero_assets.spell_list
+	
+	game_room = gr
 	
 	get_node("Paper").set_texture(hero_assets.portrait_icon)
 
@@ -74,6 +78,12 @@ func simulate(state: PlayerState, input: PlayerInput):
 		# "spell_name": current_cooldown
 		var current_cd = state.spell_cooldowns[spell]
 		spell_list.get(spell).current_cooldown = current_cd
+	
+	var is_dead = hs.serialize()['state_name'] == 'Death'
+	if is_dead:
+		game_room.round.is_dead_dict[controller_id] = true
+	else:
+		game_room.round.is_dead_dict.erase(controller_id)
 	
 	var interactions = []
 	unit_manager.derivatives_count = state.derivatives["d_count"]
