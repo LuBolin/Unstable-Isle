@@ -136,7 +136,7 @@ func launch_as_lobby_client():
 
 # Lobby Host Specific
 func update_clients_about_rooms():
-	print("Updating rooms: ", rooms_container.get_children())
+	# print("Updating rooms: ", rooms_container.get_children())
 	var s = {}
 	for server: GameRoom in rooms_container.get_children():
 		var data = server.serialize()

@@ -40,10 +40,11 @@ func simulate_input(input: PlayerInput):
 	return null
 
 func decode(dict: Dictionary):
+	fall_countdown = dict['fall_countdown']
 	return self
 
 func serialize():
 	return {
 		'state_name': 'Fall',
-		'fall_velocity': hero.velocity.y
+		'fall_countdown': fall_countdown,
 	}
