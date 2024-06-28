@@ -46,7 +46,7 @@ func init(c_id: int, name: String,
 	state_manager.init(self)
 	
 	unit_manager = $UnitManager
-	#unit_manager.init(self)
+	unit_manager.init(self)
 	
 	status_manager = $StatusManager
 	status_manager.init(self)

@@ -6,6 +6,7 @@ const bullet_scene = preload("res://game/entities/heroes/specifics/bc/bc_first.t
 const SPEED: float = 250.0
 
 var id: int
+var type = "BcFirst"
 var direction: Vector2
 var lifespan: float = 1.5
 
@@ -18,10 +19,9 @@ static func create(hero: Hero, target: Vector2):
 			hero.global_position.z)
 	
 	var manager: UnitManager = hero.unit_manager
-	bullet.init(
-		manager.derivatives_count, dirn)
-	manager.add_child(bullet)
-	manager.derivatives_count += 1
+	var b_id = manager.add(bullet)
+	bullet.init(b_id, dirn)
+	return bullet
 
 func init(b_id: int, dirn: Vector2):
 	id = b_id
@@ -57,6 +57,7 @@ func simulate(unit_states):
 
 func get_state():
 	return {'id' : id,\
+		'type' : type, \
 		'direction' : direction,\
 		'position' : global_position,\
 		'lifespan' : lifespan

@@ -35,3 +35,10 @@ func ret_status(case):
 	match case:
 		"BcSlow":
 			return BcSlow.new()
+
+func ret_projectile(case):
+	match case:
+		"BcAttack":
+			return BcAttack
+		"BcFirst":
+			return BcFirst
