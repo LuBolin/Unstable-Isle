@@ -13,6 +13,8 @@ var hero : Hero
 
 static func create(hero: Hero, target: Vector2):
 	var bullet = bullet_scene.instantiate()
+	#bullet.get_node('MeshInstance3D').mesh.surface_get_material(0).set_albedo(Color(randf(), randf(), randf(), 1))
+	#bullet.get_node('MeshInstance3D').position.y = randi_range(30, 100)
 	bullet.add_collision_exception_with(hero)
 	var dirn: Vector2 = \
 		target - Vector2(
@@ -58,7 +60,10 @@ func simulate(unit_states):
 	
 	lifespan -= delta
 	if lifespan < 0:
-		interactions.append(func(): free())
+		var node = self
+		var parent = get_parent()
+		interactions.append(func(): parent.remove_child(node); queue_free())
+		#interactions.append(func(): free())
 	return interactions
 
 

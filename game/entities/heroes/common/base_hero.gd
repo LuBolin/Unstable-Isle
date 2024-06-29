@@ -21,6 +21,8 @@ var health: int = 10 :
 		var l = get_node_or_null("HealthLabel")
 		if l:
 			l.set_text("Health: %s" % [str(health)])
+		if health <= 0:
+			state_manager.change_state(state_manager.death_state)
 var game_room: GameRoom
 @onready var state_manager: StateManager = $StateManager
 @onready var unit_manager: UnitManager = $UnitManager

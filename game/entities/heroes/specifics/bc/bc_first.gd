@@ -57,7 +57,9 @@ func simulate(unit_states):
 	
 	lifespan -= delta
 	if lifespan < 0:
-		interactions.append(func(): free())
+		var node = self
+		var parent = get_parent()
+		interactions.append(func(): parent.remove_child(node); queue_free())
 	return interactions
 
 

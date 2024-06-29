@@ -251,9 +251,9 @@ func state_update(states: GameState, inputs: Dictionary):
 			var interaction = child.simulate(states.players[id], input)
 			interactions += interaction
 	
-	#TODO add the interactions
+	#the interactions
+	#print("Frame: ", current_frame)
 	for interaction in interactions:
-		interactions.pop_front()
 		interaction.call()
 	
 	for child : Hero in entities.get_children():
