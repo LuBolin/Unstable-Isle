@@ -140,6 +140,10 @@ func update_clients_about_rooms():
 	var s = {}
 	for server: GameRoom in rooms_container.get_children():
 		var data = server.serialize()
+		# currently, only show rooms that are waiting for players
+		# later, when spectating is added, this filter will be removed
+		if data['phase'] != GameRoom.PHASE_NAMES[GameRoom.PHASE.HOLD]:
+			continue
 		var port = data['port']
 		s[port] = data
 	network.refresh_room_list.rpc(s)
