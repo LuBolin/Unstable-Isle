@@ -51,7 +51,7 @@ func simulate(unit_states):
 	if collision:
 		if collision.get_collider() is Hero:
 			var target : Hero = collision.get_collider()
-			interactions.append(func(): target.health -= 1; print("bouleted: ", id))
+			interactions.append(func(): target.health -= 1)
 			var slow = BcSlow.new()
 			slow.create(hero, slow.total_duration)
 			#interactions.append(func(): target.apply_status(slow))

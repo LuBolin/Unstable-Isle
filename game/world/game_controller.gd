@@ -238,7 +238,7 @@ func state_update(states: GameState, inputs: Dictionary):
 			interactions += interaction
 	
 	#the interactions
-	print("Frame: ", current_frame)
+	#print("Frame: ", current_frame)
 	for interaction in interactions:
 		interaction.call()
 	
