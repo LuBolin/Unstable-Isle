@@ -18,7 +18,7 @@ const PICK_PHASE_DURATION = 5
 const GRAVITY: int = 200
 const KILL_HEIGHT: int = -100
 
-## Server constants
+
 const POLL_PER_FRAME: float = 5
 
 

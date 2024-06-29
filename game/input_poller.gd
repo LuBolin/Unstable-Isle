@@ -34,6 +34,8 @@ func _input(event):
 		var to = from + camera_3d.project_ray_normal(mousePos) * 1000
 		var space = get_world_3d().direct_space_state
 		var rayQuery = PhysicsRayQueryParameters3D.new()
+		# InputRaycastTargetBody: Layer = 4
+		rayQuery.set_collision_mask(0b1000)
 		rayQuery.from = from
 		rayQuery.to = to
 		
