@@ -23,7 +23,8 @@ func process_physics(delta: float) -> Array:
 		hero.interrupted = false
 		return []
 	
-	hero.move(target, delta)
+	if not "Stunned" in sm.state_statuses:
+		hero.move(target, delta)
 	
 	var airborne = not hero.is_on_floor()
 	if airborne:

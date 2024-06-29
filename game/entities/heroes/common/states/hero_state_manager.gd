@@ -17,6 +17,8 @@ const PlayerInput = Serializables.PlayerInput
 var prev_state: HeroState
 var current_state: HeroState
 
+var status_label: Label3D
+
 func init(hero: Hero):
 	Serializables.state_managers[hero.controller_id] = self
 	for child in get_children():
@@ -25,6 +27,13 @@ func init(hero: Hero):
 		child.hero = hero
 		child.sm = self
 	change_state(starting_state)
+	status_label = hero.status_label
+
+#State-tied statuses
+#Statuses are Stunned, Rooted, Silenced for now
+var state_statuses = {}
+func clean_up():
+	state_statuses = {}
 
 func change_state(new_state: HeroState):
 	# server updates client state
@@ -58,7 +67,7 @@ func _process(delta):
 	#var new_state = current_state.process_frame(delta)
 	#if new_state:
 	#	change_state(new_state)
-	pass
+	$"../StatusLabel".apply_status(state_statuses)
 
 func simulate(hs: HeroState, input: PlayerInput):
 	# current_state.reset() ?

@@ -29,6 +29,7 @@ var movement
 
 var interrupted = false
 var statuses: Dictionary = {}
+@onready var status_label = $StatusLabel
 
 static func create(c_id: int, hero_name: String, 
 	initial_pos: Vector3, is_self: bool, gr: GameRoom):
@@ -53,6 +54,8 @@ func init(c_id: int, name: String,
 	
 	movement = $Movement
 	movement.init(self)
+	
+	status_label = $StatusLabel
 
 	hero_assets = hah
 	spell_list = hero_assets.spell_list
@@ -87,6 +90,7 @@ func simulate(state: PlayerState, input: PlayerInput):
 	
 	var interactions = []
 	unit_manager.derivatives_count = state.derivatives["d_count"]
+	state_manager.clean_up()
 	unit_manager.drop_freed(state.derivatives["unit_states"])
 	status_manager.drop_freed(statuses["unit_statuses"])
 	

@@ -29,6 +29,9 @@ func clean_up():
 func process_physics(delta: float) -> Array:
 	var interactions = []
 	cast_point -= delta
+	if "Stunned" in sm.state_statuses or "Silenced" in sm.state_statuses:
+		cast_point = spell.cast_point
+	
 	if cast_point <= 0:
 		spell.effect.call(hero, target)
 		#interactions.append(func(): spell.effect.call(hero, target))
