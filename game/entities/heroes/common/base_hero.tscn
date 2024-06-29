@@ -1,6 +1,7 @@
-[gd_scene load_steps=18 format=3 uid="uid://dqmbhtd1nghrs"]
+[gd_scene load_steps=20 format=3 uid="uid://dqmbhtd1nghrs"]
 
 [ext_resource type="Script" path="res://game/entities/heroes/common/base_hero.gd" id="1_vaswu"]
+[ext_resource type="Script" path="res://game/entities/heroes/common/StatusLabel.gd" id="3_8atvv"]
 [ext_resource type="PackedScene" uid="uid://dxukvbn3aiys5" path="res://game/entities/paper.tscn" id="4_54hav"]
 [ext_resource type="Script" path="res://game/entities/heroes/common/states/hero_state_manager.gd" id="5_xogyf"]
 [ext_resource type="Script" path="res://game/entities/heroes/common/states/idle_state.gd" id="6_umsh3"]
@@ -104,6 +105,9 @@ cache/0/2000/0/kerning_overrides/1000/0 = Vector2(0, 0)
 cache/0/2000/0/kerning_overrides/1200/0 = Vector2(0, 0)
 cache/0/2000/0/kerning_overrides/2000/0 = Vector2(0, 0)
 
+[sub_resource type="PlaneMesh" id="PlaneMesh_ai7x0"]
+size = Vector2(40, 2)
+
 [node name="Hero" type="CharacterBody3D"]
 script = ExtResource("1_vaswu")
 
@@ -138,6 +142,19 @@ text = "Health: X"
 font = SubResource("FontFile_3qmkq")
 font_size = 2000
 outline_size = 127
+
+[node name="StatusLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 32.8783, -32.2845)
+outline_modulate = Color(0, 0.552941, 0.913725, 1)
+font = SubResource("FontFile_3qmkq")
+font_size = 2000
+outline_size = 127
+script = ExtResource("3_8atvv")
+
+[node name="Bar" type="MeshInstance3D" parent="StatusLabel"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, -8.86602, -0.202503)
+mesh = SubResource("PlaneMesh_ai7x0")
+skeleton = NodePath("../..")
 
 [node name="UnitManager" type="Node3D" parent="."]
 script = ExtResource("10_qqqta")

@@ -1,4 +1,4 @@
-class_name BcSlow
+class_name BcStun
 extends HeroStatus
 
 
@@ -8,9 +8,9 @@ extends HeroStatus
 # Return a function that applies some effect to self
 
 var duration
-var total_duration = 3
+var total_duration = 5
 var h_id
-var id = "BcSlow"
+var id = "BcStun"
 
 func create(hero, d):
 	h_id = hero.controller_id
@@ -21,7 +21,7 @@ func simulate(hero, state):
 	var delta = get_physics_process_delta_time()
 	duration = state["duration"]
 	h_id = state["h_id"]
-	hero.modify_speed(0.1)
+	hero.state_manager.state_statuses["Stunned"] = [duration, total_duration]
 	duration -= delta
 	var node = self
 	var parent = get_parent()

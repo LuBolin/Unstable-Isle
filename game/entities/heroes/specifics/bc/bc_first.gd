@@ -3,12 +3,13 @@ extends CharacterBody3D
 
 const bullet_scene = preload("res://game/entities/heroes/specifics/bc/bc_first.tscn")
 
-const SPEED: float = 250.0
+const SPEED: float = 200.0
 
 var id: int
 var type = "BcFirst"
 var direction: Vector2
-var lifespan: float = 1.5
+var lifespan: float = 5
+var hero : Hero
 
 static func create(hero: Hero, target: Vector2):
 	var bullet = bullet_scene.instantiate()
@@ -20,12 +21,13 @@ static func create(hero: Hero, target: Vector2):
 	
 	var manager: UnitManager = hero.unit_manager
 	var b_id = manager.add(bullet)
-	bullet.init(b_id, dirn)
+	bullet.init(b_id, dirn, hero)
 	return bullet
 
-func init(b_id: int, dirn: Vector2):
+func init(b_id: int, dirn: Vector2, h: Hero):
 	id = b_id
 	direction = dirn
+	hero = h
 
 func simulate(unit_states):
 	var interactions = []
@@ -47,8 +49,12 @@ func simulate(unit_states):
 	if collision:
 		if collision.get_collider() is Hero:
 			var target : Hero = collision.get_collider()
-			interactions.append(func(): target.health -= 2)
+			var stun = BcStun.new()
+			stun.create(hero, stun.total_duration)
+			#interactions.append(func(): target.apply_status(slow))
+			target.apply_status(stun)
 			lifespan = -1	#remove
+	
 	lifespan -= delta
 	if lifespan < 0:
 		interactions.append(func(): free())

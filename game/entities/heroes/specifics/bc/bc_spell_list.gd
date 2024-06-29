@@ -11,7 +11,7 @@ func _init():
 	
 	# first spell and attack are same for now
 	first_spell = Spell.new(
-		0.4, 3.0, "first_spell",
+		1.0, 3.0, "first_spell",
 		func (hero: Hero, target: Vector2):
 			BcFirst.create(hero, target)
 			first_spell.current_cooldown = first_spell.cooldown
@@ -35,6 +35,8 @@ func ret_status(case):
 	match case:
 		"BcSlow":
 			return BcSlow.new()
+		"BcStun":
+			return BcStun.new()
 
 func ret_projectile(case):
 	match case:
