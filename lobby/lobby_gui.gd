@@ -12,6 +12,7 @@ signal join_room(port)
 func _ready():
 	create_room_button.pressed.connect(_on_create_room)
 	quick_join_button.pressed.connect(_on_quick_join)
+	quick_join_button.set_visible(false) # unimplemented
 
 func _on_quick_join():
 	lobby.network.request_join_room.rpc_id(1, null)
@@ -22,7 +23,6 @@ func _on_create_room():
 func refresh_lobby_rooms(rooms):
 	for c in rooms_grid.get_children():
 		c.queue_free()
-	# print("Refresh with ", rooms)
 	for port in rooms:
 		var room_info = rooms[port]
 		var room: LobbyRoom = LobbyRoom.create(room_info)

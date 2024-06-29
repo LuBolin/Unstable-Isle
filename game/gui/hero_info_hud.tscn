@@ -1,7 +1,36 @@
-[gd_scene load_steps=3 format=3 uid="uid://cwor7os8b7cbr"]
+[gd_scene load_steps=8 format=3 uid="uid://cwor7os8b7cbr"]
 
 [ext_resource type="Script" path="res://game/gui/hero_info_hud.gd" id="1_s2d8o"]
 [ext_resource type="PackedScene" uid="uid://cgdsl76obnvw6" path="res://game/gui/spell_indicator.tscn" id="2_21hdc"]
+[ext_resource type="Shader" path="res://game/gui/spell_cooldown.gdshader" id="3_fhher"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e8x8q"]
+resource_local_to_scene = true
+shader = ExtResource("3_fhher")
+shader_parameter/cooldown = 5.0
+shader_parameter/current_cooldown = 0.0
+shader_parameter/is_atlas = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tln5c"]
+resource_local_to_scene = true
+shader = ExtResource("3_fhher")
+shader_parameter/cooldown = 5.0
+shader_parameter/current_cooldown = 0.0
+shader_parameter/is_atlas = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6knf5"]
+resource_local_to_scene = true
+shader = ExtResource("3_fhher")
+shader_parameter/cooldown = 5.0
+shader_parameter/current_cooldown = 0.0
+shader_parameter/is_atlas = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5q7vs"]
+resource_local_to_scene = true
+shader = ExtResource("3_fhher")
+shader_parameter/cooldown = 5.0
+shader_parameter/current_cooldown = 0.0
+shader_parameter/is_atlas = true
 
 [node name="HeroInfoHUD" type="Control"]
 layout_mode = 3
@@ -27,13 +56,17 @@ grow_vertical = 0
 mouse_filter = 2
 
 [node name="Spell" parent="Spells" instance=ExtResource("2_21hdc")]
+material = SubResource("ShaderMaterial_e8x8q")
 layout_mode = 2
 
 [node name="Spell2" parent="Spells" instance=ExtResource("2_21hdc")]
+material = SubResource("ShaderMaterial_tln5c")
 layout_mode = 2
 
 [node name="Spell3" parent="Spells" instance=ExtResource("2_21hdc")]
+material = SubResource("ShaderMaterial_6knf5")
 layout_mode = 2
 
 [node name="Spell4" parent="Spells" instance=ExtResource("2_21hdc")]
+material = SubResource("ShaderMaterial_5q7vs")
 layout_mode = 2

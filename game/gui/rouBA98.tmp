@@ -1,0 +1,109 @@
+[gd_scene load_steps=4 format=3 uid="uid://jva47p3ypmpj"]
+
+[ext_resource type="Script" path="res://game/gui/round_info.gd" id="1_g4ynt"]
+[ext_resource type="Texture2D" uid="uid://bsujwiafa6sbv" path="res://game/entities/heroes/specifics/wizard/wizard.png" id="2_esn00"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n4n2b"]
+atlas = ExtResource("2_esn00")
+region = Rect2(0, 0, 64, 64)
+
+[node name="RoundInfo" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_g4ynt")
+
+[node name="RoundScroes" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CornerVBox" type="VBoxContainer" parent="RoundScroes"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 951.0
+offset_right = 1112.0
+offset_bottom = 118.0
+grow_horizontal = 0
+
+[node name="PlayersLabel" type="Label" parent="RoundScroes/CornerVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Players"
+
+[node name="ScoreInfoLabel" type="Label" parent="RoundScroes/CornerVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "First to 4 wins"
+
+[node name="HSeparator" type="HSeparator" parent="RoundScroes/CornerVBox"]
+layout_mode = 2
+
+[node name="Old" type="ItemList" parent="RoundScroes/CornerVBox"]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+auto_height = true
+
+[node name="PlayerList" type="VBoxContainer" parent="RoundScroes/CornerVBox"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="RoundScroes/CornerVBox/PlayerList"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="RoundScroes/CornerVBox/PlayerList/HBoxContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_n4n2b")
+expand_mode = 3
+
+[node name="Label" type="Label" parent="RoundScroes/CornerVBox/PlayerList/HBoxContainer"]
+layout_mode = 2
+text = "asd"
+
+[node name="Control" type="Control" parent="RoundScroes/CornerVBox/PlayerList/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="RoundScroes/CornerVBox/PlayerList/HBoxContainer"]
+layout_mode = 2
+text = "asd"
+
+[node name="RoundResultLabel" type="Label" parent="RoundScroes"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 413.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 80
+text = "12345 WON"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameScores" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScoreList" type="VBoxContainer" parent="GameScores"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2

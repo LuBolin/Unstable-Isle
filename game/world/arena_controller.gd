@@ -23,7 +23,7 @@ func _ready():
 	crumble_timer.wait_time = crumble_period
 	crumble_timer.timeout.connect(self.crumble_step)
 
-func init_island(seed):
+func init_island(_seed):
 	for child in chunk_root.get_children(): child.queue_free()
 	if multiplayer.is_server():
 		crumble_timer.stop()
@@ -31,7 +31,7 @@ func init_island(seed):
 	crumble_radius = Settings.ISLAND_RADIUS
 	
 	var sites = make_island(Settings.ISLAND_RADIUS,
-		delaunay_step, delaunay_noise, seed)
+		delaunay_step, delaunay_noise, _seed)
 
 	for i in range(len(sites)):
 		var site = sites[i]
@@ -45,10 +45,10 @@ func init_island(seed):
 	chunk_states.fill(GroundChunk.CHUNK_STATE.Stable)
 
 func make_island(radius: float, step_size: float, 
-	axis_variance: float = 30, seed = null):
+	axis_variance: float = 30, _seed = null):
 	var rdm = RandomNumberGenerator.new()
-	if seed is int:
-		rdm.set_seed(seed)
+	if _seed is int:
+		rdm.set_seed(_seed)
 	var origin = Vector3.ZERO
 	var bounds = Rect2(origin.x - radius, origin.y - radius, 2 * radius, 2 * radius)
 	var delaunay = DelaunayWrapper.new(bounds)

@@ -145,6 +145,7 @@ func modify_speed(percentage):
 
 const path_to_hero_asset = "res://game/entities/heroes/specifics/%s/%s_assets.tres"
 static func get_hero_asset_holder(hero_name: String):
+	hero_name = hero_name.to_lower()
 	var path = path_to_hero_asset % [hero_name, hero_name]
 	var data: HeroAssetHolder = load(path)
 	return data.duplicate(true)

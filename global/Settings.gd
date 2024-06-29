@@ -13,11 +13,13 @@ const SKY_BOX_ANGLE: int = -205
 # thus offset by another -90
 # thus skybox is at -115 - 90 = -205 degrees
 
-const PICK_PHASE_DURATION = 5
+const PICK_PHASE_DURATION = 8
+const DRAW_WAIT_DURATION = 1.5
 
 const GRAVITY: int = 200
-const KILL_HEIGHT: int = -100
+const KILL_HEIGHT: int = -800 # 0.5 * A * t^2, 2 seconds, A = 200, D = 800
 
+const SCORE_TO_WIN: int = 2
 
 const POLL_PER_FRAME: float = 5
 

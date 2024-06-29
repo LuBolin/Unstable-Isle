@@ -133,7 +133,7 @@ mesh = SubResource("CylinderMesh_v2fqt")
 skeleton = NodePath("../..")
 
 [node name="Paper" parent="." instance=ExtResource("4_54hav")]
-transform = Transform3D(80, 0, 0, 0, 80, 0, 0, 0, 80, 0, 10, -4)
+transform = Transform3D(64, 0, 0, 0, 64, 0, 0, 0, 64, 0, 14, -4)
 
 [node name="HealthLabel" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 25.2479, -20)
@@ -208,8 +208,4 @@ target_position = Vector3(0, -2, 0)
 
 [node name="RayCast3D3" type="RayCast3D" parent="Movement/MovingTowardsVoidCheck"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16)
-target_position = Vector3(0, -2, 0)
-
-[node name="RayCast3D4" type="RayCast3D" parent="Movement/MovingTowardsVoidCheck"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -24)
 target_position = Vector3(0, -2, 0)

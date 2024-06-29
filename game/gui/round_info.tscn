@@ -17,53 +17,66 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_g4ynt")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="RoundScores" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CornerVBox" type="VBoxContainer" parent="RoundScores"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -113.0
-offset_bottom = 57.0
+offset_left = -161.0
+offset_bottom = 118.0
 grow_horizontal = 0
 
-[node name="PlayersLabel" type="Label" parent="VBoxContainer"]
+[node name="PlayersLabel" type="Label" parent="RoundScores/CornerVBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Players"
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+[node name="ScoreInfoLabel" type="Label" parent="RoundScores/CornerVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "First to 4 wins"
+
+[node name="HSeparator" type="HSeparator" parent="RoundScores/CornerVBox"]
 layout_mode = 2
 
-[node name="Old" type="ItemList" parent="VBoxContainer"]
+[node name="Old" type="ItemList" parent="RoundScores/CornerVBox"]
 visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 26
 auto_height = true
 
-[node name="PlayerList" type="VBoxContainer" parent="VBoxContainer"]
+[node name="PlayerList" type="VBoxContainer" parent="RoundScores/CornerVBox"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PlayerList"]
+[node name="HBoxContainer" type="HBoxContainer" parent="RoundScores/CornerVBox/PlayerList"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/PlayerList/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="RoundScores/CornerVBox/PlayerList/HBoxContainer"]
 layout_mode = 2
 texture = SubResource("AtlasTexture_n4n2b")
 expand_mode = 3
 
-[node name="Label" type="Label" parent="VBoxContainer/PlayerList/HBoxContainer"]
+[node name="Label" type="Label" parent="RoundScores/CornerVBox/PlayerList/HBoxContainer"]
 layout_mode = 2
 text = "asd"
 
-[node name="Control" type="Control" parent="VBoxContainer/PlayerList/HBoxContainer"]
+[node name="Control" type="Control" parent="RoundScores/CornerVBox/PlayerList/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label2" type="Label" parent="VBoxContainer/PlayerList/HBoxContainer"]
+[node name="Label2" type="Label" parent="RoundScores/CornerVBox/PlayerList/HBoxContainer"]
 layout_mode = 2
 text = "asd"
 
-[node name="RoundResultLabel" type="Label" parent="."]
+[node name="RoundResultLabel" type="Label" parent="RoundScores"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -75,3 +88,34 @@ theme_override_font_sizes/font_size = 80
 text = "12345 WON"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="GameScores" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SpacingHBox" type="HBoxContainer" parent="GameScores"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="quarter" type="Control" parent="GameScores/SpacingHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScoreList" type="VBoxContainer" parent="GameScores/SpacingHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+alignment = 1
+
+[node name="quarter2" type="Control" parent="GameScores/SpacingHBox"]
+layout_mode = 2
+size_flags_horizontal = 3

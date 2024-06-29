@@ -12,8 +12,8 @@ extends Control
 
 
 const LOBBY_SERVER_ADDRESS = '127.0.0.1'
-const LOBBY_SERVER_PORT = 12000
-const GAME_PORT_RANGE = 10
+const LOBBY_SERVER_PORT = 22400
+const GAME_PORT_RANGE = 200
 const MAX_CONNECTIONS = 100
 var game_ports = range(
 	LOBBY_SERVER_PORT + 1, 
@@ -32,8 +32,7 @@ func _ready():
 	network.refresh_lobby_rooms.connect(controls.refresh_lobby_rooms)
 	controls.join_room.connect(func(port): network.request_join_room.rpc_id(1, port))
 	login.logged_in.connect(_on_logged_in)
-#
-#func _enter_tree():
+	
 	get_tree().set_multiplayer(mutiplayer, self.get_path())
 	is_lobby_host = launch_as_lobby_server()
 	if is_lobby_host:
@@ -43,6 +42,7 @@ func _ready():
 			func(): get_tree().root.mode = Window.MODE_MINIMIZED)
 	else:
 		launch_as_lobby_client()
+	# launch_as_lobby_client()
 
 var game_room = preload("res://game/game_room.tscn")
 func create_room():
@@ -55,6 +55,7 @@ func create_room():
 			rooms_container.add_child(room)
 			
 			room.create_room(port)
+			room.room_started.connect(func(): update_clients_about_rooms())
 			room.room_closed.connect(func(): close_room(port))
 			
 			server_instances[port] = room
@@ -84,6 +85,10 @@ func request_join_room(client_id: int, port: int):
 			port = instances[0]
 		else:
 			return null
+	if port in server_instances:
+		var existing_room: GameRoom = server_instances[port]
+		if existing_room.game_phase != GameRoom.PHASE.HOLD:
+			return
 	var result = {}
 	result['ip'] = LOBBY_SERVER_ADDRESS
 	result['port'] = port
@@ -136,7 +141,6 @@ func launch_as_lobby_client():
 
 # Lobby Host Specific
 func update_clients_about_rooms():
-	# print("Updating rooms: ", rooms_container.get_children())
 	var s = {}
 	for server: GameRoom in rooms_container.get_children():
 		var data = server.serialize()

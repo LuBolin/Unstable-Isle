@@ -19,6 +19,8 @@ var mutiplayer: SceneMultiplayer = SceneMultiplayer.new()
 
 signal self_disconnected
 signal room_closed
+signal room_started
+signal game_ended
 
 enum PHASE{
 	HOLD, # game have not started, clients can still join as player
@@ -75,6 +77,7 @@ func request_start_game(requester_id):
 		return
 	var game_seed = randi()
 	network.start_prep.rpc(game_seed)
+	room_started.emit()
 
 func request_close_room(requester_id):
 	print("Requested to close, by ", requester_id)

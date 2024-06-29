@@ -15,7 +15,14 @@ func set_hero(h: Hero):
 	spell_indicators[1].set_texture(hero_assets.fst_icon)
 	spell_indicators[2].set_texture(hero_assets.scd_icon)
 	spell_indicators[3].set_texture(hero_assets.ult_icon)
-	
+
+func clear():
+	hero_displayed = null
+	hero_assets = null
+	spell_list = null
+	for indicator in spell_indicators_hbox.get_children():
+		indicator.set_texture(null)
+
 func _process(delta):
 	if not hero_displayed:
 		return
