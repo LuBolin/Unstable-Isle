@@ -124,6 +124,9 @@ func start_round():
 	buffer.append(FrameState.new(0, start_states, start_inputs))
 	# print("Started " + str(game_room.mutiplayer.get_unique_id()))
 	arena.start_round()
+	var camera_3d = get_viewport().get_camera_3d()
+	if camera_3d is BirdsEye3DCamera:
+		camera_3d.reset()
 
 func pick_hero(hero: String, id):
 	if game_room.game_phase != PHASE.PREP:
@@ -281,10 +284,6 @@ func poll_and_send():
 func create_player(id, player_name, pos):
 	var is_self = game_room.network.multiplayer.get_unique_id() == id
 	var player: Hero = Hero.create(id, player_name, pos, is_self, game_room)
-	player.hero_died.connect(
-		func(id):
-			print("Hero died emitted and relayed")
-			game_room.round.hero_died.emit(id))
 	var init_state = player.get_state()
 	entities.add_child(player)
 	if is_self:

@@ -3,7 +3,9 @@ extends HeroState
 
 func enter():
 	print("%s died!" % [hero.name])
-	hero.hero_died.emit(hero.controller_id)
+	var msg = "Emitting player hero died with controller id: %s, on %s"
+	print(msg % [hero.controller_id, hero.game_room.mutiplayer.get_unique_id()])
+	hero.game_room.round.hero_died.emit(hero.controller_id)
 	hero.hide()
 
 func exit():

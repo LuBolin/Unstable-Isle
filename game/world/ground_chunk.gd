@@ -38,7 +38,6 @@ func initialize(arena: ArenaController, index: int):
 	index_in_parent = index
 	$IndexLabel.set_text(str(index))
 
-
 func set_shape(poly: PackedVector2Array, thickness: float = 16.0):
 	self.polygon = poly
 	
@@ -146,6 +145,14 @@ func crumble():
 	texture.set_next_pass(ShaderMaterial.new())
 	var outline = texture.next_pass
 	outline.set_shader(outline_pass.duplicate())
+	
+	# ignore collisions
+	# actually we only want to ignore collision with players
+	for c in get_children():
+		if c is CollisionShape3D:
+			c.disabled = true
+	# set_collision_layer(0)
+	# set_collision_mask(0)
 	
 	# boost downwards
 	apply_central_force(Vector3(0,randf_range(-1.0, 1.0),0) * 25.0)

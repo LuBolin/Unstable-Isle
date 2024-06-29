@@ -1,3 +1,4 @@
+class_name BirdsEye3DCamera
 extends Camera3D
 
 const CAM_ANGLE: int = -65
@@ -7,15 +8,18 @@ const CAM_MAX_HEIGHT: int = 400
 const CAM_MIN_HEIGHT: int = 150
 const pan_speed = 5.0
 const scroll_scale = 3.0
+const cam_default_focus = Vector2(0, 100)
 
 func _init():
-	rotation = Vector3(deg_to_rad(CAM_ANGLE), 0, 0)
-	position.y = CAM_MAX_HEIGHT * 0.75
-	# focus_at(Vector2.ZERO)
-	focus_at(Vector2(0, 50))
+	reset()
 
 var panning = false
 var pan_origin = Vector2.ZERO
+
+func reset():
+	rotation = Vector3(deg_to_rad(CAM_ANGLE), 0, 0)
+	position.y = CAM_MAX_HEIGHT * 0.75
+	focus_at(cam_default_focus)
 
 func _input(event):
 	if event is InputEventMouse:

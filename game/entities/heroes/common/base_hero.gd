@@ -2,8 +2,6 @@
 class_name Hero
 extends CharacterBody3D
 
-signal hero_died(id)
-
 const PlayerState = Serializables.PlayerState
 const PlayerInput = Serializables.PlayerInput
 
@@ -44,7 +42,9 @@ func init(c_id: int, name: String,
 	initial_pos: Vector3, is_self: bool, 
 	hah: HeroAssetHolder, gr: GameRoom):
 	controller_id = c_id
-
+	
+	game_room = gr
+	
 	state_manager = $StateManager
 	state_manager.init(self)
 	
@@ -61,8 +61,7 @@ func init(c_id: int, name: String,
 
 	hero_assets = hah
 	spell_list = hero_assets.spell_list
-	
-	game_room = gr
+
 	
 	get_node("Paper").set_texture(hero_assets.portrait_icon)
 

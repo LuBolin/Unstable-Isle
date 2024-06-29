@@ -4,8 +4,8 @@ extends Node3D
 const PlayerState = Serializables.PlayerState
 const PlayerInput = Serializables.PlayerInput
 
-@onready var hero: Hero = $".."
-
+# @onready var hero: Hero = $".."
+var hero: Hero
 @export var starting_state: HeroState
 
 @export var idle_state: HeroState
@@ -19,7 +19,8 @@ var current_state: HeroState
 
 var status_label: Label3D
 
-func init(hero: Hero):
+func init(_hero: Hero):
+	hero = _hero
 	Serializables.state_managers[hero.controller_id] = self
 	for child in get_children():
 		if not (child is HeroState):

@@ -78,8 +78,9 @@ func _on_round_ended(winner_id):
 			if winner_id and game_room\
 				.players[winner_id]['score'] == Settings.SCORE_TO_WIN:
 				game_room.network.announce_game_ended.rpc()
-				get_tree().create_timer(10).timeout.connect(
-					func(): game_room.close_room())
+				get_tree().create_timer(\
+					Settings.DISPLAY_FINAL_RESULT_DURATION).\
+					timeout.connect(func(): game_room.close_room())
 			else:
 				var game_seed = randi()
 				game_room.network.start_prep.rpc(game_seed)
