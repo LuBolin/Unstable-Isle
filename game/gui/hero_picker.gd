@@ -6,12 +6,15 @@ extends Control
 @onready var hero_name_inspector = $"RegionControl/HeroInfo/Portrait/Hero Name"
 @onready var hero_portrait_inspector = $"RegionControl/HeroInfo/Portrait/Hero Portrait"
 @onready var hero_spells_inspector = $RegionControl/HeroInfo/Spells
+@onready var time_left_label = $RegionControl/HeroList/VBoxContainer/TimeLeftLabel
 @onready var random_button = $RegionControl/HeroList/VBoxContainer/HBoxContainer/RandomButton
 @onready var confirm_button = $RegionControl/HeroList/VBoxContainer/HBoxContainer/ConfirmButton
 @onready var gui_controller: GameroomGuiController = $".."
-var game_room: GameRoom
 
+var game_room: GameRoom
+var hero_pick_time_left = 0
 var choice = null
+
 func _ready():
 	game_room = gui_controller.game_room
 	random_button.pressed.connect(_on_random_clicked)
@@ -24,7 +27,18 @@ func _ready():
 		button.pressed.connect(
 			_on_hero_button_clicked.bind(button, hero_assets))
 		hero_grid.add_child(button)
-		
+
+func _process(delta):
+	if game_room.game_phase != game_room.PHASE.PREP:
+		return
+	if game_room.multiplayer.is_server():
+		return
+	hero_pick_time_left -= delta
+	var string = "Time Left: %s"
+	var time_left = int(max(0, hero_pick_time_left))
+	string = string % [time_left]
+	time_left_label.set_text(string)
+
 func _on_hero_button_clicked(
 	button: Button, hero_choice: HeroAssetHolder):
 	for b in hero_grid.get_children():
@@ -71,6 +85,7 @@ func _on_confirm_clicked():
 
 func _prep_started(_seed):
 	choice = null
+	hero_pick_time_left = Settings.PICK_PHASE_DURATION
 	for b in hero_grid.get_children():
 		if b is Button:
 			# default color is white

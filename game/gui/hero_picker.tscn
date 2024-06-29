@@ -109,6 +109,18 @@ offset_bottom = 123.5
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="SelectHeroLabel" type="Label" parent="RegionControl/HeroList/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 42
+text = "SELECT YOUR HERO"
+horizontal_alignment = 1
+
+[node name="TimeLeftLabel" type="Label" parent="RegionControl/HeroList/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 42
+text = "Time Left:"
+horizontal_alignment = 1
+
 [node name="HeroGrid" type="GridContainer" parent="RegionControl/HeroList/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4

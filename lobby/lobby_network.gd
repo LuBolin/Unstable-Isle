@@ -47,7 +47,8 @@ func refresh_room_list(room):
 
 
 func _on_client_connected(id):
-	print(str(id) + " connected to lobby")
+	# print(str(id) + " connected to lobby")
+	pass
 
 func _on_client_disconnected(id):
 	print(str(id) + " disconnect")

@@ -29,7 +29,6 @@ func _hero_picked(hero_name, id):
 	update_player_list()
 
 func _round_started():
-	print("Game round assigned")
 	round_result_label.hide()
 	update_player_list()
 
@@ -62,12 +61,17 @@ func update_player_list_in_prep():
 		var player = game_room.players[id]
 		var p_name = player['username']
 		var p_score = player['score']
-		var hero_choice = game_round.hero_choices[id]
-		var texture = null
-		if hero_choice:
-			var asset_holder: HeroAssetHolder = Hero.get_hero_asset_holder(hero_choice)
-			texture = asset_holder.portrait_icon if asset_holder else null
-		var item = scoreboard_object.new(p_name, p_score, texture)
+		var p_connected = player['connected']
+		var item
+		if p_connected:
+			var hero_choice = game_round.hero_choices[id]
+			var texture = null
+			if hero_choice:
+				var asset_holder: HeroAssetHolder = Hero.get_hero_asset_holder(hero_choice)
+				texture = asset_holder.portrait_icon if asset_holder else null
+			item = scoreboard_object.new(p_name, p_score, texture)
+		else:
+			item = scoreboard_object.new(p_name, p_score, null, true)
 		player_list.add_child(item)
 
 func update_player_list_in_game():

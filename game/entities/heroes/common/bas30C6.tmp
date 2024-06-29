@@ -1,0 +1,198 @@
+[gd_scene load_steps=18 format=3 uid="uid://dqmbhtd1nghrs"]
+
+[ext_resource type="Script" path="res://game/entities/heroes/common/base_hero.gd" id="1_vaswu"]
+[ext_resource type="PackedScene" uid="uid://dxukvbn3aiys5" path="res://game/entities/paper.tscn" id="4_54hav"]
+[ext_resource type="Script" path="res://game/entities/heroes/common/states/hero_state_manager.gd" id="5_xogyf"]
+[ext_resource type="Script" path="res://game/entities/heroes/common/states/idle_state.gd" id="6_umsh3"]
+[ext_resource type="Script" path="res://game/entities/heroes/common/states/move_state.gd" id="7_0arju"]
+[ext_resource type="Script" path="res://game/entities/heroes/common/states/fall_state.gd" id="8_lemy6"]
+[ext_resource type="Script" path="res://game/entities/heroes/common/states/cast_state.gd" id="9_ninn8"]
+[ext_resource type="Script" path="res://game/entities/heroes/common/states/death_state.gd" id="10_8c41r"]
+[ext_resource type="Script" path="res://game/entities/heroes/common/hero_unit_manager.gd" id="10_qqqta"]
+[ext_resource type="Script" path="res://game/entities/heroes/common/hero_status_manager.gd" id="12_w46rw"]
+[ext_resource type="Script" path="res://game/entities/heroes/common/hero_movement.gd" id="13_aiud7"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_nag1g"]
+height = 36.0
+radius = 12.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_1q0os"]
+top_radius = 12.0
+bottom_radius = 12.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_okujh"]
+resource_local_to_scene = true
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_eldxs"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_okujh")
+inner_radius = 13.0
+outer_radius = 15.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_v2fqt"]
+resource_local_to_scene = true
+top_radius = 4.0
+bottom_radius = 4.0
+height = 0.001
+
+[sub_resource type="FontFile" id="FontFile_3qmkq"]
+cache/0/32/0/ascent = 0.0
+cache/0/32/0/descent = 0.0
+cache/0/32/0/underline_position = 0.0
+cache/0/32/0/underline_thickness = 0.0
+cache/0/32/0/scale = 1.0
+cache/0/32/0/kerning_overrides/32/0 = Vector2(0, 0)
+cache/0/32/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/32/0/kerning_overrides/500/0 = Vector2(0, 0)
+cache/0/32/0/kerning_overrides/1000/0 = Vector2(0, 0)
+cache/0/32/0/kerning_overrides/1200/0 = Vector2(0, 0)
+cache/0/32/0/kerning_overrides/2000/0 = Vector2(0, 0)
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/32/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/500/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/1000/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/1200/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/2000/0 = Vector2(0, 0)
+cache/0/500/0/ascent = 0.0
+cache/0/500/0/descent = 0.0
+cache/0/500/0/underline_position = 0.0
+cache/0/500/0/underline_thickness = 0.0
+cache/0/500/0/scale = 1.0
+cache/0/500/0/kerning_overrides/32/0 = Vector2(0, 0)
+cache/0/500/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/500/0/kerning_overrides/500/0 = Vector2(0, 0)
+cache/0/500/0/kerning_overrides/1000/0 = Vector2(0, 0)
+cache/0/500/0/kerning_overrides/1200/0 = Vector2(0, 0)
+cache/0/500/0/kerning_overrides/2000/0 = Vector2(0, 0)
+cache/0/1000/0/ascent = 0.0
+cache/0/1000/0/descent = 0.0
+cache/0/1000/0/underline_position = 0.0
+cache/0/1000/0/underline_thickness = 0.0
+cache/0/1000/0/scale = 1.0
+cache/0/1000/0/kerning_overrides/32/0 = Vector2(0, 0)
+cache/0/1000/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/1000/0/kerning_overrides/500/0 = Vector2(0, 0)
+cache/0/1000/0/kerning_overrides/1000/0 = Vector2(0, 0)
+cache/0/1000/0/kerning_overrides/1200/0 = Vector2(0, 0)
+cache/0/1000/0/kerning_overrides/2000/0 = Vector2(0, 0)
+cache/0/1200/0/ascent = 0.0
+cache/0/1200/0/descent = 0.0
+cache/0/1200/0/underline_position = 0.0
+cache/0/1200/0/underline_thickness = 0.0
+cache/0/1200/0/scale = 1.0
+cache/0/1200/0/kerning_overrides/32/0 = Vector2(0, 0)
+cache/0/1200/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/1200/0/kerning_overrides/500/0 = Vector2(0, 0)
+cache/0/1200/0/kerning_overrides/1000/0 = Vector2(0, 0)
+cache/0/1200/0/kerning_overrides/1200/0 = Vector2(0, 0)
+cache/0/1200/0/kerning_overrides/2000/0 = Vector2(0, 0)
+cache/0/2000/0/ascent = 0.0
+cache/0/2000/0/descent = 0.0
+cache/0/2000/0/underline_position = 0.0
+cache/0/2000/0/underline_thickness = 0.0
+cache/0/2000/0/scale = 1.0
+cache/0/2000/0/kerning_overrides/32/0 = Vector2(0, 0)
+cache/0/2000/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/2000/0/kerning_overrides/500/0 = Vector2(0, 0)
+cache/0/2000/0/kerning_overrides/1000/0 = Vector2(0, 0)
+cache/0/2000/0/kerning_overrides/1200/0 = Vector2(0, 0)
+cache/0/2000/0/kerning_overrides/2000/0 = Vector2(0, 0)
+
+[node name="Hero" type="CharacterBody3D"]
+script = ExtResource("1_vaswu")
+
+[node name="Hitbox" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18, 0)
+shape = SubResource("CylinderShape3D_nag1g")
+
+[node name="Base" type="Node3D" parent="."]
+
+[node name="Circle" type="MeshInstance3D" parent="Base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CylinderMesh_1q0os")
+skeleton = NodePath("")
+
+[node name="Ring" type="MeshInstance3D" parent="Base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("TorusMesh_eldxs")
+skeleton = NodePath("")
+
+[node name="TargetLine" type="MeshInstance3D" parent="Base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CylinderMesh_v2fqt")
+skeleton = NodePath("../..")
+
+[node name="Paper" parent="." instance=ExtResource("4_54hav")]
+transform = Transform3D(80, 0, 0, 0, 80, 0, 0, 0, 80, 0, 10, -4)
+
+[node name="HealthLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 25.2479, -20)
+outline_modulate = Color(1, 0, 0, 1)
+text = "Health: X"
+font = SubResource("FontFile_3qmkq")
+font_size = 2000
+outline_size = 127
+
+[node name="UnitManager" type="Node3D" parent="."]
+script = ExtResource("10_qqqta")
+
+[node name="StateManager" type="Node3D" parent="." node_paths=PackedStringArray("starting_state", "idle_state", "move_state", "fall_state", "cast_state", "death_state")]
+script = ExtResource("5_xogyf")
+starting_state = NodePath("Idle")
+idle_state = NodePath("Idle")
+move_state = NodePath("Move")
+fall_state = NodePath("Fall")
+cast_state = NodePath("Cast")
+death_state = NodePath("Death")
+
+[node name="Idle" type="Node3D" parent="StateManager"]
+script = ExtResource("6_umsh3")
+
+[node name="Move" type="Node3D" parent="StateManager"]
+script = ExtResource("7_0arju")
+
+[node name="Fall" type="Node3D" parent="StateManager"]
+script = ExtResource("8_lemy6")
+
+[node name="Cast" type="Node3D" parent="StateManager"]
+script = ExtResource("9_ninn8")
+
+[node name="Death" type="Node3D" parent="StateManager"]
+script = ExtResource("10_8c41r")
+
+[node name="HealthLabel" type="Label3D" parent="StateManager"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 19.2479, -11)
+outline_modulate = Color(1, 0, 0, 1)
+text = "Idle"
+font = SubResource("FontFile_3qmkq")
+font_size = 2000
+outline_size = 127
+
+[node name="StatusManager" type="Node3D" parent="."]
+script = ExtResource("12_w46rw")
+
+[node name="Movement" type="Node3D" parent="."]
+script = ExtResource("13_aiud7")
+
+[node name="MovingTowardsVoidCheck" type="Node3D" parent="Movement"]
+
+[node name="RayCast3D" type="RayCast3D" parent="Movement/MovingTowardsVoidCheck"]
+target_position = Vector3(0, -2, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="Movement/MovingTowardsVoidCheck"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
+target_position = Vector3(0, -2, 0)
+
+[node name="RayCast3D3" type="RayCast3D" parent="Movement/MovingTowardsVoidCheck"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16)
+target_position = Vector3(0, -2, 0)
+
+[node name="RayCast3D4" type="RayCast3D" parent="Movement/MovingTowardsVoidCheck"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -24)
+target_position = Vector3(0, -2, 0)

@@ -70,6 +70,20 @@ func start_prep(island_seed):
 	for child in entities.get_children(): child.queue_free()
 	current_frame = 0
 	buffer.clear()
+	
+	if game_room.multiplayer.is_server():
+		get_tree().create_timer(Settings.PICK_PHASE_DURATION).timeout.connect(
+			func():
+				for p_id in game_room.round.hero_choices:
+					if game_room.round.hero_choices[p_id] == null:
+						# randomly pick something
+						# for now, assume wizard
+						var hero = 'wizard'
+						game_room.network.pick_hero.rpc(hero, p_id)
+				# wait for rpc reliable
+				get_tree().create_timer(0.3).timeout.connect( \
+					func(): game_room.round.round_started.emit())
+		)
 
 func start_round():
 	if game_room.game_phase == PHASE.GAME:
@@ -81,27 +95,34 @@ func start_round():
 	
 	# radius is 400
 	var distance_from_center = Settings.SPAWN_RADIUS_PERCENT * Settings.ISLAND_RADIUS
-	var angle_increment = 2.0 * PI / len(game_room.players)
+	var connected_players = game_room.get_connected_players()
+	var angle_increment = 2.0 * PI / len(connected_players)
 	
 	var players = {}
 	var spawn_count = 0
-	for id in game_room.players:
+	var safety_y = 5
+	var disconnected_y = Settings.KILL_HEIGHT
+	for id in connected_players:
 		var angle = spawn_count * angle_increment
 		var x = distance_from_center * cos(angle)
 		var z = distance_from_center * sin(angle)
-		var safety_y = 5
 		# to be updated in team mode
 		# for teams to spawn near each other
 		var spawn_position = Vector3(x, safety_y, z)
 		var hero_name = game_room.round.hero_choices[id]
 		players[id] = create_player(id, hero_name, spawn_position)
 		spawn_count += 1
+	for id in game_room.players:
+		if id in connected_players:
+			continue
+		var spawn_position = Vector3(0, disconnected_y, 0)
+		var hero_name = game_room.round.hero_choices[id]
+		players[id] = create_player(id, hero_name, spawn_position)
 	var arena_state: ArenaState = ArenaState.new(arena.chunk_states)
 	var start_states: GameState = GameState.new(arena_state, players)
 	var start_inputs = {} # empty dict of PlayerInput
 	buffer.append(FrameState.new(0, start_states, start_inputs))
-	# print("Client at init: ",buffer[0].states.players.values()[0].hero_state)
-	print("Started " + str(game_room.mutiplayer.get_unique_id()))
+	# print("Started " + str(game_room.mutiplayer.get_unique_id()))
 	arena.start_round()
 
 func pick_hero(hero: String, id):
@@ -109,17 +130,10 @@ func pick_hero(hero: String, id):
 		return
 	if id in game_room.round.hero_choices:
 		# if game_room.round.hero_choices[id] == null:
-		game_room.round.hero_choices[id] = hero
-		if game_room.mutiplayer.is_server():
-			game_room.network.pick_hero.rpc(hero, id)
-	var all_picked = true
-	for p_id in game_room.round.hero_choices:
-		if game_room.round.hero_choices[p_id] == null:
-			all_picked = false
-			break
-	if all_picked:
-		game_room.round.round_started.emit()
-
+		if hero != game_room.round.hero_choices[id]:
+			game_room.round.hero_choices[id] = hero
+			if game_room.mutiplayer.is_server():
+				game_room.network.pick_hero.rpc(hero, id)
 
 ## Actual game loop
 func _physics_process(delta):

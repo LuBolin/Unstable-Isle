@@ -64,7 +64,7 @@ func start_prep(seed):
 	print("Start prep rpc on %s" % [str(game_room.mutiplayer.get_unique_id())])
 	game_room.round.prep_started.emit(seed)
 
-@rpc("any_peer", "call_remote", "reliable", 1)
+@rpc("any_peer", "call_local", "reliable", 1)
 func pick_hero(hero_choice, sender_id = null):
 	if sender_id == null:
 		sender_id = game_room.mutiplayer.get_remote_sender_id()
@@ -90,7 +90,8 @@ func send_chat(chat_msg):
 	if not game_room.mutiplayer.is_server():
 		return
 	var sender_id = game_room.mutiplayer.get_remote_sender_id()
-	if sender_id not in game_room.players:
+	if sender_id not in game_room.players \
+		or not game_room.players[sender_id]['connected']:
 		return # how did this happen ???
 	var sender_name = game_room.players[sender_id]['username']
 	var msg = sender_name + ":  " + chat_msg
@@ -109,7 +110,7 @@ func receive_username(username: String):
 	if game_room.mutiplayer.is_server():
 		var sender_id = game_room.mutiplayer.get_remote_sender_id()
 		game_room.players[sender_id]['username'] = username
-		game_room.players[sender_id]
+		game_room.players[sender_id]['connected'] = true
 		update_player_list.rpc(game_room.players)
 
 @rpc("authority", "call_local", "reliable")
@@ -131,19 +132,31 @@ func _on_client_connected(id):
 		# then update the rest
 
 func _on_client_disconnected(id):
-	game_room.players.erase(id)
-	if game_room.players.is_empty():
-		game_room.close_room()
+	if id == 1:
+		return
+	if game_room.game_phase == game_room.PHASE.HOLD:
+		game_room.players.erase(id)
+		if game_room.players.is_empty():
+			game_room.close_room()
+		else:
+			if id == game_room.owner_id:
+				game_room.owner_id = game_room.players.keys()[0]
+				update_room_owner.rpc(game_room.owner_id)
+			update_player_list.rpc(game_room.players)
 	else:
-		if id == game_room.owner_id:
-			game_room.owner_id = game_room.players.keys()[0]
-			update_room_owner.rpc(game_room.owner_id)
-		update_player_list.rpc(game_room.players)
+		game_room.players[id]['connected'] = false
+		var connecteds = game_room.get_connected_players()
+		if len(connecteds) == 0:
+			game_room.close_room()
+		else:
+			if id == game_room.owner_id:
+				game_room.owner_id = connecteds.keys()[0]
+				update_room_owner.rpc(game_room.owner_id)
+			update_player_list.rpc(game_room.players)
 
 func _on_connected_success():
 	print("connect success")
 	var id = game_room.mutiplayer.get_unique_id()
-	game_room.players[id] = [str(id), 0]
 
 func _on_connected_fail():
 	print("connect fail")

@@ -91,7 +91,7 @@ func request_join_room(client_id: int, port: int):
 
 func disconnect_self(port: int):
 	self.set_visible(true)
-	if server_instances[port]:
+	if port in server_instances:
 		server_instances[port].queue_free()
 	server_instances.erase(port)
 

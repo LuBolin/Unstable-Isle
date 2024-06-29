@@ -13,11 +13,14 @@ const SKY_BOX_ANGLE: int = -205
 # thus offset by another -90
 # thus skybox is at -115 - 90 = -205 degrees
 
-const GRAVITY: int = 200
+const PICK_PHASE_DURATION = 5
 
+const GRAVITY: int = 200
+const KILL_HEIGHT: int = -100
 
 ## Server constants
 const POLL_PER_FRAME: float = 5
+
 
 # Layers
 # 1: Physics

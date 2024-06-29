@@ -34,15 +34,21 @@ const PHASE_NAMES = {
 
 var game_phase: PHASE = PHASE.HOLD
 
-# 'owner': id
-# id: ['username', score]
 var owner_id: int
 var players = {}:
+	# id: {'username', 'score', 'connected'}
 	set(v):
 		players = v
 		gui.round_info.update_player_list()
 		gui.menu_overlay.update_player_list()
 const MAX_PLAYERS = 6
+
+func get_connected_players():
+	var connecteds = {}
+	for p_id in players:
+		if players[p_id]['connected']:
+			connecteds[p_id] = players[p_id]
+	return connecteds
 
 func _enter_tree():
 	get_tree().set_multiplayer(mutiplayer, self.get_path())
@@ -82,7 +88,8 @@ func close_room():
 	if not mutiplayer.is_server():
 		return
 	for p in players:
-		multiplayer.multiplayer_peer.disconnect_peer(p)
+		if players[p]['connected']:
+			multiplayer.multiplayer_peer.disconnect_peer(p)
 	room_closed.emit()
 
 func disconnect_self():

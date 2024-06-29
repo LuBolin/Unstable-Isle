@@ -40,6 +40,7 @@ func _on_hero_died(id):
 func check_round_should_end(): # server side only
 	if not game_room.mutiplayer.is_server():
 		return
+	# all disconnected players will be set to dead when a round starts
 	var alive_count = len(game_room.players) - len(is_dead_dict)
 	if alive_count > 1:
 		return
