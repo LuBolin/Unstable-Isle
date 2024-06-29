@@ -31,5 +31,10 @@ func _on_close_room():
 func update_player_list():
 	var owner_id = game_room.owner_id
 	var is_owner = game_room.multiplayer.get_unique_id() == owner_id
-	start_game_button.set_visible(is_owner)
-	close_room_button.set_visible(is_owner)
+	if game_room.game_phase == game_room.PHASE.HOLD:
+		start_game_button.set_visible(is_owner)
+		close_room_button.set_visible(is_owner)
+	else:
+		start_game_button.set_visible(false)
+		close_room_button.set_visible(false)
+		
