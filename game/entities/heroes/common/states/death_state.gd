@@ -7,7 +7,7 @@ func enter():
 	hero.hide()
 
 func exit():
-	pass
+	hero.show()
 
 func process_input(event: InputEvent) -> HeroState:
 	return null
