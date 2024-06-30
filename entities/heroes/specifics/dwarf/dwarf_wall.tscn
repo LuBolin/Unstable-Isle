@@ -1,11 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://boji8mtgtk17e"]
+[gd_scene load_steps=8 format=3 uid="uid://boji8mtgtk17e"]
 
-[ext_resource type="Script" path="res://entities/heroes/specifics/dwarf/dwarf_wall.gd" id="1_yresb"]
+[ext_resource type="Script" path="res://entities/heroes/specifics/dwarf/dwarf_wall.gd" id="1_dovuv"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_l7nyq"]
 size = Vector3(10, 20, 160)
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_oflax"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5xd58"]
+noise = SubResource("FastNoiseLite_oflax")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iw5as"]
+albedo_color = Color(0.294118, 0.2, 0.0470588, 1)
+albedo_texture = SubResource("NoiseTexture2D_5xd58")
+
 [sub_resource type="BoxMesh" id="BoxMesh_bdxr8"]
+material = SubResource("StandardMaterial3D_iw5as")
 size = Vector3(10, 20, 160)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f5rie"]
@@ -14,7 +24,7 @@ size = Vector3(10, 20, 160)
 [node name="DwarfWall" type="StaticBody3D"]
 collision_layer = 2
 collision_mask = 0
-script = ExtResource("1_yresb")
+script = ExtResource("1_dovuv")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, -92)

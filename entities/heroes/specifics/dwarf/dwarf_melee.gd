@@ -11,7 +11,7 @@ var direction: Vector2
 var lifespan: float = 0.15
 var hit_scanned: bool = false
 var hero : Hero
-var spawn_offset = 12
+var spawn_offset = 15
 
 static func create(hero: Hero, target: Vector2, offset: float = 0):
 	var bullet = bullet_scene.instantiate()
@@ -33,18 +33,7 @@ func init(b_id: int, dirn: Vector2, h: Hero, offset = 0):
 	direction = dirn
 	hero = h
 	add_exception(hero)
-	
-	var mesh_instance: MeshInstance3D = attack_mesh.cm_mesh_instance
-	mesh_instance.create_convex_collision()
-	# creates a StaticBody3D child node with a ConvexPolygonShape3D
-	# StaticBody -> CollisionShape3D (which has ConcavePolygonShape3D)
-	var static_body = mesh_instance.get_child(0)
-	var collider = mesh_instance.get_child(0).get_child(0)
-	var shape: Shape3D = collider.get_shape()
-	self.set_shape(shape)
-	mesh_instance.remove_child(static_body)
-	static_body.queue_free()
-	collider.queue_free()
+
 	var dirn_v3: Vector3 = Vector3(direction.x, 0, direction.y)
 	global_position += dirn_v3 * spawn_offset
 	global_position += dirn_v3.normalized() * offset
