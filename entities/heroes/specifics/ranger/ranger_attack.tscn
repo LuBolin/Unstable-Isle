@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://q40108tchjia"]
+
+[ext_resource type="Script" path="res://entities/heroes/specifics/ranger/ranger_attack.gd" id="1_mili3"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nc8n7"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_nwhii"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_mdnyr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l5mjm"]
+size = Vector3(40, 1, 40)
+
+[node name="RangerAttack" type="CharacterBody3D"]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
+top_level = true
+script = ExtResource("1_mili3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.5, 0, 0, 0, -6.55671e-08, 1.5, 0, -1.5, -6.55671e-08, 0, 0, -0.545759)
+shape = SubResource("CapsuleShape3D_nc8n7")
+
+[node name="Mesh" type="Node3D" parent="."]
+
+[node name="Head" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -1.49881)
+mesh = SubResource("PrismMesh_nwhii")
+
+[node name="Body" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(0.5, 0, 0, 0, -4.37114e-08, 0.5, 0, -1, -2.18557e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_mdnyr")
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.61821, -20.0988)
+shape = SubResource("BoxShape3D_l5mjm")

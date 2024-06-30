@@ -16,7 +16,7 @@ func create(hero, d):
 	h_id = hero.controller_id
 	duration = d
 
-func simulate(hero, state):
+func simulate(hero, state, input):
 	var interactions = []
 	var delta = get_physics_process_delta_time()
 	duration = state["duration"]
