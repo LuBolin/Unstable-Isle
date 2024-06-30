@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://ixwioibwy56f"]
+
+[ext_resource type="Script" path="res://entities/heroes/specifics/ranger/ranger_lock_on.gd" id="1_ojr88"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ksdp2"]
+radius = 14.495
+
+[sub_resource type="PrismMesh" id="PrismMesh_p5rq7"]
+size = Vector3(20, 20, 20)
+
+[node name="RangerLockOn" type="ShapeCast3D"]
+top_level = true
+shape = SubResource("CylinderShape3D_ksdp2")
+script = ExtResource("1_ojr88")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("PrismMesh_p5rq7")

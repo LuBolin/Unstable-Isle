@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://c5f1muwlunfio" path="res://entities/heroes/specifics/ranger/ranger.png" id="1_7f8l4"]
 [ext_resource type="Script" path="res://entities/heroes/common/hero_asset_holder.gd" id="2_nfupg"]
-[ext_resource type="Resource" uid="uid://514b4oo67uov" path="res://entities/heroes/specifics/bc/bc_spell_list.tres" id="3_psbsl"]
+[ext_resource type="Resource" uid="uid://cpyvdd2tay5nm" path="res://entities/heroes/specifics/ranger/ranger_spell_list.tres" id="3_cxa5u"]
 
 [resource]
 script = ExtResource("2_nfupg")
@@ -12,4 +12,4 @@ atk_description = "Basic Attack"
 fst_description = "First Spell"
 scd_description = "Powershot"
 ult_description = "Ultimate"
-spell_list = ExtResource("3_psbsl")
+spell_list = ExtResource("3_cxa5u")

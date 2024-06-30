@@ -26,7 +26,7 @@ func simulate(unit_statuses, input: PlayerInput):
 	for child in get_children():
 		if child.id in unit_statuses:
 			var unit_status = unit_statuses[child.id]
-			var interaction = child.simulate(hero, unit_status)
+			var interaction = child.simulate(hero, unit_status, input)
 			interactions += interaction
 			unit_statuses.erase(child.id)
 	for id in unit_statuses:
@@ -36,7 +36,7 @@ func simulate(unit_statuses, input: PlayerInput):
 			if entity.controller_id == unit_statuses[id]["h_id"]:
 				var status = entity.spell_list.ret_status(id)
 				hero.apply_status(status)
-				var interaction = status.simulate(hero, unit_statuses[id])
+				var interaction = status.simulate(hero, unit_statuses[id], input)
 				interactions += interaction
 	return interactions
 
