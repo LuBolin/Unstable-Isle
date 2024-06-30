@@ -13,9 +13,10 @@ var h_id
 var id = "RangerGatling"
 var target
 
-func create(hero, d):
+func create(hero, d, t):
 	h_id = hero.controller_id
 	duration = d
+	target = t
 
 func simulate(hero, state, input):
 	var interactions = []

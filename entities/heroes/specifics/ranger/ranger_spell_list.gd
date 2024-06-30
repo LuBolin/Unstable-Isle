@@ -36,7 +36,7 @@ func _init():
 		1.5, 5.0, "ulti_spell",
 		func (hero: Hero, target: Vector2):
 			var gatling = RangerGatling.new()
-			gatling.create(hero, gatling.total_duration)
+			gatling.create(hero, gatling.total_duration, target)
 			hero.apply_status(gatling)
 			ulti_spell.current_cooldown = ulti_spell.cooldown
 	)
