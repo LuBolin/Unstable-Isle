@@ -22,7 +22,7 @@ Serializables="*res://global/serializables.gd"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gdDelaunay/plugin.cfg")
+enabled=PackedStringArray("res://addons/curvemesh3d/plugin.cfg", "res://addons/gdDelaunay/plugin.cfg")
 
 [input]
 
