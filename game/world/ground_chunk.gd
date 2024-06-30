@@ -176,8 +176,6 @@ func crumble():
 func hit(strength = 1):
 	var prev = state
 	state += strength
-	var s = "Chunk %s hit. From %s to %s"
-	print(s % [name, prev, state])
 	if state >= CHUNK_STATE.Crumbled:
 		crumble()
 	else:

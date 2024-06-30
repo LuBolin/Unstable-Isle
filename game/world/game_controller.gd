@@ -258,6 +258,11 @@ func state_update(states: GameState, inputs: Dictionary):
 	for interaction in interactions:
 		interaction.call()
 	
+	#print("This is ", game_room.mutiplayer.get_unique_id())
+	#for h in entities.get_children():
+		#if h is Hero:
+			#print(h.name, " ", h.health)
+	
 	for child : Hero in entities.get_children():
 		var id = child.controller_id
 		if id in states.players:

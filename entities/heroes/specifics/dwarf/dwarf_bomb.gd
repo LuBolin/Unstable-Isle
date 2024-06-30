@@ -3,6 +3,7 @@ extends CharacterBody3D
 
 @onready var core_explosion = $CoreExplosion
 @onready var edge_explosion = $EdgeExplosion
+# @onready var grounded_raycast: RayCast3D = $GroundedRaycast
 
 @onready var explosion_particles: GPUParticles3D = $ExplosionParticles
 
@@ -56,8 +57,12 @@ func simulate(unit_states):
 	var speed = speed_curve.sample(1.0-(lifespan/FUSE_DURATION)) * SPEED
 	
 	velocity = dirn.normalized() * speed
-	
-	move_and_collide(velocity * delta)
+	#if grounded_raycast.is_colliding():
+		#velocity.y = 0
+	#else:
+	velocity.y -= Settings.GRAVITY * delta * 10
+	# move_and_collide(velocity * delta)
+	move_and_slide()
 	
 	if lifespan > 0 and lifespan - delta <= 0:
 		explosion_particles.restart()

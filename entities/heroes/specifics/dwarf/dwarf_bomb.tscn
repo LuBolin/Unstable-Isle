@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://addons/curvemesh3d/curvemesh3d.gd" id="2_qg1ed"]
 
 [sub_resource type="Curve" id="Curve_sxv0u"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.754286, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.654545, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_iisam"]
@@ -46,7 +46,7 @@ point_count = 2
 albedo_color = Color(0.529412, 0.313726, 0.176471, 1)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_4oeof"]
-radius = 4.0
+radius = 10.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_og7ft"]
 radius = 20.0
@@ -58,16 +58,14 @@ radial_velocity_min = 20.0
 radial_velocity_max = 30.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7bsxe"]
-albedo_color = Color(0.243137, 0.0117647, 0.0117647, 0.172549)
+albedo_color = Color(0.482353, 0.0470588, 0.0470588, 0.172549)
 
 [sub_resource type="SphereMesh" id="SphereMesh_1ld6o"]
 material = SubResource("StandardMaterial3D_7bsxe")
-radius = 0.25
-height = 0.5
 
 [node name="DwarfBomb" type="CharacterBody3D"]
-collision_layer = 2
-collision_mask = 0
+collision_layer = 0
+collision_mask = 3
 script = ExtResource("1_1nsvb")
 speed_curve = SubResource("Curve_sxv0u")
 
@@ -86,6 +84,7 @@ material = SubResource("StandardMaterial3D_kldae")
 
 [node name="CoreExplosion" type="ShapeCast3D" parent="."]
 shape = SubResource("SphereShape3D_4oeof")
+target_position = Vector3(0, 0, 0)
 collision_mask = 3
 
 [node name="EdgeExplosion" type="ShapeCast3D" parent="."]
@@ -95,7 +94,9 @@ collision_mask = 3
 [node name="ExplosionParticles" type="GPUParticles3D" parent="."]
 emitting = false
 amount = 200
+lifetime = 2.0
 one_shot = true
+preprocess = 1.0
 explosiveness = 0.5
 visibility_aabb = AABB(-16, -16, -16, 32, 32, 32)
 local_coords = true

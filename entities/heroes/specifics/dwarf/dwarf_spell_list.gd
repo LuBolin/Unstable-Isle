@@ -31,17 +31,16 @@ func _init():
 	)
 	
 	ulti_spell = Spell.new(
-		1.5, 20.0, "ulti_spell",
+		1.0, 10.0, "ulti_spell",
 		func (hero: Hero, target: Vector2):
+			DwarfWall.create(hero, target)
 			ulti_spell.current_cooldown = ulti_spell.cooldown
 	)
 
 func ret_status(case):
-	#match case:
-		#"BcSlow":
-			#return BcSlow.new()
-		#"BcStun":
-			#return BcStun.new()
+	match case:
+		"DwarfWallStun":
+			return DwarfWallStun.new()
 	return
 
 func ret_projectile(case):
@@ -50,3 +49,5 @@ func ret_projectile(case):
 			return DwarfMelee
 		"DwarfBomb":
 			return DwarfBomb
+		"DwarfWall":
+			return DwarfWall
