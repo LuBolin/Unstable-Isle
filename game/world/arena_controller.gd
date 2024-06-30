@@ -43,6 +43,7 @@ func init_island(_seed):
 	chunk_states.clear()
 	chunk_states.resize(len(sites))
 	chunk_states.fill(GroundChunk.CHUNK_STATE.Stable)
+	
 
 func make_island(radius: float, step_size: float, 
 	axis_variance: float = 30, _seed = null):
@@ -104,6 +105,22 @@ func make_island(radius: float, step_size: float,
 func start_round():
 	if multiplayer.is_server():
 		crumble_timer.start()
+		
+		# random initial destruction
+		var allowed_destruction_radius = 0.5 * Settings.ISLAND_RADIUS
+		var destruction_hit_radius = 0.08 * Settings.ISLAND_RADIUS
+		
+		var angle = randf_range(0, 2.0 * PI)
+		var hit_count = randi_range(2, 5)
+		var angle_offset = (2.0 * PI)/hit_count
+		for i in range(hit_count):
+			var r = randf_range(destruction_hit_radius * 2, allowed_destruction_radius)
+			var x = r * cos(angle)
+			var z = r * sin(angle)
+			var point = Vector3(x, 0, z)
+			hit_island(point, destruction_hit_radius)
+			hit_island(point, destruction_hit_radius / 2.0) # further destroy the middle
+			angle += angle_offset * randf_range(0.9, 1.1)
 
 func crumble_step():
 	crumble_radius -= crumble_step_size
@@ -117,3 +134,18 @@ func update_state(arena_state: ArenaState):
 	for i in len(chunks):
 		var c: GroundChunk = chunk_root.get_child(i)
 		c.state = chunks[i]
+
+func hit_island(target: Vector3, radius: int):
+	var space_state = get_world_3d().direct_space_state
+	var query = PhysicsShapeQueryParameters3D.new()
+	query.shape = SphereShape3D.new()
+	query.shape.radius = radius
+	query.set_transform(Transform3D(Basis(), target))
+	
+	var collision = space_state.intersect_shape(query)
+	for result in collision:
+		var c = result['collider']
+		if c is GroundChunk:
+			print(c)
+			c.hit()
+
