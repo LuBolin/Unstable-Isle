@@ -28,6 +28,9 @@ func clean_up():
 
 func process_physics(delta: float) -> Array:
 	var interactions = []
+	if hero.health <= 0:
+		return [func(): sm.change_state(sm.death_state)]
+		
 	cast_point -= delta
 	if "Stunned" in sm.state_statuses or "Silenced" in sm.state_statuses:
 		cast_point = spell.cast_point

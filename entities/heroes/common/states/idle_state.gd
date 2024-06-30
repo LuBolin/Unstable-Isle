@@ -16,6 +16,9 @@ func process_physics(delta: float) -> Array:
 		hero.interrupted = false
 		return []
 	
+	if hero.health <= 0:
+		return [func(): sm.change_state(sm.death_state)]
+		
 	hero.move_and_slide() # force is_on_floor to update
 	var airborne = not hero.is_on_floor()
 	if airborne:

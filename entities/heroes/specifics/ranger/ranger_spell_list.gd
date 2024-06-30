@@ -17,10 +17,19 @@ func _init():
 	)
 	
 	second_spell = Spell.new(
-		0.8, 8.0, "second_spell",
+		0.8, 1.0, "second_spell",
 		func (hero: Hero, target: Vector2):
-			BcFirst.create(hero, target)
-			first_spell.current_cooldown = first_spell.cooldown
+			var hero_pos = Vector2(
+						hero.global_position.x,
+						hero.global_position.z)
+			var dirn: Vector2 = target - hero_pos
+			RangerAttack.create(hero, target)
+			var angle = dirn.angle()
+			var adjusted = dirn.from_angle(angle + PI / 4) + hero_pos
+			RangerAttack.create(hero, adjusted)
+			adjusted = dirn.from_angle(angle - PI / 4) + hero_pos
+			RangerAttack.create(hero, adjusted)
+			second_spell.current_cooldown = second_spell.cooldown
 	)
 	
 	ulti_spell = Spell.new(
@@ -38,6 +47,8 @@ func ret_status(case):
 			return RangerLockedOn.new()
 		"RangerGatling":
 			return RangerGatling.new()
+		"RangerLockedOnTarget":
+			return RangerLockedOnTarget.new()
 
 func ret_projectile(case):
 	match case:
