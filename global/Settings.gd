@@ -3,6 +3,8 @@ extends Node
 const ISLAND_RADIUS: int = 400
 const SPAWN_RADIUS_PERCENT: float = 0.75
 
+const HERO_RADIUS: int = 12
+
 const CAM_ANGLE: int = -65
 const SKY_BOX_ANGLE: int = -205
 # -65 is experimented to look at things on the X-Z plane
@@ -13,7 +15,7 @@ const SKY_BOX_ANGLE: int = -205
 # thus offset by another -90
 # thus skybox is at -115 - 90 = -205 degrees
 
-const PICK_PHASE_DURATION = 3
+const PICK_PHASE_DURATION = 5
 const DRAW_WAIT_DURATION = 1
 const DISPLAY_FINAL_RESULT_DURATION = 7
 

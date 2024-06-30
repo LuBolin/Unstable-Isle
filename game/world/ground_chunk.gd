@@ -174,6 +174,7 @@ func crumble():
 	timer.start()
 
 func hit(strength = 1):
+	var prev = state
 	state += strength
 	if state >= CHUNK_STATE.Crumbled:
 		crumble()

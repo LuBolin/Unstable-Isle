@@ -46,10 +46,7 @@ func simulate(unit_states):
 			if obj is Hero:
 				if obj.controller_id == lock_on:
 					var to_lock_on = Vector2(obj.global_position.x, obj.global_position.z) - Vector2(global_position.x, global_position.z)
-					#var angle = direction.angle_to(to_lock_on)
-					print(to_lock_on)
 					direction = direction.move_toward(to_lock_on, turn_rate * delta)
-					#direction = to_lock_on
 	var dirn: Vector3 = Vector3(direction.x, 0, direction.y)
 	if lifespan < delta:
 		velocity = dirn.normalized() * SPEED * (lifespan/delta)
