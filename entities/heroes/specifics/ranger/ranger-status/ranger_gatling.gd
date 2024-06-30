@@ -1,4 +1,4 @@
-class_name BcSlow
+class_name RangerGatling
 extends HeroStatus
 
 
@@ -8,9 +8,10 @@ extends HeroStatus
 # Return a function that applies some effect to self
 
 var duration
-var total_duration = 3
+var total_duration = 5
 var h_id
-var id = "BcSlow"
+var id = "RangerGatling"
+var target
 
 func create(hero, d):
 	h_id = hero.controller_id
@@ -21,7 +22,14 @@ func simulate(hero, state, input):
 	var delta = get_physics_process_delta_time()
 	duration = state["duration"]
 	h_id = state["h_id"]
-	hero.modify_speed(0.1)
+	
+	#every 0.2 seconds fire a bullet
+	if not input == null:
+		target = input.target
+	if not target == null:
+		if not floor(duration * 5) == floor((duration - delta) * 5):
+			RangerAttack.create(hero, target)
+	
 	duration -= delta
 	var node = self
 	var parent = get_parent()
@@ -30,4 +38,4 @@ func simulate(hero, state, input):
 	return interactions
 
 func get_state():
-	return {"h_id" : h_id, "duration" : duration}
+	return {"h_id" : h_id, "duration" : duration, "target" : target}
