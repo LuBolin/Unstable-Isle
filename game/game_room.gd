@@ -75,6 +75,8 @@ func request_start_game(requester_id):
 		return
 	if not requester_id == owner_id:
 		return
+	if players.size() <= 1:
+		return
 	var game_seed = randi()
 	network.start_prep.rpc(game_seed)
 	room_started.emit()

@@ -37,4 +37,4 @@ func update_player_list():
 	else:
 		start_game_button.set_visible(false)
 		close_room_button.set_visible(false)
-		
+	start_game_button.disabled = game_room.players.size() <= 1
