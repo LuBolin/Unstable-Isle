@@ -20,6 +20,7 @@ var health: int = 10 :
 		if l:
 			l.set_text("Health: %s" % [str(health)])
 		if health <= 0:
+			print(multiplayer.get_unique_id())
 			state_manager.change_state(state_manager.death_state)
 var game_room: GameRoom
 @onready var state_manager: StateManager = $StateManager

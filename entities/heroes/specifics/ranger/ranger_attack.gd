@@ -10,6 +10,8 @@ var type = "RangerAttack"
 var direction: Vector2
 var lifespan: float = 5
 var hero : Hero
+var lock_on : int = -1
+var turn_rate = 300
 
 static func create(hero: Hero, target: Vector2):
 	var bullet = bullet_scene.instantiate()
@@ -33,9 +35,22 @@ func simulate(unit_states):
 	var interactions = []
 	global_position = unit_states['position']
 	direction = unit_states['direction']
-	var dirn: Vector3 = Vector3(direction.x, 0, direction.y)
 	lifespan = unit_states['lifespan']
+	
 	var delta = get_physics_process_delta_time()
+	
+	if not lock_on == null:
+		var count =  $ShapeCast3D.get_collision_count()
+		for i in range(count):
+			var obj = $ShapeCast3D.get_collider(i)
+			if obj is Hero:
+				if obj.controller_id == lock_on:
+					var to_lock_on = Vector2(obj.global_position.x, obj.global_position.z) - Vector2(global_position.x, global_position.z)
+					#var angle = direction.angle_to(to_lock_on)
+					print(to_lock_on)
+					direction = direction.move_toward(to_lock_on, turn_rate * delta)
+					#direction = to_lock_on
+	var dirn: Vector3 = Vector3(direction.x, 0, direction.y)
 	if lifespan < delta:
 		velocity = dirn.normalized() * SPEED * (lifespan/delta)
 	else:

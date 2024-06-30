@@ -10,9 +10,9 @@ func _init():
 	)
 	
 	first_spell = Spell.new(
-		1.0, 3.0, "first_spell",
+		1.0, 1.0, "first_spell",
 		func (hero: Hero, target: Vector2):
-			BcFirst.create(hero, target)
+			RangerLockOn.create(hero, target)
 			first_spell.current_cooldown = first_spell.cooldown
 	)
 	
@@ -34,14 +34,14 @@ func _init():
 
 func ret_status(case):
 	match case:
+		"RangerLockedOn":
+			return RangerLockedOn.new()
 		"RangerGatling":
 			return RangerGatling.new()
-		"BcStun":
-			return BcStun.new()
 
 func ret_projectile(case):
 	match case:
 		"RangerAttack":
 			return RangerAttack
-		"BcFirst":
-			return BcFirst
+		"RangerLockOn":
+			return RangerLockOn
