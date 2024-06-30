@@ -46,6 +46,8 @@ func simulate(unit_states):
 	var dirn: Vector3 = Vector3(direction.x, 0, direction.y)
 	lifespan = unit_states['lifespan']
 	var delta = get_physics_process_delta_time()
+	hit_scanned = unit_states['hit_scanned']
+	health = unit_states['health']
 
 	var look_target = global_position + dirn.normalized()
 	look_at(look_target)
@@ -67,11 +69,12 @@ func simulate(unit_states):
 				stun.create(hero, stun.total_duration)
 				#interactions.append(func(): target.apply_status(slow))
 				collider.apply_status(stun)
-
+	
 	lifespan -= delta
-	if lifespan < 0:
-		var node = self
-		var parent = get_parent()
+	var node = self
+	var parent = get_parent()
+	
+	if health <= 0 or lifespan < 0:
 		interactions.append(func(): parent.remove_child(node); queue_free())
 	return interactions
 

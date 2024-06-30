@@ -13,7 +13,7 @@ var spell_list: SpellList
 const hero_node = preload("res://entities/heroes/common/base_hero.tscn")
 
 var controller_id: int # netwprl unique id
-var health: int = 10 :
+var health: int = 20 :
 	set(new_health):
 		health = new_health
 		var l = get_node_or_null("HealthLabel")

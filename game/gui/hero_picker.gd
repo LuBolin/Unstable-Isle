@@ -77,6 +77,8 @@ func _on_hero_button_clicked(
 		
 		var label = Label.new()
 		label.set_text(hero_choice.get(spell[1]))
+		# AutowrapMode AUTOWRAP_WORD_SMART = 3
+		label.set_autowrap_mode(0)
 		hero_spells_inspector.add_child(label)
 	
 	if not choice:

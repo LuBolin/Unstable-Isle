@@ -77,7 +77,7 @@ func start_prep(island_seed):
 					if game_room.round.hero_choices[p_id] == null:
 						# randomly pick something
 						# for now, assume wizard
-						var hero = 'wizard'
+						var hero = 'ranger'
 						game_room.network.pick_hero.rpc(hero, p_id)
 				# wait for rpc reliable
 				get_tree().create_timer(0.3).timeout.connect( \
