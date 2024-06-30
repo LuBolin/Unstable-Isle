@@ -23,6 +23,8 @@ func process_physics(delta: float) -> Array:
 	#fall_countdown -= delta
 	#if fall_countdown <= 0:
 		#return [func(): sm.change_state(sm.death_state)]
+	if hero.health <= 0:
+		return [func(): sm.change_state(sm.death_state)]
 	if hero.position.y <= Settings.KILL_HEIGHT:
 		return [func(): sm.change_state(sm.death_state)]
 	

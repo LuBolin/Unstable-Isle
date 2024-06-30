@@ -22,7 +22,10 @@ func process_physics(delta: float) -> Array:
 	if hero.interrupted:
 		hero.interrupted = false
 		return []
-	
+		
+	if hero.health <= 0:
+		return [func(): sm.change_state(sm.death_state)]
+		
 	if not "Stunned" in sm.state_statuses and not "Rooted" in sm.state_statuses:
 		hero.move(target, delta)
 	

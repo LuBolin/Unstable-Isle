@@ -37,6 +37,10 @@ func simulate(unit_states):
 			locked_on.create(hero, locked_on.total_duration)
 			locked_on.init(target.controller_id)
 			hero.apply_status(locked_on)
+			
+			var locked_on_target = RangerLockedOnTarget.new()
+			locked_on_target.create(hero, locked_on_target.total_duration)
+			target.apply_status(locked_on_target)
 			lifespan = -1	#remove
 	
 	lifespan -= delta
