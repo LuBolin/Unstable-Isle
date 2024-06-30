@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="HeroAssetHolder" load_steps=4 format=3 uid="uid://tuchrp66o1e7"]
 
-[ext_resource type="Texture2D" uid="uid://bsujwiafa6sbv" path="res://game/entities/heroes/specifics/wizard/wizard.png" id="1_bf6r3"]
-[ext_resource type="Script" path="res://game/entities/heroes/common/hero_asset_holder.gd" id="1_ckoev"]
-[ext_resource type="Resource" uid="uid://514b4oo67uov" path="res://game/entities/heroes/specifics/bc/bc_spell_list.tres" id="3_un4mx"]
+[ext_resource type="Texture2D" uid="uid://bsujwiafa6sbv" path="res://entities/heroes/specifics/wizard/wizard.png" id="1_bf6r3"]
+[ext_resource type="Script" path="res://entities/heroes/common/hero_asset_holder.gd" id="1_ckoev"]
+[ext_resource type="Resource" uid="uid://514b4oo67uov" path="res://entities/heroes/specifics/bc/bc_spell_list.tres" id="3_un4mx"]
 
 [resource]
 script = ExtResource("1_ckoev")

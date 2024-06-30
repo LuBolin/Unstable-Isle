@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="HeroAssetHolder" load_steps=4 format=3 uid="uid://bg7rdic2affu0"]
 
-[ext_resource type="Texture2D" uid="uid://bgmlcpt8y5p3v" path="res://game/entities/heroes/specifics/dwarf/dwarf.png" id="1_a4dad"]
-[ext_resource type="Script" path="res://game/entities/heroes/common/hero_asset_holder.gd" id="1_iypli"]
-[ext_resource type="Resource" uid="uid://514b4oo67uov" path="res://game/entities/heroes/specifics/bc/bc_spell_list.tres" id="3_bo0sb"]
+[ext_resource type="Texture2D" uid="uid://bgmlcpt8y5p3v" path="res://entities/heroes/specifics/dwarf/dwarf.png" id="1_a4dad"]
+[ext_resource type="Script" path="res://entities/heroes/common/hero_asset_holder.gd" id="1_iypli"]
+[ext_resource type="Resource" uid="uid://514b4oo67uov" path="res://entities/heroes/specifics/bc/bc_spell_list.tres" id="3_bo0sb"]
 
 [resource]
 script = ExtResource("1_iypli")

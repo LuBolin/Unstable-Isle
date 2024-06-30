@@ -7,8 +7,7 @@ const PlayerState = Serializables.PlayerState
 const GameState = Serializables.GameState
 const ArenaState = Serializables.ArenaState
 
-# @onready var player_node = preload("res://game/entities/heroes/common/base_hero.tscn")
-var player_node = load("res://game/entities/heroes/common/base_hero.tscn")
+var player_node = load("res://entities/heroes/common/base_hero.tscn")
 
 const PHASE = game_room.PHASE
 

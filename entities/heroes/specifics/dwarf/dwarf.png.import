@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5f1muwlunfio"
-path="res://.godot/imported/ranger.png-196d54d19aecc8cd20db6e56c0e5978d.ctex"
+uid="uid://bgmlcpt8y5p3v"
+path="res://.godot/imported/dwarf.png-829867bf76c09709aeff5c5a93808a6d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/entities/heroes/specifics/ranger/ranger.png"
-dest_files=["res://.godot/imported/ranger.png-196d54d19aecc8cd20db6e56c0e5978d.ctex"]
+source_file="res://entities/heroes/specifics/dwarf/dwarf.png"
+dest_files=["res://.godot/imported/dwarf.png-829867bf76c09709aeff5c5a93808a6d.ctex"]
 
 [params]
 

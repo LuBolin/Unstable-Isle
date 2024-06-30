@@ -1,7 +1,7 @@
 class_name BcFirst
 extends CharacterBody3D
 
-const bullet_scene = preload("res://game/entities/heroes/specifics/bc/bc_first.tscn")
+const bullet_scene = preload("res://entities/heroes/specifics/bc/bc_first.tscn")
 
 const SPEED: float = 200.0
 

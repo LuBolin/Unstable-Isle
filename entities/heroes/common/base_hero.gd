@@ -10,7 +10,7 @@ var spell_list: SpellList
 
 @onready var target_line: MeshInstance3D = $Base/TargetLine
 
-const hero_node = preload("res://game/entities/heroes/common/base_hero.tscn")
+const hero_node = preload("res://entities/heroes/common/base_hero.tscn")
 
 var controller_id: int # netwprl unique id
 var health: int = 10 :
@@ -142,7 +142,7 @@ func move(target: Vector2, delta: float):
 func modify_speed(percentage):
 	movement.modify_speed(percentage)
 
-const path_to_hero_asset = "res://game/entities/heroes/specifics/%s/%s_assets.tres"
+const path_to_hero_asset = "res://entities/heroes/specifics/%s/%s_assets.tres"
 static func get_hero_asset_holder(hero_name: String):
 	hero_name = hero_name.to_lower()
 	var path = path_to_hero_asset % [hero_name, hero_name]

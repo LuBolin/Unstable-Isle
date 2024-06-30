@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bgmlcpt8y5p3v"
-path="res://.godot/imported/dwarf.png-dfece92c2fcd6120cdcce7131d55ac46.ctex"
+uid="uid://bsujwiafa6sbv"
+path="res://.godot/imported/wizard.png-cb38f8bb8a9f52ccaf1dda8b375c98d9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/entities/heroes/specifics/dwarf/dwarf.png"
-dest_files=["res://.godot/imported/dwarf.png-dfece92c2fcd6120cdcce7131d55ac46.ctex"]
+source_file="res://entities/heroes/specifics/wizard/wizard.png"
+dest_files=["res://.godot/imported/wizard.png-cb38f8bb8a9f52ccaf1dda8b375c98d9.ctex"]
 
 [params]
 

@@ -43,10 +43,7 @@ func change_state(new_state: HeroState):
 	
 	if current_state:
 		current_state.exit()
-	#var s = multiplayer.get_unique_id() if multiplayer else "Not initialized"
-	#var n1 = current_state.name if current_state else "No State"
-	#var n2 = new_state.name
-	#print("I am %s. Changing state from %s to %s" % [s, n1, n2])
+
 	prev_state = current_state
 	current_state = new_state
 	current_state.enter()

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bsujwiafa6sbv"
-path="res://.godot/imported/wizard.png-ceebc9bc4e8982305ebba05f74860d64.ctex"
+uid="uid://c5f1muwlunfio"
+path="res://.godot/imported/ranger.png-2bb484e1b4a635c1de9a9ec8802f8b80.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/entities/heroes/specifics/wizard/wizard.png"
-dest_files=["res://.godot/imported/wizard.png-ceebc9bc4e8982305ebba05f74860d64.ctex"]
+source_file="res://entities/heroes/specifics/ranger/ranger.png"
+dest_files=["res://.godot/imported/ranger.png-2bb484e1b4a635c1de9a9ec8802f8b80.ctex"]
 
 [params]
 

@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://jva47p3ypmpj"]
 
 [ext_resource type="Script" path="res://game/gui/round_info.gd" id="1_g4ynt"]
-[ext_resource type="Texture2D" uid="uid://bsujwiafa6sbv" path="res://game/entities/heroes/specifics/wizard/wizard.png" id="2_esn00"]
+[ext_resource type="Texture2D" uid="uid://bsujwiafa6sbv" path="res://entities/heroes/specifics/wizard/wizard.png" id="2_dlehi"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n4n2b"]
-atlas = ExtResource("2_esn00")
+atlas = ExtResource("2_dlehi")
 region = Rect2(0, 0, 64, 64)
 
 [node name="RoundInfo" type="Control"]

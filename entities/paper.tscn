@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dxukvbn3aiys5"]
 
-[ext_resource type="Script" path="res://game/entities/paper.gd" id="1_bkro6"]
+[ext_resource type="Script" path="res://entities/paper.gd" id="1_bkro6"]
 
 [node name="Paper" type="Node3D"]
 script = ExtResource("1_bkro6")
