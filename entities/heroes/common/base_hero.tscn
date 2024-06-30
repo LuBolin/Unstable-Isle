@@ -137,7 +137,7 @@ skeleton = NodePath("../..")
 transform = Transform3D(64, 0, 0, 0, 64, 0, 0, 0, 64, 0, 14, -4)
 
 [node name="HealthLabel" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 25.2479, -20)
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 31.2479, -20)
 outline_modulate = Color(1, 0, 0, 1)
 text = "Health: X"
 font = SubResource("FontFile_3qmkq")
@@ -145,7 +145,7 @@ font_size = 2000
 outline_size = 127
 
 [node name="StatusLabel" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 32.8783, -32.2845)
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 38.8783, -32.2845)
 outline_modulate = Color(0, 0.552941, 0.913725, 1)
 font = SubResource("FontFile_3qmkq")
 font_size = 2000
@@ -184,7 +184,7 @@ script = ExtResource("9_ninn8")
 [node name="Death" type="Node3D" parent="StateManager"]
 script = ExtResource("10_8c41r")
 
-[node name="HealthLabel" type="Label3D" parent="StateManager"]
+[node name="StateLabel" type="Label3D" parent="StateManager"]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 19.2479, -11)
 outline_modulate = Color(1, 0, 0, 1)
 text = "Idle"

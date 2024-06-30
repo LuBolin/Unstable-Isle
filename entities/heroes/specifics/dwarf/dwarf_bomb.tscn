@@ -1,0 +1,103 @@
+[gd_scene load_steps=17 format=3 uid="uid://t8j6pjx2kywt"]
+
+[ext_resource type="Script" path="res://entities/heroes/specifics/dwarf/dwarf_bomb.gd" id="1_1nsvb"]
+[ext_resource type="Script" path="res://addons/curvemesh3d/curvemesh3d.gd" id="2_qg1ed"]
+
+[sub_resource type="Curve" id="Curve_sxv0u"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.754286, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_iisam"]
+radius = 10.0
+
+[sub_resource type="Curve" id="Curve_jj2t6"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.248408, 0), 0.0, 0.0, 0, 0, Vector2(0.251592, 1), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(0.503185, 0), 0.0, 0.0, 0, 0, Vector2(0.745223, 0), 0.0, 0.0, 0, 0, Vector2(0.748408, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 8
+
+[sub_resource type="CurveTexture" id="CurveTexture_yvppv"]
+curve = SubResource("Curve_jj2t6")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2qfes"]
+albedo_color = Color(0.917647, 0, 0.0745098, 1)
+albedo_texture = SubResource("CurveTexture_yvppv")
+metallic = 1.0
+roughness = 0.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_qxsuc"]
+material = SubResource("StandardMaterial3D_2qfes")
+radius = 10.0
+height = 20.0
+
+[sub_resource type="Curve3D" id="Curve3D_v4y8j"]
+bake_interval = 0.1
+_data = {
+"points": PackedVector3Array(-0.319816, -6.37035, 0.611923, 0.319816, 6.37035, -0.611923, 0, 0, 0, -0.415578, 0.294548, -0.636408, 0.415578, -0.294548, 0.636408, 6.99459, -0.441461, -0.865429),
+"tilts": PackedFloat32Array(0, -3.05588)
+}
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_5skmp"]
+min_value = 2.0
+max_value = 5.0
+_data = [Vector2(0, 5), 0.0, 0.0, 0, 0, Vector2(1, 2), -0.944364, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kldae"]
+albedo_color = Color(0.529412, 0.313726, 0.176471, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4oeof"]
+radius = 4.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_og7ft"]
+radius = 20.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_sh44t"]
+emission_shape = 1
+emission_sphere_radius = 1.0
+radial_velocity_min = 20.0
+radial_velocity_max = 30.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7bsxe"]
+albedo_color = Color(0.243137, 0.0117647, 0.0117647, 0.172549)
+
+[sub_resource type="SphereMesh" id="SphereMesh_1ld6o"]
+material = SubResource("StandardMaterial3D_7bsxe")
+radius = 0.25
+height = 0.5
+
+[node name="DwarfBomb" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_1nsvb")
+speed_curve = SubResource("Curve_sxv0u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_iisam")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_qxsuc")
+
+[node name="CurveMesh3D" type="Path3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.0448, 0)
+curve = SubResource("Curve3D_v4y8j")
+script = ExtResource("2_qg1ed")
+radius_profile = SubResource("Curve_5skmp")
+material = SubResource("StandardMaterial3D_kldae")
+
+[node name="CoreExplosion" type="ShapeCast3D" parent="."]
+shape = SubResource("SphereShape3D_4oeof")
+collision_mask = 3
+
+[node name="EdgeExplosion" type="ShapeCast3D" parent="."]
+shape = SubResource("SphereShape3D_og7ft")
+collision_mask = 3
+
+[node name="ExplosionParticles" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 200
+one_shot = true
+explosiveness = 0.5
+visibility_aabb = AABB(-16, -16, -16, 32, 32, 32)
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_sh44t")
+draw_pass_1 = SubResource("SphereMesh_1ld6o")

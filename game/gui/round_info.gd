@@ -32,6 +32,9 @@ func _prep_started(_game_seed):
 	update_player_list()
 	round_result_label.hide()
 
+func _process(delta):
+	update_player_list()
+
 func _hero_picked(hero_name, id):
 	update_player_list()
 

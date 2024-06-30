@@ -13,7 +13,7 @@ var hit_scanned: bool = false
 var hero : Hero
 var spawn_offset = 12
 
-static func create(hero: Hero, target: Vector2):
+static func create(hero: Hero, target: Vector2, offset: float = 0):
 	var bullet = bullet_scene.instantiate()
 	var dirn: Vector2 = \
 		target - Vector2(
@@ -23,12 +23,12 @@ static func create(hero: Hero, target: Vector2):
 	
 	var manager: UnitManager = hero.unit_manager
 	var b_id = manager.add(bullet)
-	bullet.init(b_id, dirn, hero)
+	bullet.init(b_id, dirn, hero, offset)
 	return bullet
 
 var hits = []
 
-func init(b_id: int, dirn: Vector2, h: Hero):
+func init(b_id: int, dirn: Vector2, h: Hero, offset = 0):
 	id = b_id
 	direction = dirn
 	hero = h
@@ -47,6 +47,7 @@ func init(b_id: int, dirn: Vector2, h: Hero):
 	collider.queue_free()
 	var dirn_v3: Vector3 = Vector3(direction.x, 0, direction.y)
 	global_position += dirn_v3 * spawn_offset
+	global_position += dirn_v3.normalized() * offset
 	
 	var look_target = global_position + dirn_v3.normalized()
 	look_at(look_target)

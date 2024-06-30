@@ -47,7 +47,7 @@ func change_state(new_state: HeroState):
 	prev_state = current_state
 	current_state = new_state
 	current_state.enter()
-	$HealthLabel.set_text(current_state.name)
+	$StateLabel.set_text(current_state.name)
 
 func _input(event):
 	var new_state = current_state.process_input(event)
