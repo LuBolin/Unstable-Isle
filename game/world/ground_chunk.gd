@@ -116,8 +116,8 @@ func set_shape(poly: PackedVector2Array, thickness: float = 16.0):
 	mesh_instance.create_trimesh_collision()
 	# StaticBody -> ConcavePolygonShape3D
 	var collider = mesh_instance.get_child(0).get_child(0)
-	mesh_instance.get_child(0).queue_free()
 	collider.reparent(self)
+	mesh_instance.get_child(0).queue_free()
 
 	# unique instance per mesh
 	var new_mat = func ():

@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=3 uid="uid://binvela5b4jky"]
+
+[ext_resource type="Script" path="res://entities/heroes/specifics/dwarf/dwarf_melee.gd" id="1_asf18"]
+[ext_resource type="Script" path="res://addons/curvemesh3d/curvemesh3d.gd" id="2_crkvb"]
+
+[sub_resource type="Curve3D" id="Curve3D_4njrh"]
+bake_interval = 0.1
+_data = {
+"points": PackedVector3Array(0.6, 0.46, 0, 0, 0, 0, -15, 0, 0, -15, 0, 0, 15, 0, 0, 0, 0, -15, 0, 0, 0, 0, 0, 0, 15, 0, 0),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_nnrkv"]
+min_value = 1.0
+max_value = 30.0
+_data = [Vector2(0, 1), 0.0, 57.9368, 0, 1, Vector2(0.502857, 30.1339), -0.388728, -0.388728, 0, 0, Vector2(1, 1), -58.6027, 0.0, 1, 0]
+point_count = 3
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_tap3a"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2745d"]
+noise = SubResource("FastNoiseLite_tap3a")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pa1jh"]
+albedo_color = Color(0.647059, 0.65098, 0.643137, 1)
+albedo_texture = SubResource("NoiseTexture2D_2745d")
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+
+[node name="DwarfMelee" type="ShapeCast3D"]
+target_position = Vector3(0, 0, 0)
+script = ExtResource("1_asf18")
+
+[node name="AttackMesh" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00269604, 2.0638, -0.0593376)
+curve = SubResource("Curve3D_4njrh")
+script = ExtResource("2_crkvb")
+radius_profile = SubResource("Curve_nnrkv")
+material = SubResource("StandardMaterial3D_pa1jh")

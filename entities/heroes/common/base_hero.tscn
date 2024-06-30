@@ -109,6 +109,7 @@ cache/0/2000/0/kerning_overrides/2000/0 = Vector2(0, 0)
 size = Vector2(40, 2)
 
 [node name="Hero" type="CharacterBody3D"]
+collision_mask = 3
 script = ExtResource("1_vaswu")
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
@@ -201,11 +202,14 @@ script = ExtResource("13_aiud7")
 
 [node name="RayCast3D" type="RayCast3D" parent="Movement/MovingTowardsVoidCheck"]
 target_position = Vector3(0, -2, 0)
+collision_mask = 2
 
 [node name="RayCast3D2" type="RayCast3D" parent="Movement/MovingTowardsVoidCheck"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
 target_position = Vector3(0, -2, 0)
+collision_mask = 2
 
 [node name="RayCast3D3" type="RayCast3D" parent="Movement/MovingTowardsVoidCheck"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16)
 target_position = Vector3(0, -2, 0)
+collision_mask = 2

@@ -74,6 +74,8 @@ cache/0/1000/0/kerning_overrides/100/0 = Vector2(0, 0)
 cache/0/1000/0/kerning_overrides/1000/0 = Vector2(0, 0)
 
 [node name="GroundChunk" type="RigidBody3D"]
+collision_layer = 2
+collision_mask = 0
 axis_lock_linear_x = true
 axis_lock_linear_z = true
 inertia = Vector3(1, 1, 1)

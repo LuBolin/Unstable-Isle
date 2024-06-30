@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="DwarfSpellList" load_steps=2 format=3 uid="uid://dxyd23r0shl71"]
+
+[ext_resource type="Script" path="res://entities/heroes/specifics/dwarf/dwarf_spell_list.gd" id="1_uob7p"]
+
+[resource]
+script = ExtResource("1_uob7p")
