@@ -28,18 +28,23 @@ var server_instances: Dictionary = {} # port, reference to object
 # client specific
 var username: String
 
+var is_host = true
+
 func _ready():
 	network.refresh_lobby_rooms.connect(controls.refresh_lobby_rooms)
 	controls.join_room.connect(func(port): network.request_join_room.rpc_id(1, port))
 	login.logged_in.connect(_on_logged_in)
-	
-	get_tree().set_multiplayer(mutiplayer, self.get_path())
-	is_lobby_host = launch_as_lobby_server()
-	if is_lobby_host:
-		refresh_rooms_timer.timeout.connect(update_clients_about_rooms)
-		# minimize host window
-		get_tree().create_timer(0.1).timeout.connect(
-			func(): get_tree().root.mode = Window.MODE_MINIMIZED)
+
+	if is_host:
+		get_tree().set_multiplayer(mutiplayer, self.get_path())
+		is_lobby_host = launch_as_lobby_server()
+		if is_lobby_host:
+			refresh_rooms_timer.timeout.connect(update_clients_about_rooms)
+			# minimize host window
+			get_tree().create_timer(0.1).timeout.connect(
+				func(): get_tree().root.mode = Window.MODE_MINIMIZED)
+		else:
+			launch_as_lobby_client()
 	else:
 		launch_as_lobby_client()
 	# launch_as_lobby_client()

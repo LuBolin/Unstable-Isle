@@ -173,13 +173,14 @@ func _game_ended():
 		if score in score_username_dict:
 			score_username_dict[score].append(username)
 		else:
-			score_username_dict[score] = (username)
+			score_username_dict[score] = [username]
 	var score = Settings.SCORE_TO_WIN
 	while score >= 0:
 		if score not in score_username_dict:
 			score -= 1
 			continue
 		var players = score_username_dict[score]
+		print(score_username_dict)
 		var is_winner = score == Settings.SCORE_TO_WIN
 		for p_name in players:
 			var item = \
