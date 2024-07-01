@@ -43,7 +43,7 @@ func init_island(_seed):
 	chunk_states.clear()
 	chunk_states.resize(len(sites))
 	chunk_states.fill(GroundChunk.CHUNK_STATE.Stable)
-	
+
 
 func make_island(radius: float, step_size: float, 
 	axis_variance: float = 30, _seed = null):
@@ -129,9 +129,13 @@ func crumble_step():
 		chunk.radial_crumble(crumble_radius)
 
 # Client Functions
+func catch_up(_seed):
+	init_island(_seed)
+
 func update_state(arena_state: ArenaState):
 	var chunks = arena_state.chunks
-	for i in len(chunks):
+	# for i in len(chunks):
+	for i in range(chunk_root.get_children().size()):
 		var c: GroundChunk = chunk_root.get_child(i)
 		c.state = chunks[i]
 
@@ -146,6 +150,5 @@ func hit_island(target: Vector3, radius: int):
 	for result in collision:
 		var c = result['collider']
 		if c is GroundChunk:
-			print(c)
 			c.hit()
 

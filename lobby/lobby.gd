@@ -90,10 +90,6 @@ func request_join_room(client_id: int, port: int):
 			port = instances[0]
 		else:
 			return null
-	if port in server_instances:
-		var existing_room: GameRoom = server_instances[port]
-		if existing_room.game_phase != GameRoom.PHASE.HOLD:
-			return
 	var result = {}
 	result['ip'] = LOBBY_SERVER_ADDRESS
 	result['port'] = port
@@ -151,8 +147,8 @@ func update_clients_about_rooms():
 		var data = server.serialize()
 		# currently, only show rooms that are waiting for players
 		# later, when spectating is added, this filter will be removed
-		if data['phase'] != GameRoom.PHASE_NAMES[GameRoom.PHASE.HOLD]:
-			continue
+		#if data['phase'] != GameRoom.PHASE_NAMES[GameRoom.PHASE.HOLD]:
+			#continue
 		var port = data['port']
 		s[port] = data
 	network.refresh_room_list.rpc(s)

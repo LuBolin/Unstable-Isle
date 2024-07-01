@@ -20,12 +20,14 @@ var hero_choices = {}
 # id: dead_or_alive_boolean
 var is_dead_dict = {}
 
+var round_seed = null
 
 func _ready():
 	hero_died.connect(_on_hero_died)
 	round_ended.connect(_on_round_ended)
 	round_started.connect( # for the sake of 1 player lobbies
 		func(): get_tree().create_timer(1).timeout.connect(check_round_should_end))
+
 
 func reset():
 	hero_choices.clear()

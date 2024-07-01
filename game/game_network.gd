@@ -16,7 +16,8 @@ func _ready():
 func create_server(p: int):
 	port = p
 	var peer : ENetMultiplayerPeer = ENetMultiplayerPeer.new()
-	var status = peer.create_server(port, game_room.MAX_PLAYERS)
+	# max client shd be more than Settings.ROOM_MAX_PLAYERS, due to spectators
+	var status = peer.create_server(port)
 	print("Peer create server at %s on %s: %s" \
 		% [game_room.multiplayer.get_unique_id(), port, status])
 	if status == Error.OK:
@@ -42,6 +43,9 @@ func terminate_multiplayer() -> void:
 @rpc("authority", "call_remote", "reliable")
 func update_player_list(players_dict):
 	# triggers setter
+	for p_id in players_dict:
+		if p_id not in game_room.round.hero_choices:
+			game_room.round.hero_choices[p_id] = null
 	game_room.players = players_dict
 	print("Update player list: ", players_dict)
 
@@ -113,6 +117,10 @@ func receive_username(username: String):
 		game_room.players[sender_id]['connected'] = true
 		update_player_list.rpc(game_room.players)
 
+@rpc ("authority", "call_remote", "reliable")
+func announce_spectator(game_phase, catchup_seed, hero_choices):
+	game_room.spectator_caughtup.emit(game_phase, catchup_seed, hero_choices)
+
 @rpc("authority", "call_local", "reliable")
 func announce_round_result(winner_id):
 	game_room.round.round_ended.emit(winner_id)
@@ -127,15 +135,31 @@ func _on_client_connected(id):
 	if game_room.mutiplayer.is_server():
 		if not game_room.owner_id:
 			game_room.owner_id = id
-		game_room.players[id] = {'score': 0}
+		
+		var is_spectator = false
+		if game_room.game_phase != GameRoom.PHASE.HOLD \
+			or game_room.players.size() >= Settings.ROOM_MAX_PLAYERS:
+			is_spectator = true
+		
+		if is_spectator:
+			announce_spectator.rpc_id(id, \
+				game_room.game_phase,
+				game_room.round.round_seed, 
+				game_room.round.hero_choices
+			)
+			update_player_list.rpc(game_room.players)
+		else:
+			game_room.players[id] = {'score': 0}
+			request_username.rpc_id(id)
 		update_room_owner.rpc_id(id, game_room.owner_id)
-		request_username.rpc_id(id)
 		# request name
 		# receive name
 		# then update the rest
 
 func _on_client_disconnected(id):
 	if id == 1:
+		return
+	if id not in game_room.players:
 		return
 	if game_room.game_phase == game_room.PHASE.HOLD:
 		game_room.players.erase(id)

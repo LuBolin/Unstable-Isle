@@ -21,6 +21,7 @@ signal self_disconnected
 signal room_closed
 signal room_started
 signal game_ended
+signal spectator_caughtup(game_phase, catchup_seed, hero_choices)
 
 enum PHASE{
 	HOLD, # game have not started, clients can still join as player
@@ -43,7 +44,7 @@ var players = {}:
 		players = v
 		gui.round_info.update_player_list()
 		gui.menu_overlay.update_player_list()
-const MAX_PLAYERS = 6
+
 
 func get_connected_players():
 	var connecteds = {}

@@ -14,6 +14,7 @@ func _ready():
 	game_room.round.prep_started.connect(start_prep)
 	game_room.round.round_started.connect(start_round)
 	game_room.game_ended.connect(game_ended)
+	game_room.spectator_caughtup.connect(spectator_caughtup)
 
 func start_prep(_game_seed: int):
 	hero_picker.clear()
@@ -22,6 +23,11 @@ func start_prep(_game_seed: int):
 	hero_picker.set_visible(not game_room.network.multiplayer.is_server())
 	round_info.set_visible(true)
 	hero_info_hud.set_visible(false)
+
+func spectator_caughtup(_game_phase, _catchup_seed, _hero_choices):
+	hero_info_hud.hide()
+	hero_picker.random_button.hide()
+	chat.hide()
 
 func start_round():
 	hero_picker.set_visible(false)

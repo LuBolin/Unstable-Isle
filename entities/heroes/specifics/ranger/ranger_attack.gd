@@ -59,9 +59,7 @@ func simulate(unit_states):
 	
 	var collision = move_and_collide(velocity * delta)
 	if collision:
-		print(collision.get_collider())
 		if not collision.get_collider().get("health") == null:
-			print(collision.get_collider().health)
 			var target = collision.get_collider()
 			interactions.append(func(): target.health -= 1)
 			lifespan = -1	#remove
