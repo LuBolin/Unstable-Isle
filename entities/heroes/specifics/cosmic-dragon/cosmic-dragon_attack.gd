@@ -1,17 +1,16 @@
-class_name RangerAttack
+class_name CosmicDragonAttack
 extends CharacterBody3D
 
-const bullet_scene = preload("res://entities/heroes/specifics/ranger/ranger_attack.tscn")
+const bullet_scene = preload("res://entities/heroes/specifics/cosmic-dragon/cosmic-dragon_attack.tscn")
 
-const SPEED: float = 200.0
+const SPEED: float = 100.0
 
 var id: int
-var type = "RangerAttack"
+var type = "CosmicDragonAttack"
 var direction: Vector2
-var lifespan: float = 5
+var lifespan: float = 10
 var hero : Hero
-var lock_on : int = -1
-var turn_rate = 300
+var orbit_angle
 
 static func create(hero: Hero, target: Vector2):
 	var bullet = bullet_scene.instantiate()
@@ -35,19 +34,9 @@ func simulate(unit_states):
 	var interactions = []
 	global_position = unit_states['position']
 	direction = unit_states['direction']
-	lifespan = unit_states['lifespan']
-	
-	var delta = get_physics_process_delta_time()
-	
-	if not lock_on == null:
-		var count =  $ShapeCast3D.get_collision_count()
-		for i in range(count):
-			var obj = $ShapeCast3D.get_collider(i)
-			if obj is Hero:
-				if obj.controller_id == lock_on:
-					var to_lock_on = Vector2(obj.global_position.x, obj.global_position.z) - Vector2(global_position.x, global_position.z)
-					direction = direction.move_toward(to_lock_on, turn_rate * delta)
 	var dirn: Vector3 = Vector3(direction.x, 0, direction.y)
+	lifespan = unit_states['lifespan']
+	var delta = get_physics_process_delta_time()
 	if lifespan < delta:
 		velocity = dirn.normalized() * SPEED * (lifespan/delta)
 	else:
@@ -69,6 +58,7 @@ func simulate(unit_states):
 		var node = self
 		var parent = get_parent()
 		interactions.append(func(): parent.remove_child(node); queue_free())
+		#interactions.append(func(): free())
 	return interactions
 
 
@@ -77,5 +67,6 @@ func get_state():
 		'type' : type, \
 		'direction' : direction,\
 		'position' : global_position,\
-		'lifespan' : lifespan
+		'lifespan' : lifespan,
+		'orbit_angle' : orbit_angle
 		}

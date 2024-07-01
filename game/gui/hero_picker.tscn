@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://bc8x7f2av1vxp"]
+[gd_scene load_steps=13 format=3 uid="uid://bc8x7f2av1vxp"]
 
 [ext_resource type="Theme" uid="uid://chv8tthirups8" path="res://lobby/base_ui_theme.tres" id="1_7341g"]
 [ext_resource type="Script" path="res://game/gui/hero_picker.gd" id="1_v3gvd"]
 [ext_resource type="Resource" uid="uid://bg7rdic2affu0" path="res://entities/heroes/specifics/dwarf/dwarf_assets.tres" id="2_c85x3"]
 [ext_resource type="Shader" path="res://game/gui/hero_picker_background.gdshader" id="2_pjb5a"]
 [ext_resource type="Resource" uid="uid://3yqcobabk4ca" path="res://entities/heroes/specifics/ranger/ranger_assets.tres" id="3_q33y3"]
+[ext_resource type="Resource" uid="uid://bxlvmh2x375c8" path="res://entities/heroes/specifics/cosmic-dragon/cosmic-dragon_assets.tres" id="5_pw5a2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0sdw3"]
 shader = ExtResource("2_pjb5a")
@@ -36,7 +37,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_7341g")
 script = ExtResource("1_v3gvd")
-hero_assets_list = Array[Resource("res://entities/heroes/common/hero_asset_holder.gd")]([ExtResource("2_c85x3"), ExtResource("3_q33y3")])
+hero_assets_list = Array[Resource("res://entities/heroes/common/hero_asset_holder.gd")]([ExtResource("2_c85x3"), ExtResource("3_q33y3"), ExtResource("5_pw5a2")])
 
 [node name="Background" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_0sdw3")

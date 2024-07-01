@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://c0agv638k58ux"]
+
+[ext_resource type="Script" path="res://entities/heroes/specifics/cosmic-dragon/cosmic-dragon_tail.gd" id="1_wlnnr"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_tkfyc"]
+height = 36.0
+radius = 12.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_bd7td"]
+top_radius = 12.0
+bottom_radius = 12.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3y4er"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_ryrpc"]
+material = SubResource("StandardMaterial3D_3y4er")
+inner_radius = 13.0
+outer_radius = 15.0
+
+[node name="Cosmic-dragonTail" type="CharacterBody3D"]
+script = ExtResource("1_wlnnr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20.0738, 0)
+shape = SubResource("CylinderShape3D_tkfyc")
+
+[node name="Base" type="Node3D" parent="."]
+
+[node name="Circle" type="MeshInstance3D" parent="Base"]
+mesh = SubResource("CylinderMesh_bd7td")
+
+[node name="Ring" type="MeshInstance3D" parent="Base"]
+visible = false
+mesh = SubResource("TorusMesh_ryrpc")
