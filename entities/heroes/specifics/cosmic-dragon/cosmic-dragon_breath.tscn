@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dwvyedwfk4pdi"]
+
+[ext_resource type="Script" path="res://entities/heroes/specifics/cosmic-dragon/cosmic-dragon_breath.gd" id="1_xq43q"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3lxla"]
+size = Vector3(20, 20, 50)
+
+[sub_resource type="BoxMesh" id="BoxMesh_oh5gm"]
+size = Vector3(20, 20, 50)
+
+[node name="Cosmic-dragonBreath" type="ShapeCast3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.534, 0)
+shape = SubResource("BoxShape3D_3lxla")
+target_position = Vector3(0, 0, 0)
+script = ExtResource("1_xq43q")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.310434)
+mesh = SubResource("BoxMesh_oh5gm")
