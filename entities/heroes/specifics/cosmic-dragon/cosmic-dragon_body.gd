@@ -11,6 +11,10 @@ var type = "CosmicDragonBody"
 var direction: Vector2
 var hero : Hero
 var selected = false
+#transfer health loss to main hero
+var health: int = 20 :
+	set(new_health):
+		hero.health -= health - new_health
 
 static func create(hero: Hero, target: Vector2):
 	var bullet = bullet_scene.instantiate()
@@ -36,6 +40,7 @@ func simulate(unit_states):
 	var interactions = []
 	global_position = unit_states['position']
 	direction = unit_states['direction']
+	var delta = get_physics_process_delta_time()
 	if selected:
 		$Base/Ring.show()
 	else:
@@ -43,9 +48,9 @@ func simulate(unit_states):
 	var dirn: Vector3 = hero.global_position - global_position
 	if dirn.length() > tag_radius:
 		direction = Vector2(dirn.x, dirn.z)
-		var delta = get_physics_process_delta_time()
 		velocity = dirn.normalized() * SPEED
 		var collision = move_and_collide(velocity * delta)
+	
 	return interactions
 
 

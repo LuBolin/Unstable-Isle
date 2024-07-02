@@ -35,7 +35,7 @@ func _init():
 	)
 	
 	ulti_spell = Spell.new(
-		0.0, 0.0, "ulti_spell",
+		0.0, 0.1, "ulti_spell",
 		func (hero: Hero, target: Vector2):
 			cycle_part(hero)
 			ulti_spell.current_cooldown = ulti_spell.cooldown

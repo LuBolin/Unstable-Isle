@@ -11,6 +11,10 @@ var type = "CosmicDragonTail"
 var direction: Vector2
 var hero : Hero
 var selected = false
+#transfer health loss to main hero
+var health: int = 20 :
+	set(new_health):
+		hero.health -= health - new_health
 
 static func create(hero: Hero, target: Vector2):
 	var bullet = bullet_scene.instantiate()
