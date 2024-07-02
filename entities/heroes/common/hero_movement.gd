@@ -33,6 +33,8 @@ func move(target: Vector2, delta: float) -> void:
 		if not rc.is_colliding():
 			moving_towards_void = true
 			break
+	if "Flying" in hero.state_manager.state_statuses:
+		moving_towards_void = false
 	if moving_towards_void:
 		modified_speed *= 0.2
 	if dirn.length() > 0:

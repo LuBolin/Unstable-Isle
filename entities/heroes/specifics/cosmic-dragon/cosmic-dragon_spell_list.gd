@@ -54,7 +54,9 @@ func _init():
 			var current_part = get_part(hero)
 			match current_part:
 				HEAD:
-					pass
+					var cosmic_dragon_flight = CosmicDragonFlight.new()
+					cosmic_dragon_flight.create(hero, cosmic_dragon_flight.total_duration)
+					hero.apply_status(cosmic_dragon_flight)
 				BODY:
 					#only works because State simulates after Status
 					for status in hero.status_manager.get_children():
@@ -115,6 +117,8 @@ func ret_status(case):
 			return CosmicDragonOrbit.new()
 		"CosmicDragonSelection":
 			return CosmicDragonSelection.new()
+		"CosmicDragonFlight":
+			return CosmicDragonFlight.new()
 	return
 
 func ret_projectile(case):

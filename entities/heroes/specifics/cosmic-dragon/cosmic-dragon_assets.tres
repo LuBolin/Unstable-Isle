@@ -1,13 +1,13 @@
 [gd_resource type="Resource" script_class="HeroAssetHolder" load_steps=4 format=3 uid="uid://bxlvmh2x375c8"]
 
-[ext_resource type="Texture2D" uid="uid://bgmlcpt8y5p3v" path="res://entities/heroes/specifics/dwarf/dwarf.png" id="1_wupa1"]
+[ext_resource type="Texture2D" uid="uid://clgwp5h05yh2p" path="res://entities/heroes/specifics/cosmic-dragon/cosmic-dragon.png" id="1_a1voo"]
 [ext_resource type="Script" path="res://entities/heroes/common/hero_asset_holder.gd" id="2_tomr0"]
 [ext_resource type="Resource" uid="uid://c80uywbmyj26u" path="res://entities/heroes/specifics/cosmic-dragon/cosmic-dragon_spell_list.tres" id="3_pkkyb"]
 
 [resource]
 script = ExtResource("2_tomr0")
 hero_name = "Cosmic-Dragon"
-picker_texture = ExtResource("1_wupa1")
+picker_texture = ExtResource("1_a1voo")
 atk_description = "Balls"
 fst_description = "Rapid swings"
 scd_description = "Bomb (Destroys terrain)"
