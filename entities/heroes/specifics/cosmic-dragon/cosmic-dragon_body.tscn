@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://c2nrfbbyxkh3i"]
+
+[ext_resource type="Script" path="res://entities/heroes/specifics/cosmic-dragon/cosmic-dragon_body.gd" id="1_u4m7h"]
+[ext_resource type="Texture2D" uid="uid://3yk1c8m81i61" path="res://entities/heroes/specifics/cosmic-dragon/cosmic-dragon-body.png" id="2_clur5"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_f3wqr"]
+height = 36.0
+radius = 12.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_yrs2d"]
+top_radius = 12.0
+bottom_radius = 12.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ac4g0"]
+albedo_color = Color(0, 0, 1, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_f187s"]
+material = SubResource("StandardMaterial3D_ac4g0")
+inner_radius = 13.0
+outer_radius = 15.0
+
+[node name="Cosmic-dragonBody" type="CharacterBody3D"]
+script = ExtResource("1_u4m7h")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.8686, 0)
+shape = SubResource("CylinderShape3D_f3wqr")
+
+[node name="Base" type="Node3D" parent="."]
+
+[node name="Circle" type="MeshInstance3D" parent="Base"]
+mesh = SubResource("CylinderMesh_yrs2d")
+
+[node name="Ring" type="MeshInstance3D" parent="Base"]
+visible = false
+mesh = SubResource("TorusMesh_f187s")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 1.96805, 7.71038, 0)
+pixel_size = 0.75
+texture_filter = 0
+texture = ExtResource("2_clur5")

@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="CosmicDragonSpellList" load_steps=2 format=3 uid="uid://c80uywbmyj26u"]
+
+[ext_resource type="Script" path="res://entities/heroes/specifics/cosmic-dragon/cosmic-dragon_spell_list.gd" id="1_nbnwa"]
+
+[resource]
+script = ExtResource("1_nbnwa")

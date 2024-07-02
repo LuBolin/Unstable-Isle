@@ -21,7 +21,7 @@ func process_physics(delta: float) -> Array:
 		
 	hero.move_and_slide() # force is_on_floor to update
 	var airborne = not hero.is_on_floor()
-	if airborne:
+	if airborne and not "Flying" in  sm.state_statuses:
 		return [func(): sm.change_state(sm.fall_state)]
 	if pending_state:
 		return [func(): sm.change_state(pending_state)]
