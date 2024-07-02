@@ -44,7 +44,7 @@ func _init():
 						if status is CosmicDragonOrbit:
 							status.orbs_out = false
 				TAIL:
-					pass
+					CosmicDragonWish.create(hero, target)
 			first_spell.current_cooldown = first_spell.cooldown
 	)
 	
@@ -63,7 +63,9 @@ func _init():
 						if status is CosmicDragonOrbit:
 							status.orbs_out = true
 				TAIL:
-					pass
+					var cosmic_dragon_haste = CosmicDragonHaste.new()
+					cosmic_dragon_haste.create(hero, cosmic_dragon_haste.total_duration)
+					hero.apply_status(cosmic_dragon_haste)
 			second_spell.current_cooldown = second_spell.cooldown
 	)
 	
@@ -119,6 +121,8 @@ func ret_status(case):
 			return CosmicDragonSelection.new()
 		"CosmicDragonFlight":
 			return CosmicDragonFlight.new()
+		"CosmicDragonHaste":
+			return CosmicDragonHaste.new()
 	return
 
 func ret_projectile(case):
@@ -129,3 +133,5 @@ func ret_projectile(case):
 			return CosmicDragonBody
 		"CosmicDragonTail":
 			return CosmicDragonTail
+		"CosmicDragonWish":
+			return CosmicDragonWish

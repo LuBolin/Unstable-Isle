@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://dytyfo2bcnyn0"]
+
+[ext_resource type="Script" path="res://entities/heroes/specifics/cosmic-dragon/cosmic-dragon-wish.gd" id="1_j07ja"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_uim63"]
+height = 5.0
+radius = 50.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x5alg"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_n5fwn"]
+material = SubResource("StandardMaterial3D_x5alg")
+inner_radius = 50.0
+outer_radius = 52.0
+
+[node name="Cosmic-dragon-wish" type="ShapeCast3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.53114, 0)
+shape = SubResource("CylinderShape3D_uim63")
+script = ExtResource("1_j07ja")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("TorusMesh_n5fwn")

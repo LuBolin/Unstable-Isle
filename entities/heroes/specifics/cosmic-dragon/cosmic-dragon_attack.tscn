@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cjfjmet070art"]
+[gd_scene load_steps=6 format=3 uid="uid://cjfjmet070art"]
 
 [ext_resource type="Script" path="res://entities/heroes/specifics/cosmic-dragon/cosmic-dragon_attack.gd" id="1_2ckt5"]
 
@@ -9,6 +9,12 @@ radius = 6.0
 radius = 6.0
 height = 12.0
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cfe58"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_totj7"]
+radius = 1.0
+height = 2.0
+
 [node name="Cosmic-dragonAttack" type="CharacterBody3D"]
 collision_layer = 2
 script = ExtResource("1_2ckt5")
@@ -18,3 +24,8 @@ shape = SubResource("SphereShape3D_j7fxu")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_me1y7")
+
+[node name="CPUParticles3D" type="GPUParticles3D" parent="."]
+trail_lifetime = 0.03
+process_material = SubResource("ParticleProcessMaterial_cfe58")
+draw_pass_1 = SubResource("SphereMesh_totj7")
