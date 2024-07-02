@@ -11,15 +11,14 @@ var total_duration = 0
 var h_id
 var id = "CosmicDragonOrbit"
 var orbit_radius = 100
-var orbs_out = true
+var orbs_out = false
 const max_radius = 300
 const min_radius = 100
-const radius_speed = 300
+const radius_speed = 100
 
 func create(hero, d):
 	h_id = hero.controller_id
 	duration = d
-
 
 func simulate(hero, state, input):
 	var interactions = []

@@ -12,34 +12,80 @@ extends SpellList
 # Tail
 # Q stuns at the tail
 # W grants a temporary speed boost
-
+enum {HEAD, BODY, TAIL}
 
 func _init():
 	attack = Spell.new(
 		0.1, 1.0, "attack",
 		func (hero: Hero, target: Vector2):
+			var hero_pos = Vector2(
+						hero.global_position.x,
+						hero.global_position.z)
+			var dirn: Vector2 = target - hero_pos
 			CosmicDragonAttack.create(hero, target)
 			attack.current_cooldown = attack.cooldown
+			var angle = dirn.angle()
+			var adjusted = dirn.from_angle(angle + 2 * PI / 3) + hero_pos
+			CosmicDragonAttack.create(hero, adjusted)
+			adjusted = dirn.from_angle(angle - 2 * PI / 3) + hero_pos
+			CosmicDragonAttack.create(hero, adjusted)
 	)
 	
 	first_spell = Spell.new(
-		0.0, 3.0, "first_spell",
+		0.0, 0.1, "first_spell",
 		func (hero: Hero, target: Vector2):
+			var current_part = get_part(hero)
+			match current_part:
+				HEAD:
+					pass
+				BODY:
+					#only works because State simulates after Status
+					for status in hero.status_manager.get_children():
+						if status is CosmicDragonOrbit:
+							status.orbs_out = false
+				TAIL:
+					pass
 			first_spell.current_cooldown = first_spell.cooldown
 	)
 	
 	second_spell = Spell.new(
-		0.0, 7.0, "second_spell",
+		0.0, 0.1, "second_spell",
 		func (hero: Hero, target: Vector2):
+			var current_part = get_part(hero)
+			match current_part:
+				HEAD:
+					pass
+				BODY:
+					#only works because State simulates after Status
+					for status in hero.status_manager.get_children():
+						if status is CosmicDragonOrbit:
+							status.orbs_out = true
+				TAIL:
+					pass
 			second_spell.current_cooldown = second_spell.cooldown
 	)
 	
 	ulti_spell = Spell.new(
 		0.0, 0.1, "ulti_spell",
 		func (hero: Hero, target: Vector2):
+			create_part(hero)
 			cycle_part(hero)
 			ulti_spell.current_cooldown = ulti_spell.cooldown
 	)
+
+
+func create_part(hero: Hero):
+	for child in hero.unit_manager.get_children():
+		if child is CosmicDragonBody:
+			return true
+		if child is CosmicDragonTail:
+			return true
+	CosmicDragonBody.create(hero, Vector2(0, 0))
+	CosmicDragonTail.create(hero, Vector2(0, 0))
+	var orbit_status = CosmicDragonOrbit.new()
+	orbit_status.create(hero, 0)
+	hero.apply_status(orbit_status)
+	return false
 
 #get which part is selected
 func get_part(hero: Hero):
@@ -56,17 +102,11 @@ func cycle_part(hero: Hero):
 	for child in hero.status_manager.get_children():
 		if child is CosmicDragonSelection:
 			child.selected = next
-	var exist = false
 	for child in hero.unit_manager.get_children():
 		if child is CosmicDragonBody:
-			exist = true
-			child.selected = next == 1
+			child.selected = next == BODY
 		if child is CosmicDragonTail:
-			exist = true
-			child.selected = next == 2
-	if not exist:
-		CosmicDragonBody.create(hero, Vector2(0, 0))
-		CosmicDragonTail.create(hero, Vector2(0, 0))
+			child.selected = next == TAIL
 	return
 
 func ret_status(case):
