@@ -71,6 +71,12 @@ func init(c_id: int, name: String,
 		ring.get_mesh().surface_get_material(0).albedo_color = Color.GREEN
 	position = initial_pos
 
+func _enter_tree():
+	var cam: BirdsEye3DCamera = get_viewport().get_camera_3d()
+	if not cam:
+		return
+	cam.target_hero = self
+
 func simulate(state: PlayerState, input: PlayerInput):
 	position = state.position
 	health = state.health
