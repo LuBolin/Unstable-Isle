@@ -24,7 +24,7 @@ func start_prep(_game_seed: int):
 	round_info.set_visible(true)
 	hero_info_hud.set_visible(false)
 
-func spectator_caughtup(_game_phase, _catchup_seed, _hero_choices):
+func spectator_caughtup(_catchup_dict):
 	hero_info_hud.hide()
 	hero_picker.random_button.hide()
 	chat.hide()

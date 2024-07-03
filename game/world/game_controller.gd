@@ -275,18 +275,20 @@ func state_update(states: GameState, inputs: Dictionary):
 	arena.update_state(states.arena)
 	return states
 
-func spectator_caughtup(game_phase, catchup_seed, hero_choices):
-	print("Caught up: ")
-	print(game_phase, " ", catchup_seed, " ", hero_choices)
+func spectator_caughtup(catchup_dict):
+	# game_phase, round_seed, hero_choices
+	var game_phase = catchup_dict['game_phase']
+	var round_seed = catchup_dict['round_seed']
+	var hero_choices = catchup_dict['hero_choices']
 	match game_phase:
 		PHASE.HOLD:
 			pass
 		PHASE.PREP:
-			game_room.round.prep_started.emit(catchup_seed)
+			game_room.round.prep_started.emit(round_seed)
 			game_room.round.hero_choices = hero_choices
 		PHASE.GAME:
 			game_room.round.hero_choices = hero_choices
-			arena.catch_up(catchup_seed)
+			arena.catch_up(round_seed)
 			for id in hero_choices:
 				var hero_name = hero_choices[id]
 				if not hero_name: # still pick_phase

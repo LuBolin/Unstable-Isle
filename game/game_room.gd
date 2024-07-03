@@ -21,7 +21,7 @@ signal self_disconnected
 signal room_closed
 signal room_started
 signal game_ended
-signal spectator_caughtup(game_phase, catchup_seed, hero_choices)
+signal spectator_caughtup(catchup_dict)
 
 enum PHASE{
 	HOLD, # game have not started, clients can still join as player
@@ -36,6 +36,8 @@ const PHASE_NAMES = {
 }
 
 var game_phase: PHASE = PHASE.HOLD
+
+var game_ended_flag = false
 
 var owner_id: int
 var players = {}:
@@ -72,7 +74,7 @@ func join_room(ip: String, port: int, username: String):
 	network.create_client(ip, port)
 
 func request_start_game(requester_id):
-	if not mutiplayer.is_server():
+	if not self.mutiplayer.is_server():
 		return
 	if not requester_id == owner_id:
 		return
@@ -84,22 +86,24 @@ func request_start_game(requester_id):
 
 func request_close_room(requester_id):
 	print("Requested to close, by ", requester_id)
-	if not mutiplayer.is_server():
+	if not self.mutiplayer.is_server():
 		return
 	if not requester_id == owner_id:
 		return
 	close_room()
 
 func close_room():
-	if not mutiplayer.is_server():
+	if not self.mutiplayer.is_server():
 		return
 	for p in players:
 		if players[p]['connected']:
-			multiplayer.multiplayer_peer.disconnect_peer(p)
+			self.multiplayer.multiplayer_peer.disconnect_peer(p)
+	self.multiplayer.multiplayer_peer.close()
 	room_closed.emit()
 
 func disconnect_self():
-	multiplayer.multiplayer_peer.close()
+	if self.multiplayer:
+		self.multiplayer.multiplayer_peer.close()
 	self_disconnected.emit()
 
 # for lobby_room

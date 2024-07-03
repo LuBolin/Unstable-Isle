@@ -118,8 +118,9 @@ func receive_username(username: String):
 		update_player_list.rpc(game_room.players)
 
 @rpc ("authority", "call_remote", "reliable")
-func announce_spectator(game_phase, catchup_seed, hero_choices):
-	game_room.spectator_caughtup.emit(game_phase, catchup_seed, hero_choices)
+func announce_spectator(catchup_dict):
+	# game_phase, round_seed, hero_choices,, winner_id
+	game_room.spectator_caughtup.emit(catchup_dict)
 
 @rpc("authority", "call_local", "reliable")
 func announce_round_result(winner_id):
@@ -142,12 +143,19 @@ func _on_client_connected(id):
 			is_spectator = true
 		
 		if is_spectator:
-			announce_spectator.rpc_id(id, \
-				game_room.game_phase,
-				game_room.round.round_seed, 
-				game_room.round.hero_choices
-			)
-			update_player_list.rpc(game_room.players)
+			var catchup_dict = game_room.round.serialize()
+			catchup_dict['game_phase'] = game_room.game_phase
+			announce_spectator.rpc_id(id, catchup_dict)
+			# initialize players list
+			update_player_list.rpc_id(id, game_room.players)
+			# null, DRAW which is 0, or winner_id
+			if game_room.round.winner_id != null:
+				announce_round_result.rpc_id(id, game_room.round.winner_id)
+				update_player_list.rpc_id(id, game_room.players)
+				# sync remote scores again, because announce_result
+				# incremented score unnecessarily
+			if game_room.game_ended_flag:
+				announce_game_ended.rpc_id(id)
 		else:
 			game_room.players[id] = {'score': 0}
 			request_username.rpc_id(id)
