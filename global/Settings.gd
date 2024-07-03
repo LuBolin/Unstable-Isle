@@ -24,7 +24,7 @@ const ROOM_MAX_PLAYERS = 2
 const GRAVITY: int = 200
 const KILL_HEIGHT: int = -800 # 0.5 * A * t^2, 2 seconds, A = 200, D = 800
 
-const SCORE_TO_WIN: int = 3
+const SCORE_TO_WIN: int = 30
 
 const POLL_PER_FRAME: float = 5
 
