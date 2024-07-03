@@ -180,7 +180,6 @@ func _game_ended():
 			score -= 1
 			continue
 		var players = score_username_dict[score]
-		print(score_username_dict)
 		var is_winner = score == Settings.SCORE_TO_WIN
 		for p_name in players:
 			var item = \

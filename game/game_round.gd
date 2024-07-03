@@ -20,12 +20,18 @@ var hero_choices = {}
 # id: dead_or_alive_boolean
 var is_dead_dict = {}
 
+var round_seed = null
+
+const DRAW = 0
+
+var winner_id = null # null = unended, DRAW = draw, num = winner_id
 
 func _ready():
 	hero_died.connect(_on_hero_died)
 	round_ended.connect(_on_round_ended)
 	round_started.connect( # for the sake of 1 player lobbies
 		func(): get_tree().create_timer(1).timeout.connect(check_round_should_end))
+
 
 func reset():
 	hero_choices.clear()
@@ -34,6 +40,7 @@ func reset():
 	is_dead_dict.clear()
 	for id in game_room.players:
 		hero_choices[id] = null
+	winner_id = null
 
 func _on_hero_died(id):
 	is_dead_dict[id] = true
@@ -59,8 +66,8 @@ func _physics_process(delta):
 	draw_wait_cooldown -= delta
 	if draw_wait_cooldown > 0:
 		return
-	
-	var winner_id = null
+
+	winner_id = DRAW
 	for id in game_room.players:
 		if id not in is_dead_dict:
 			winner_id = id
@@ -71,12 +78,13 @@ func _physics_process(delta):
 func _on_round_ended(winner_id):
 	if not game_room.multiplayer.is_server():
 		return
-	if winner_id:
+	if winner_id not in [null, DRAW]:
 		game_room.players[winner_id]['score'] += 1
 	get_tree().create_timer(3).timeout.connect(
 		func():
-			if winner_id and game_room\
-				.players[winner_id]['score'] == Settings.SCORE_TO_WIN:
+			if winner_id and game_room \
+			.players[winner_id]['score'] == Settings.SCORE_TO_WIN:
+				game_room.game_ended_flag = true
 				game_room.network.announce_game_ended.rpc()
 				get_tree().create_timer(\
 					Settings.DISPLAY_FINAL_RESULT_DURATION).\
@@ -85,3 +93,9 @@ func _on_round_ended(winner_id):
 				var game_seed = randi()
 				game_room.network.start_prep.rpc(game_seed)
 	)
+
+func serialize():
+	return {
+		'round_seed': round_seed,
+		'hero_choices': hero_choices
+	}

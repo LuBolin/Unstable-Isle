@@ -30,6 +30,7 @@ func _ready():
 	game_room.round.round_started.connect(start_round)
 	game_room.round.received_server_frame.connect(receive_truth)
 	game_room.round.received_client_input.connect(receive_input)
+	game_room.spectator_caughtup.connect(spectator_caughtup)
 
 func _input(event):
 	if game_room.game_phase != PHASE.GAME:
@@ -62,6 +63,9 @@ func start_prep(island_seed):
 	game_room.game_phase = PHASE.PREP
 	print("Prep started on ", game_room.multiplayer.get_unique_id())
 	# print("Prepping " + str(multiplayer.get_unique_id()))
+	
+	game_room.round.round_seed = island_seed
+	
 	if(game_room.mutiplayer.is_server()):
 		game_room.network.start_prep.rpc(island_seed)
 	arena.init_island(island_seed)
@@ -271,6 +275,25 @@ func state_update(states: GameState, inputs: Dictionary):
 	arena.update_state(states.arena)
 	return states
 
+func spectator_caughtup(catchup_dict):
+	# game_phase, round_seed, hero_choices
+	var game_phase = catchup_dict['game_phase']
+	var round_seed = catchup_dict['round_seed']
+	var hero_choices = catchup_dict['hero_choices']
+	match game_phase:
+		PHASE.HOLD:
+			pass
+		PHASE.PREP:
+			game_room.round.prep_started.emit(round_seed)
+			game_room.round.hero_choices = hero_choices
+		PHASE.GAME:
+			game_room.round.hero_choices = hero_choices
+			arena.catch_up(round_seed)
+			for id in hero_choices:
+				var hero_name = hero_choices[id]
+				if not hero_name: # still pick_phase
+					continue # break?
+				create_player(id, hero_name, Vector3(0, 10, 0))
 
 # #################################
 # Non-logic functions
@@ -285,9 +308,9 @@ func poll_and_send():
 	for i in range(MAKE_SURE):
 		game_room.network.send_input.rpc_id(1, last_input.serialize())
 
-func create_player(id, player_name, pos):
+func create_player(id, hero_name, pos):
 	var is_self = game_room.network.multiplayer.get_unique_id() == id
-	var player: Hero = Hero.create(id, player_name, pos, is_self, game_room)
+	var player: Hero = Hero.create(id, hero_name, pos, is_self, game_room)
 	var init_state = player.get_state()
 	entities.add_child(player)
 	if is_self:

@@ -19,6 +19,7 @@ const PICK_PHASE_DURATION = 5
 const DRAW_WAIT_DURATION = 1
 const DISPLAY_FINAL_RESULT_DURATION = 7
 
+const ROOM_MAX_PLAYERS = 2
 
 const GRAVITY: int = 200
 const KILL_HEIGHT: int = -800 # 0.5 * A * t^2, 2 seconds, A = 200, D = 800
