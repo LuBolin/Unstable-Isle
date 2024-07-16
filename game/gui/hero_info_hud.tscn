@@ -11,28 +11,28 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8o8kd"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_asyhn"]
 resource_local_to_scene = true
 shader = ExtResource("3_fhher")
 shader_parameter/cooldown = 5.0
 shader_parameter/current_cooldown = 0.0
 shader_parameter/is_atlas = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_66yjf"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x5xwx"]
 resource_local_to_scene = true
 shader = ExtResource("3_fhher")
 shader_parameter/cooldown = 5.0
 shader_parameter/current_cooldown = 0.0
 shader_parameter/is_atlas = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_knwoh"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ma2fw"]
 resource_local_to_scene = true
 shader = ExtResource("3_fhher")
 shader_parameter/cooldown = 5.0
 shader_parameter/current_cooldown = 0.0
 shader_parameter/is_atlas = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ffoj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_screa"]
 resource_local_to_scene = true
 shader = ExtResource("3_fhher")
 shader_parameter/cooldown = 5.0
@@ -92,20 +92,19 @@ size_flags_horizontal = 4
 mouse_filter = 2
 
 [node name="Spell" parent="Aligner/SpellIndicatorsHbox" instance=ExtResource("2_21hdc")]
-material = SubResource("ShaderMaterial_8o8kd")
+material = SubResource("ShaderMaterial_asyhn")
 layout_mode = 2
 
 [node name="Spell2" parent="Aligner/SpellIndicatorsHbox" instance=ExtResource("2_21hdc")]
-material = SubResource("ShaderMaterial_66yjf")
+material = SubResource("ShaderMaterial_x5xwx")
 layout_mode = 2
 
 [node name="Spell3" parent="Aligner/SpellIndicatorsHbox" instance=ExtResource("2_21hdc")]
-material = SubResource("ShaderMaterial_knwoh")
+material = SubResource("ShaderMaterial_ma2fw")
 layout_mode = 2
 
 [node name="Spell4" parent="Aligner/SpellIndicatorsHbox" instance=ExtResource("2_21hdc")]
-material = SubResource("ShaderMaterial_5ffoj")
+material = SubResource("ShaderMaterial_screa")
 layout_mode = 2
 
-[node name="Spacer" type="Label" parent="Aligner"]
-layout_mode = 2
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

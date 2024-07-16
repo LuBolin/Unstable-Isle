@@ -25,8 +25,9 @@ colors = PackedColorArray(0.114897, 0.114897, 0.114897, 1)
 gradient = SubResource("Gradient_cd80l")
 fill_to = Vector2(1, 1)
 
-[node name="SpellIndicator" type="MarginContainer"]
-custom_minimum_size = Vector2(64, 64)
+[node name="SpellIndicator" type="Control"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -38,33 +39,61 @@ offset_right = 40.0
 offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("2_gatkw")
+
+[node name="Aligner" type="HBoxContainer" parent="."]
+layout_mode = 2
+offset_right = 302.0
+offset_bottom = 80.0
+
+[node name="SpellIndicator" type="MarginContainer" parent="Aligner"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 tooltip_text = "Some magical spell"
+mouse_filter = 0
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
-script = ExtResource("2_gatkw")
 
-[node name="SpellIcon" type="TextureRect" parent="."]
+[node name="SpellIcon" type="TextureRect" parent="Aligner/SpellIndicator"]
 material = SubResource("ShaderMaterial_w7dk0")
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
-mouse_filter = 2
 
-[node name="CooldownOverlay" type="TextureRect" parent="."]
+[node name="CooldownOverlay" type="TextureRect" parent="Aligner/SpellIndicator"]
 material = SubResource("ShaderMaterial_ei4sd")
 layout_mode = 2
 texture = SubResource("GradientTexture2D_ykbh6")
 
-[node name="CooldownLabel" type="Label" parent="."]
+[node name="CooldownLabel" type="Label" parent="Aligner/SpellIndicator"]
 layout_mode = 2
 horizontal_alignment = 1
 
-[node name="StatusBorder" type="ReferenceRect" parent="."]
+[node name="StatusBorder" type="ReferenceRect" parent="Aligner/SpellIndicator"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 border_color = Color(1, 1, 0.168627, 1)
 border_width = 4.0
 editor_only = false
+
+[node name="SpellDescription" type="PanelContainer" parent="Aligner"]
+z_index = 1
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="SpellDescLabel" type="Label" parent="Aligner/SpellDescription"]
+visible = false
+layout_mode = 2
+text = "Magic missle boom pew pow!
+"
+
+[node name="HoverDetect" type="Panel" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

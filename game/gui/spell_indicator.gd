@@ -8,17 +8,22 @@ const CASTPOINT_BORDER_COLOR = Color.YELLOW
 const DEFAULT_BORDER_COLOR = Color.WEB_GREEN
 const COOLDOWN_BORDER_COLOR = Color.BLACK
 
-@onready var spell_icon = $SpellIcon
-@onready var cooldown_overlay = $CooldownOverlay
-@onready var cooldown_label = $CooldownLabel
-@onready var status_border = $StatusBorder
+@onready var spell_icon = $Aligner/SpellIndicator/SpellIcon
+@onready var cooldown_overlay = $Aligner/SpellIndicator/CooldownOverlay
+@onready var cooldown_label = $Aligner/SpellIndicator/CooldownLabel
+@onready var status_border = $Aligner/SpellIndicator/StatusBorder
+
+@onready var spell_desc_label = $Aligner/SpellDescription/SpellDescLabel
+
+@onready var hover_detect: Panel = $HoverDetect
 
 var spell_desc: String
 var my_spell: SpellList.Spell
-#var hovered = false
-#func _init():
-	#mouse_entered.connect(func(): hovered = true)
-	#mouse_exited.connect(func(): hovered = false)
+
+func _ready():
+	print("Readied")
+	hover_detect.mouse_entered.connect(func(): print("A"); spell_desc_label.show())
+	hover_detect.mouse_exited.connect(func(): print("b"); spell_desc_label.hide())
 
 func reset():
 	spell_icon.set_texture(null)
@@ -48,7 +53,7 @@ func set_spell(hah: HeroAssetHolder, spell: String):
 			my_spell = spell_list.ulti_spell
 	spell_icon.set_texture(txtr)
 	spell_desc = desc
-	set_tooltip_text(desc)
+	spell_desc_label.set_text(spell_desc)
 
 func process():
 	pass

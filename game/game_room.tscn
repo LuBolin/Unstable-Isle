@@ -59,6 +59,7 @@ script = ExtResource("9_yo23v")
 [node name="ClientSpecifics" type="Node" parent="."]
 
 [node name="Misc" type="Node3D" parent="ClientSpecifics"]
+visible = false
 
 [node name="ThirdPersonCam" type="Camera3D" parent="ClientSpecifics/Misc"]
 transform = Transform3D(1, 0, 0, 0, 0.422618, 0.906308, 0, -0.906308, 0.422618, 0, 400, 200)
@@ -87,6 +88,7 @@ grow_vertical = 2
 script = ExtResource("5_r84ri")
 
 [node name="Chat" parent="ClientSpecifics/GUI" instance=ExtResource("8_kmi4j")]
+visible = false
 layout_mode = 1
 offset_left = 6.0
 offset_right = 6.0
@@ -107,4 +109,5 @@ layout_mode = 1
 layout_mode = 1
 
 [node name="InputPoller" type="Node3D" parent="ClientSpecifics"]
+visible = false
 script = ExtResource("11_15ryg")
