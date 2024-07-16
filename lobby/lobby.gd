@@ -154,8 +154,8 @@ func update_clients_about_rooms():
 	network.refresh_room_list.rpc(s)
 
 # Lobby Client Specific
-func _on_logged_in(username: String):
-	self.username = username
-	username_label.set_text("[color=orange][u]"+username+"[/u][/color]")
+func _on_logged_in(un: String):
+	self.username = un
+	username_label.set_text("[color=orange][u]"+un+"[/u][/color]")
 	login.hide()
 	main_lobby_gui.show()

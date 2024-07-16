@@ -12,13 +12,23 @@ var spell_list: SpellList
 
 const hero_node = preload("res://entities/heroes/common/base_hero.tscn")
 
+const MAX_HEALTH = 20
+
 var controller_id: int # netwprl unique id
-var health: int = 20 :
+var health: int = MAX_HEALTH:
 	set(new_health):
+		new_health = clampi(new_health, 0, MAX_HEALTH)
 		health = new_health
-		var l = get_node_or_null("HealthLabel")
-		if l:
-			l.set_text("Health: %s" % [str(health)])
+		
+		var health_bar_container = get_node_or_null("HealthBar")
+		var subviewport = health_bar_container.get_node("SubViewport")
+		var health_bar = subviewport.get_child(0)
+		var health_label = health_bar.get_child(0)
+		
+		health_bar.set_value(health)
+		# space on the right, serving as a margin
+		var format_string = "%2d "
+		health_label.set_text(format_string % health)
 
 var game_room: GameRoom
 @onready var state_manager: StateManager = $StateManager
@@ -69,6 +79,13 @@ func init(c_id: int, name: String,
 		var ring = get_node("Base/Ring")
 		# Inspector -> Resource -> Local to Scene
 		ring.get_mesh().surface_get_material(0).albedo_color = Color.GREEN
+		
+		var health_bar_container = get_node_or_null("HealthBar")
+		var subviewport = health_bar_container.get_node("SubViewport")
+		var heath_bar = subviewport.get_child(0)
+		var fill_stylebox: StyleBoxFlat = heath_bar.get("theme_override_styles/fill")
+		fill_stylebox.bg_color = Color.GREEN
+		# else keep as red
 	position = initial_pos
 
 func _enter_tree():

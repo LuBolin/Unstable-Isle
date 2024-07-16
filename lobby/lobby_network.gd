@@ -46,7 +46,7 @@ func refresh_room_list(room):
 	refresh_lobby_rooms.emit(room)
 
 
-func _on_client_connected(id):
+func _on_client_connected(_id):
 	# print(str(id) + " connected to lobby")
 	pass
 
