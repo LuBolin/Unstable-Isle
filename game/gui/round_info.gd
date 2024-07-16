@@ -32,10 +32,10 @@ func _prep_started(_game_seed):
 	update_player_list()
 	round_result_label.hide()
 
-func _process(delta):
+func _process(_delta):
 	update_player_list()
 
-func _hero_picked(hero_name, id):
+func _hero_picked(_hero_name, _id):
 	update_player_list()
 
 func _round_started():
@@ -168,12 +168,12 @@ func _game_ended():
 	var score_username_dict = {}
 	for p in game_room.players:
 		var p_data = game_room.players[p]
-		var score = p_data['score']
+		var p_score = p_data['score']
 		var username = p_data['username']
-		if score in score_username_dict:
-			score_username_dict[score].append(username)
+		if p_score in score_username_dict:
+			score_username_dict[p_score].append(username)
 		else:
-			score_username_dict[score] = [username]
+			score_username_dict[p_score] = [username]
 	var score = Settings.SCORE_TO_WIN
 	while score >= 0:
 		if score not in score_username_dict:
