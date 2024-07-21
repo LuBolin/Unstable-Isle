@@ -21,9 +21,8 @@ var spell_desc: String
 var my_spell: SpellList.Spell
 
 func _ready():
-	print("Readied")
-	hover_detect.mouse_entered.connect(func(): print("A"); spell_desc_label.show())
-	hover_detect.mouse_exited.connect(func(): print("b"); spell_desc_label.hide())
+	hover_detect.mouse_entered.connect(func(): spell_desc_label.show())
+	hover_detect.mouse_exited.connect(func(): spell_desc_label.hide())
 
 func reset():
 	spell_icon.set_texture(null)
