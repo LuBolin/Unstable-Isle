@@ -153,6 +153,7 @@ skeleton = NodePath("")
 
 [node name="TargetLine" type="MeshInstance3D" parent="Base"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+visible = false
 mesh = SubResource("CylinderMesh_v2fqt")
 skeleton = NodePath("../..")
 

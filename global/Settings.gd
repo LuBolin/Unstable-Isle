@@ -28,6 +28,12 @@ const SCORE_TO_WIN: int = 30
 
 const POLL_PER_FRAME: float = 5
 
+# saves last X frames
+# buffer 0.1 seconds, 60fps -> 6 physics frames
+# 5 poll per frame -> 30 buffer frames
+const BUFFER_SIZE = 30
+# tolerate inputs up to 1/2 of buffer ahead of servcer
+const LEAD_TOLERANCE = BUFFER_SIZE * 0.5
 
 # Layers
 # 1: Physics

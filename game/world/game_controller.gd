@@ -14,7 +14,7 @@ const PHASE = game_room.PHASE
 # saves last X frames
 # buffer 0.1 seconds, 60fps -> 6 physics frames
 # 5 poll per frame -> 30 buffer frames
-const BUFFER_SIZE = 30
+const BUFFER_SIZE = Settings.BUFFER_SIZE
 var buffer: Array[FrameState] = []
 var current_frame: int = 0
 
@@ -203,7 +203,8 @@ func receive_input(input_dict: Dictionary, id):
 			receive_truth(buffer[i].serialize())
 
 # tolerate being up to 1/2 of buffer ahead of servcer
-const LEAD_TOLERANCE = BUFFER_SIZE * 0.5
+const LEAD_TOLERANCE = Settings.LEAD_TOLERANCE
+
 # absolute truth
 # if frame time within buffer, resimulate from there
 # else clear buffer and insert frame
@@ -254,7 +255,8 @@ func state_update(states: GameState, inputs: Dictionary):
 			if id in inputs:
 				input = inputs[id]
 			# print(states.players, " ", states.players[id])
-			var interaction = child.simulate(states.players[id], input)
+			# pass current_frame, so child knows if the input is the most recent
+			var interaction = child.simulate(states.players[id], input, current_frame)
 			interactions += interaction
 	
 	#the interactions

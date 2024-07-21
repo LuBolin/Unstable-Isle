@@ -9,7 +9,8 @@ var direction: Vector2 = Vector2.ZERO
 
 
 func enter():
-	hero.target_line.show()
+	# hero.target_line.show()
+	pass
 
 func exit():
 	hero.target_line.hide()
