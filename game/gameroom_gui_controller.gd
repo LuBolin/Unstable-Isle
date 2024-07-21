@@ -10,6 +10,8 @@ var game_room: GameRoom:
 @onready var hero_info_hud = $HeroInfoHUD
 @onready var chat = $Chat
 
+var is_spectator = false
+
 func _ready():
 	game_room.round.prep_started.connect(start_prep)
 	game_room.round.round_started.connect(start_round)
@@ -22,16 +24,18 @@ func start_prep(_game_seed: int):
 	
 	hero_picker.set_visible(not game_room.network.multiplayer.is_server())
 	round_info.set_visible(true)
-	hero_info_hud.set_visible(false)
+	hero_info_hud.hide()
 
 func spectator_caughtup(_catchup_dict):
 	hero_info_hud.hide()
 	hero_picker.random_button.hide()
 	chat.hide()
+	is_spectator = true
 
 func start_round():
 	hero_picker.set_visible(false)
-	hero_info_hud.set_visible(true)
+	if not is_spectator:
+		hero_info_hud.set_visible(true)
 
 func game_ended():
 	menu_overlay.set_visible(false)
