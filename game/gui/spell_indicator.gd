@@ -16,6 +16,7 @@ const COOLDOWN_BORDER_COLOR = Color.BLACK
 @onready var spell_desc_label = $Aligner/SpellDescription/SpellDescLabel
 
 @onready var hover_detect: Panel = $HoverDetect
+@onready var input_prompt: TextureRect = $InputPrompt/InputPrompt
 
 var spell_desc: String
 var my_spell: SpellList.Spell
@@ -33,6 +34,7 @@ func set_spell(hah: HeroAssetHolder, spell: String):
 	var spell_list = hah.spell_list
 	var txtr: Texture2D
 	var desc: String
+	var input_prompt_txtr: Texture2D
 	match spell:
 		'atk':
 			txtr = hah.atk_icon
@@ -50,9 +52,11 @@ func set_spell(hah: HeroAssetHolder, spell: String):
 			txtr = hah.ult_icon
 			desc = hah.ult_description
 			my_spell = spell_list.ulti_spell
+	input_prompt_txtr = Settings.input_prompt_txtr_dict[spell]
 	spell_icon.set_texture(txtr)
 	spell_desc = desc
 	spell_desc_label.set_text(spell_desc)
+	input_prompt.set_texture(input_prompt_txtr)
 
 func process():
 	pass

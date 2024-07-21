@@ -35,6 +35,13 @@ const BUFFER_SIZE = 30
 # tolerate inputs up to 1/2 of buffer ahead of servcer
 const LEAD_TOLERANCE = BUFFER_SIZE * 0.5
 
+# var, because we may want to allow custom controls
+var input_prompt_txtr_dict = {
+	'atk': preload("res://resources/input_prompts/mouse_left_outline.png"),
+	'fst': preload('res://resources/input_prompts/keyboard_q_outline.png'),
+	'scd': preload('res://resources/input_prompts/keyboard_w_outline.png'),
+	'ult': preload('res://resources/input_prompts/keyboard_r_outline.png')
+}
 # Layers
 # 1: Physics
 # 4: Input World Boundary Plane
