@@ -95,7 +95,8 @@ func _enter_tree():
 	var cam: BirdsEye3DCamera = get_viewport().get_camera_3d()
 	if not cam:
 		return
-	cam.target_hero = self
+	if self.is_self:
+		cam.target_hero = self
 
 func simulate(state: PlayerState, input: PlayerInput, current_frame: int):
 	position = state.position
