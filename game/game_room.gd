@@ -13,6 +13,8 @@ var poller: InputPoller:
 	get: poller = poller if poller else get_node("ClientSpecifics/InputPoller"); return poller
 var client_specifics: Node:
 	get: client_specifics = client_specifics if client_specifics else get_node("ClientSpecifics"); return client_specifics
+var bgm: AudioStreamPlayer:
+	get: bgm = bgm if bgm else get_node("GameBGM"); return bgm
 
 var username: String
 var mutiplayer: SceneMultiplayer = SceneMultiplayer.new()
@@ -57,6 +59,7 @@ func get_connected_players():
 
 func _enter_tree():
 	get_tree().set_multiplayer(mutiplayer, self.get_path())
+	bgm.play()
 
 func create_room(port: int):
 	network.create_server(port)
