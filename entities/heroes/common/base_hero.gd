@@ -9,16 +9,27 @@ var hero_assets: HeroAssetHolder
 var spell_list: SpellList
 
 @onready var target_line: MeshInstance3D = $Base/TargetLine
+@onready var input_indicator: PackedScene = preload("res://entities/heroes/common/input_indicator.tscn")
 
 const hero_node = preload("res://entities/heroes/common/base_hero.tscn")
 
+const MAX_HEALTH = 20
+
 var controller_id: int # netwprl unique id
-var health: int = 20 :
+var health: int = MAX_HEALTH:
 	set(new_health):
+		new_health = clampi(new_health, 0, MAX_HEALTH)
 		health = new_health
-		var l = get_node_or_null("HealthLabel")
-		if l:
-			l.set_text("Health: %s" % [str(health)])
+		
+		var health_bar_container = get_node_or_null("HealthBar")
+		var subviewport = health_bar_container.get_node("SubViewport")
+		var health_bar = subviewport.get_child(0)
+		var health_label = health_bar.get_child(0)
+		
+		health_bar.set_value(health)
+		# space on the right, serving as a margin
+		var format_string = "%2d "
+		health_label.set_text(format_string % health)
 
 var game_room: GameRoom
 @onready var state_manager: StateManager = $StateManager
@@ -26,6 +37,7 @@ var game_room: GameRoom
 @onready var status_manager: StatusManager = $StatusManager
 var movement
 
+var is_self = false
 var interrupted = false
 var statuses: Dictionary = {}
 @onready var status_label = $StatusLabel
@@ -65,19 +77,28 @@ func init(c_id: int, name: String,
 	get_node("Paper").set_texture(hero_assets.portrait_icon)
 
 	self.name = name
+	self.is_self = is_self
 	if is_self:
 		var ring = get_node("Base/Ring")
 		# Inspector -> Resource -> Local to Scene
 		ring.get_mesh().surface_get_material(0).albedo_color = Color.GREEN
+		
+		var health_bar_container = get_node_or_null("HealthBar")
+		var subviewport = health_bar_container.get_node("SubViewport")
+		var heath_bar = subviewport.get_child(0)
+		var fill_stylebox: StyleBoxFlat = heath_bar.get("theme_override_styles/fill")
+		fill_stylebox.bg_color = Color.GREEN
+		# else keep as red
 	position = initial_pos
 
 func _enter_tree():
 	var cam: BirdsEye3DCamera = get_viewport().get_camera_3d()
 	if not cam:
 		return
-	cam.target_hero = self
+	if self.is_self:
+		cam.target_hero = self
 
-func simulate(state: PlayerState, input: PlayerInput):
+func simulate(state: PlayerState, input: PlayerInput, current_frame: int):
 	position = state.position
 	health = state.health
 	var hs = state.hero_state # HeroState.decode(state.hero_state)
@@ -109,6 +130,17 @@ func simulate(state: PlayerState, input: PlayerInput):
 	var unit_interactions = unit_manager.simulate(state.derivatives, input)
 	interactions += unit_interactions
 	
+	if input and self.is_self:
+		var diff = current_frame - input.frame
+		if diff <= Settings.LEAD_TOLERANCE:
+			var x = input_indicator.instantiate()
+			x.set_as_top_level(true)
+			add_child(x)
+			x.global_position = Vector3(
+				input.target.x,
+				0,
+				input.target.y,
+				)
 	
 	return interactions
 

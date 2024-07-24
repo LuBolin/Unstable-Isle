@@ -1,0 +1,106 @@
+[gd_scene load_steps=12 format=3 uid="uid://f6tebjyg04p0"]
+
+[ext_resource type="Script" path="res://entities/heroes/common/input_indicator.gd" id="1_kut4g"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_okujh"]
+resource_local_to_scene = true
+albedo_color = Color(0, 0.427451, 0, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_da36y"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_okujh")
+inner_radius = 13.0
+outer_radius = 15.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ft1k5"]
+albedo_color = Color(0, 0.752941, 0, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_285pr"]
+material = SubResource("StandardMaterial3D_ft1k5")
+size = Vector3(5, 4, 0.1)
+
+[sub_resource type="Gradient" id="Gradient_moh4u"]
+colors = PackedColorArray(0, 0.752941, 0, 1, 0.627451, 0.627451, 0.627451, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jcgr8"]
+gradient = SubResource("Gradient_moh4u")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k7p6g"]
+transparency = 1
+albedo_texture = SubResource("GradientTexture1D_jcgr8")
+
+[sub_resource type="QuadMesh" id="QuadMesh_0ubcf"]
+material = SubResource("StandardMaterial3D_k7p6g")
+size = Vector2(12, 3)
+
+[sub_resource type="Animation" id="Animation_3frlt"]
+resource_name = "shrink"
+length = 0.8
+tracks/0/type = "scale_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Ring")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 1, 1, 1, 0.8, 1, 0, 0, 0)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_l1pfy"]
+_data = {
+"shrink": SubResource("Animation_3frlt")
+}
+
+[node name="InputIndicator" type="Node3D"]
+script = ExtResource("1_kut4g")
+
+[node name="Ring" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("TorusMesh_da36y")
+skeleton = NodePath("")
+
+[node name="Arrow" type="MeshInstance3D" parent="Ring"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -1, 3)
+mesh = SubResource("PrismMesh_285pr")
+skeleton = NodePath("")
+
+[node name="Trail" type="MeshInstance3D" parent="Ring/Arrow"]
+transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, -1, -4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, 1, 0, -7, -3.0598e-07)
+mesh = SubResource("QuadMesh_0ubcf")
+skeleton = NodePath("../../..")
+
+[node name="Arrow2" type="MeshInstance3D" parent="Ring"]
+transform = Transform3D(-1, -8.74228e-08, -3.82137e-15, 0, -4.37114e-08, 1, -8.74228e-08, 1, 4.37114e-08, 0, -1, -3)
+mesh = SubResource("PrismMesh_285pr")
+skeleton = NodePath("")
+
+[node name="Trail" type="MeshInstance3D" parent="Ring/Arrow2"]
+transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, -1, -4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, 1, 0, -7, -3.0598e-07)
+mesh = SubResource("QuadMesh_0ubcf")
+skeleton = NodePath("../../..")
+
+[node name="Arrow3" type="MeshInstance3D" parent="Ring"]
+transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, -3, -1, -1.31134e-07)
+mesh = SubResource("PrismMesh_285pr")
+skeleton = NodePath("")
+
+[node name="Trail" type="MeshInstance3D" parent="Ring/Arrow3"]
+transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, -1, -4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, 1, 0, -7, -3.0598e-07)
+mesh = SubResource("QuadMesh_0ubcf")
+skeleton = NodePath("../../..")
+
+[node name="Arrow4" type="MeshInstance3D" parent="Ring"]
+transform = Transform3D(1.31134e-07, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, -1.31134e-07, -5.73206e-15, 3, -1, 1.31134e-07)
+mesh = SubResource("PrismMesh_285pr")
+skeleton = NodePath("")
+
+[node name="Trail" type="MeshInstance3D" parent="Ring/Arrow4"]
+transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, -1, -4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, 1, 0, -7, -3.0598e-07)
+mesh = SubResource("QuadMesh_0ubcf")
+skeleton = NodePath("../../..")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_l1pfy")
+}
+autoplay = "shrink"
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

@@ -9,6 +9,7 @@ extends Control
 @onready var username_label: RichTextLabel = $LobbyGUI/MainAndSideHBox/Controls/Username
 @onready var refresh_rooms_timer = $RefreshRoomsTimer
 @onready var main_lobby_gui = $LobbyGUI/MainAndSideHBox
+@onready var lobby_bgm = $LobbyBGM
 
 
 const LOBBY_SERVER_ADDRESS = '127.0.0.1'
@@ -62,6 +63,7 @@ func create_room():
 			room.create_room(port)
 			room.room_started.connect(func(): update_clients_about_rooms())
 			room.room_closed.connect(func(): close_room(port))
+			lobby_bgm.stop()
 			
 			server_instances[port] = room
 			new_port = port
@@ -78,6 +80,7 @@ func join_room(ip, port):
 	# only the game, which is node3d, will still be visible
 	self.set_visible(false)
 	server_instances[port] = room
+	lobby_bgm.stop()
 	room.self_disconnected.connect(func(): disconnect_self(port))
 
 func request_join_room(client_id: int, port: int):
@@ -100,6 +103,8 @@ func disconnect_self(port: int):
 	if port in server_instances:
 		server_instances[port].queue_free()
 	server_instances.erase(port)
+	if server_instances.is_empty():
+		lobby_bgm.play()
 
 func close_room(port: int):
 	self.set_visible(true)
@@ -111,6 +116,8 @@ func close_room(port: int):
 		room.queue_free()
 		rooms_container.remove_child(room)
 	server_instances.erase(port)
+	if server_instances.is_empty():
+		lobby_bgm.play()
 	update_clients_about_rooms()
 
 # Lobby start-up functions
@@ -130,6 +137,7 @@ func launch_as_lobby_server():
 		main_lobby_gui.show()
 		username_label.set_text("[center][color=pink][b]"
 			+"LOBBY HOST"+"[/b][/color][/center]")
+	lobby_bgm.stop()
 	return success
 
 func launch_as_lobby_client():
@@ -138,6 +146,7 @@ func launch_as_lobby_client():
 	mutiplayer.multiplayer_peer = peer
 	login.show()
 	main_lobby_gui.hide()
+	lobby_bgm.play()
 
 
 # Lobby Host Specific
@@ -154,8 +163,8 @@ func update_clients_about_rooms():
 	network.refresh_room_list.rpc(s)
 
 # Lobby Client Specific
-func _on_logged_in(username: String):
-	self.username = username
-	username_label.set_text("[color=orange][u]"+username+"[/u][/color]")
+func _on_logged_in(un: String):
+	self.username = un
+	username_label.set_text("[color=orange][u]"+un+"[/u][/color]")
 	login.hide()
 	main_lobby_gui.show()

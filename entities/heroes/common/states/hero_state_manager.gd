@@ -69,7 +69,10 @@ func _physics_process(delta):
 	pass
 
 func _process(delta):
-	#var new_state = current_state.process_frame(delta)
+	# graphical simulations
+	# such as target line
+	current_state.process_frame(delta)
+	#var new_state = 
 	#if new_state:
 	#	change_state(new_state)
 	$"../StatusLabel".apply_status(state_statuses)

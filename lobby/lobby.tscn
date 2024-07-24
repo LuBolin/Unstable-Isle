@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bqoa02rehrcau"]
+[gd_scene load_steps=7 format=3 uid="uid://bqoa02rehrcau"]
 
 [ext_resource type="Theme" uid="uid://chv8tthirups8" path="res://lobby/base_ui_theme.tres" id="1_gs7h1"]
 [ext_resource type="Script" path="res://lobby/lobby.gd" id="2_83rwl"]
 [ext_resource type="Script" path="res://lobby/lobby_gui.gd" id="3_yh7kv"]
 [ext_resource type="Script" path="res://lobby/lobby_login.gd" id="4_kkprd"]
 [ext_resource type="Script" path="res://lobby/lobby_network.gd" id="4_xlaaj"]
+[ext_resource type="AudioStream" uid="uid://y8n4ijh5jxe" path="res://resources/sounds/lobby_bgm.mp3" id="6_8pfu6"]
 
 [node name="Wrapper" type="Node"]
 
@@ -169,5 +170,10 @@ script = ExtResource("4_xlaaj")
 [node name="RefreshRoomsTimer" type="Timer" parent="Lobby"]
 wait_time = 3.0
 autostart = true
+
+[node name="LobbyBGM" type="AudioStreamPlayer" parent="Lobby"]
+stream = ExtResource("6_8pfu6")
+volume_db = -15.0
+autoplay = true
 
 [node name="Rooms" type="Node" parent="."]

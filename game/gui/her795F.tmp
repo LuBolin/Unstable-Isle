@@ -1,0 +1,108 @@
+[gd_scene load_steps=9 format=3 uid="uid://cwor7os8b7cbr"]
+
+[ext_resource type="Script" path="res://game/gui/hero_info_hud.gd" id="1_s2d8o"]
+[ext_resource type="PackedScene" uid="uid://cgdsl76obnvw6" path="res://game/gui/spell_indicator.tscn" id="2_21hdc"]
+[ext_resource type="Shader" path="res://game/gui/spell_cooldown.gdshader" id="3_fhher"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2tqrr"]
+bg_color = Color(0.701961, 0, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gw2y0"]
+resource_local_to_scene = true
+shader = ExtResource("3_fhher")
+shader_parameter/cooldown = 5.0
+shader_parameter/current_cooldown = 0.0
+shader_parameter/is_atlas = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v4a2x"]
+resource_local_to_scene = true
+shader = ExtResource("3_fhher")
+shader_parameter/cooldown = 5.0
+shader_parameter/current_cooldown = 0.0
+shader_parameter/is_atlas = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_srol8"]
+resource_local_to_scene = true
+shader = ExtResource("3_fhher")
+shader_parameter/cooldown = 5.0
+shader_parameter/current_cooldown = 0.0
+shader_parameter/is_atlas = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_epn7w"]
+resource_local_to_scene = true
+shader = ExtResource("3_fhher")
+shader_parameter/cooldown = 5.0
+shader_parameter/current_cooldown = 0.0
+shader_parameter/is_atlas = true
+
+[node name="HeroInfoHUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_s2d8o")
+
+[node name="Aligner" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -166.0
+offset_top = -111.0
+offset_right = 166.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="Aligner"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_styles/fill = SubResource("StyleBoxFlat_2tqrr")
+max_value = 20.0
+step = 1.0
+value = 5.0
+
+[node name="HealthLabel" type="Label" parent="Aligner/HealthBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+text = "HP: "
+
+[node name="SpellIndicatorsHbox" type="HBoxContainer" parent="Aligner"]
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+
+[node name="Spell" parent="Aligner/SpellIndicatorsHbox" instance=ExtResource("2_21hdc")]
+material = SubResource("ShaderMaterial_gw2y0")
+layout_mode = 2
+
+[node name="Spell2" parent="Aligner/SpellIndicatorsHbox" instance=ExtResource("2_21hdc")]
+material = SubResource("ShaderMaterial_v4a2x")
+layout_mode = 2
+
+[node name="Spell3" parent="Aligner/SpellIndicatorsHbox" instance=ExtResource("2_21hdc")]
+material = SubResource("ShaderMaterial_srol8")
+layout_mode = 2
+
+[node name="Spell4" parent="Aligner/SpellIndicatorsHbox" instance=ExtResource("2_21hdc")]
+material = SubResource("ShaderMaterial_epn7w")
+layout_mode = 2

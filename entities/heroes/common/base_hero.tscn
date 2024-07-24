@@ -1,7 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://dqmbhtd1nghrs"]
+[gd_scene load_steps=23 format=3 uid="uid://dqmbhtd1nghrs"]
 
 [ext_resource type="Script" path="res://entities/heroes/common/base_hero.gd" id="1_vaswu"]
-[ext_resource type="Script" path="res://entities/heroes/common/StatusLabel.gd" id="3_8atvv"]
+[ext_resource type="Script" path="res://entities/heroes/common/statusLabel.gd" id="3_kctb3"]
 [ext_resource type="PackedScene" uid="uid://dxukvbn3aiys5" path="res://entities/paper.tscn" id="4_54hav"]
 [ext_resource type="Script" path="res://entities/heroes/common/states/hero_state_manager.gd" id="5_xogyf"]
 [ext_resource type="Script" path="res://entities/heroes/common/states/idle_state.gd" id="6_umsh3"]
@@ -108,6 +108,29 @@ cache/0/2000/0/kerning_overrides/2000/0 = Vector2(0, 0)
 [sub_resource type="PlaneMesh" id="PlaneMesh_ai7x0"]
 size = Vector2(40, 2)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pkdvh"]
+bg_color = Color(0.0470588, 0.0470588, 0.0470588, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_45gxt"]
+resource_local_to_scene = true
+bg_color = Color(0.701961, 0, 0, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_5agar"]
+viewport_path = NodePath("HealthBar/SubViewport")
+
 [node name="Hero" type="CharacterBody3D"]
 collision_mask = 3
 script = ExtResource("1_vaswu")
@@ -130,19 +153,12 @@ skeleton = NodePath("")
 
 [node name="TargetLine" type="MeshInstance3D" parent="Base"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+visible = false
 mesh = SubResource("CylinderMesh_v2fqt")
 skeleton = NodePath("../..")
 
 [node name="Paper" parent="." instance=ExtResource("4_54hav")]
 transform = Transform3D(64, 0, 0, 0, 64, 0, 0, 0, 64, 0, 14, -4)
-
-[node name="HealthLabel" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 31.2479, -20)
-outline_modulate = Color(1, 0, 0, 1)
-text = "Health: X"
-font = SubResource("FontFile_3qmkq")
-font_size = 2000
-outline_size = 127
 
 [node name="StatusLabel" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 38.8783, -32.2845)
@@ -150,7 +166,7 @@ outline_modulate = Color(0, 0.552941, 0.913725, 1)
 font = SubResource("FontFile_3qmkq")
 font_size = 2000
 outline_size = 127
-script = ExtResource("3_8atvv")
+script = ExtResource("3_kctb3")
 
 [node name="Bar" type="MeshInstance3D" parent="StatusLabel"]
 transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, -8.86602, -0.202503)
@@ -213,3 +229,46 @@ collision_mask = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16)
 target_position = Vector3(0, -2, 0)
 collision_mask = 2
+
+[node name="HealthBar" type="Node3D" parent="."]
+transform = Transform3D(4, 0, 0, 0, 2, 3.4641, 0, -3.4641, 2, 0, 31, -19)
+
+[node name="SubViewport" type="SubViewport" parent="HealthBar"]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(1024, 192)
+
+[node name="HealthBar" type="ProgressBar" parent="HealthBar/SubViewport"]
+custom_minimum_size = Vector2(4, 1)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -512.0
+offset_top = -96.0
+offset_right = 512.0
+offset_bottom = 96.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_styles/background = SubResource("StyleBoxFlat_pkdvh")
+theme_override_styles/fill = SubResource("StyleBoxFlat_45gxt")
+max_value = 20.0
+step = 1.0
+value = 20.0
+
+[node name="HealthLabel" type="Label" parent="HealthBar/SubViewport/HealthBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 240
+text = "20 "
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ViewportTexture" type="Sprite3D" parent="HealthBar"]
+texture = SubResource("ViewportTexture_5agar")

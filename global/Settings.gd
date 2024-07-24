@@ -24,11 +24,24 @@ const ROOM_MAX_PLAYERS = 2
 const GRAVITY: int = 200
 const KILL_HEIGHT: int = -800 # 0.5 * A * t^2, 2 seconds, A = 200, D = 800
 
-const SCORE_TO_WIN: int = 30
+const SCORE_TO_WIN: int = 3
 
 const POLL_PER_FRAME: float = 5
 
+# saves last X frames
+# buffer 0.1 seconds, 60fps -> 6 physics frames
+# 5 poll per frame -> 30 buffer frames
+const BUFFER_SIZE = 30
+# tolerate inputs up to 1/2 of buffer ahead of servcer
+const LEAD_TOLERANCE = BUFFER_SIZE * 0.5
 
+# var, because we may want to allow custom controls
+var input_prompt_txtr_dict = {
+	'atk': preload("res://resources/input_prompts/mouse_left_outline.png"),
+	'fst': preload('res://resources/input_prompts/keyboard_q_outline.png'),
+	'scd': preload('res://resources/input_prompts/keyboard_w_outline.png'),
+	'ult': preload('res://resources/input_prompts/keyboard_r_outline.png')
+}
 # Layers
 # 1: Physics
 # 4: Input World Boundary Plane
