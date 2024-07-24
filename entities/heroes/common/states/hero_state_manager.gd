@@ -14,7 +14,7 @@ var hero: Hero
 @export var cast_state: HeroState
 @export var death_state: HeroState
 
-var pending_state: HeroState
+var current_input: PlayerInput
 var pending_input: PlayerInput
 #var prev_state: HeroState
 var current_state: HeroState
@@ -43,7 +43,6 @@ func change_state(new_state: HeroState):
 	if current_state == new_state:
 		return
 	
-	
 	if current_state:
 		current_state.exit()
 
@@ -52,8 +51,6 @@ func change_state(new_state: HeroState):
 	current_state.enter()
 	$StateLabel.set_text(current_state.name)
 
-func queue_pending_state(p_state: HeroState):
-	pending_state = p_state
 
 #Currently does nothing (none of the states have process_input)
 func _input(event):
@@ -89,25 +86,22 @@ func simulate(hs: HeroState, input: PlayerInput):
 	# move then need to process right click to set target
 	# if state does not change in simulate_input,
 	# new_state will be null, and we continue
+	
 	var visited = []
 	while new_state:
 		visited.append(current_state)
+		if input == null:
+			input = pending_input
 		new_state = current_state.simulate_input(input)
 		if new_state:
 			change_state(new_state)
+			current_input = input
+			pending_input = null
 			# transition back, and end simulate input
 			if new_state in visited:
 				break
 		else:
-			pending_state = simulate_input(input)
 			pending_input = input
-	if current_state == idle_state and not pending_state == null:
-		change_state(pending_state)
-		input = pending_input
-		current_state.simulate_input(input)
-		pending_state = null
-		pending_input = null
-		#currently cast_state having issues with not being initialised
 	
 	hs.clean_up()
 	# TODO: simulate statuses
@@ -123,17 +117,6 @@ func simulate(hs: HeroState, input: PlayerInput):
 	interactions += state_interactions
 	return interactions
 
-func simulate_input(input: PlayerInput):
-	if not input:
-		return null
-
-	if input.key in SpellList.cast_keys:
-		return cast_state
-	
-	if input.key == MOUSE_BUTTON_RIGHT:
-		return move_state
-
-	return null
 
 func decode(hs_state: Dictionary) -> HeroState:
 	var state_name = hs_state['state_name']

@@ -31,6 +31,8 @@ func process_physics(delta: float) -> Array:
 	if hero.health <= 0:
 		return [func(): sm.change_state(sm.death_state)]
 		
+	if not cast_point:
+		return [func(): sm.change_state(sm.idle_state)]
 	cast_point -= delta
 	if "Stunned" in sm.state_statuses or "Silenced" in sm.state_statuses:
 		cast_point = spell.cast_point
