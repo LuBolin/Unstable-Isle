@@ -27,7 +27,6 @@ func process_physics(delta: float) -> Array:
 		return [func(): sm.change_state(sm.death_state)]
 	if hero.position.y <= Settings.KILL_HEIGHT:
 		return [func(): sm.change_state(sm.death_state)]
-	
 	if hero.interrupted:
 		hero.interrupted = false
 		return []
