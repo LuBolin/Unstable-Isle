@@ -48,8 +48,9 @@ func simulate(unit_states):
 				continue
 			if target is Hero:
 				var slow = CosmicDragonBreathSlow.new()
-				slow.create(hero, slow.total_duration)
+				slow.create(hero, slow.total_duration, direction)
 				target.apply_status(slow)
+				interactions.append(func(): target.movement.push(direction, 300))
 	if lifespan < 0:
 		var node = self
 		var parent = get_parent()

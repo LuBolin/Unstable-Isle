@@ -58,3 +58,8 @@ func move(target: Vector2, delta: float) -> void:
 			hero.position.x = target.x
 			hero.position.z = target.y
 	
+func push(direction, multiplier):
+	var dirn: Vector3 = Vector3(
+		direction.x, 0, direction.y)
+	hero.velocity = dirn.normalized() * multiplier
+	hero.move_and_slide()
