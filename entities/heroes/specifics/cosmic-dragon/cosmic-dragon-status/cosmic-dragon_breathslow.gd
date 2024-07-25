@@ -11,15 +11,18 @@ var duration
 var total_duration = 3
 var h_id
 var id = "CosmicDragonBreathSlow"
+var direction
 
-func create(hero, d):
+func create(hero, d, dir):
 	h_id = hero.controller_id
 	duration = d
+	direction = dir
 
 func simulate(hero, state, input):
 	var interactions = []
 	var delta = get_physics_process_delta_time()
 	duration = state["duration"]
+	direction = state["direction"]
 	h_id = state["h_id"]
 	hero.modify_speed(0.5)
 	duration -= delta
@@ -32,4 +35,4 @@ func simulate(hero, state, input):
 	return interactions
 
 func get_state():
-	return {"h_id" : h_id, "duration" : duration}
+	return {"h_id" : h_id, "duration" : duration, "direction" : direction}
