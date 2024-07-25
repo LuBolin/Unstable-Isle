@@ -32,7 +32,7 @@ func _init():
 	)
 	
 	first_spell = Spell.new(
-		0.0, 0.1, "first_spell",
+		0.01, 0.1, "first_spell",
 		func (hero: Hero, target: Vector2):
 			var current_part = get_part(hero)
 			match current_part:
@@ -49,7 +49,7 @@ func _init():
 	)
 	
 	second_spell = Spell.new(
-		0.0, 0.1, "second_spell",
+		0.01, 0.1, "second_spell",
 		func (hero: Hero, target: Vector2):
 			var current_part = get_part(hero)
 			match current_part:
@@ -70,7 +70,7 @@ func _init():
 	)
 	
 	ulti_spell = Spell.new(
-		0.0, 0.1, "ulti_spell",
+		0.01, 0.1, "ulti_spell",
 		func (hero: Hero, target: Vector2):
 			create_part(hero)
 			cycle_part(hero)

@@ -90,18 +90,12 @@ func simulate(hs: HeroState, input: PlayerInput):
 	var visited = []
 	while new_state:
 		visited.append(current_state)
-		if input == null:
-			input = pending_input
 		new_state = current_state.simulate_input(input)
 		if new_state:
 			change_state(new_state)
-			current_input = input
-			pending_input = null
 			# transition back, and end simulate input
 			if new_state in visited:
 				break
-		else:
-			pending_input = input
 	
 	hs.clean_up()
 	# TODO: simulate statuses
