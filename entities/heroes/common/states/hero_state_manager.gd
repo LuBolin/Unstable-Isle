@@ -14,7 +14,9 @@ var hero: Hero
 @export var cast_state: HeroState
 @export var death_state: HeroState
 
-var prev_state: HeroState
+var current_input: PlayerInput
+var pending_input: PlayerInput
+#var prev_state: HeroState
 var current_state: HeroState
 
 var status_label: Label3D
@@ -44,11 +46,13 @@ func change_state(new_state: HeroState):
 	if current_state:
 		current_state.exit()
 
-	prev_state = current_state
+	#prev_state = current_state
 	current_state = new_state
 	current_state.enter()
 	$StateLabel.set_text(current_state.name)
 
+
+#Currently does nothing (none of the states have process_input)
 func _input(event):
 	var new_state = current_state.process_input(event)
 	if new_state:
@@ -82,6 +86,7 @@ func simulate(hs: HeroState, input: PlayerInput):
 	# move then need to process right click to set target
 	# if state does not change in simulate_input,
 	# new_state will be null, and we continue
+	
 	var visited = []
 	while new_state:
 		visited.append(current_state)
@@ -91,6 +96,7 @@ func simulate(hs: HeroState, input: PlayerInput):
 			# transition back, and end simulate input
 			if new_state in visited:
 				break
+	
 	hs.clean_up()
 	# TODO: simulate statuses
 	
@@ -104,6 +110,7 @@ func simulate(hs: HeroState, input: PlayerInput):
 	var state_interactions = current_state.process_physics(delta)
 	interactions += state_interactions
 	return interactions
+
 
 func decode(hs_state: Dictionary) -> HeroState:
 	var state_name = hs_state['state_name']

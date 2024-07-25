@@ -23,7 +23,10 @@ func move(target: Vector2, delta: float) -> void:
 	var dirn: Vector3 = Vector3(
 		target.x - hero.position.x, 0,
 		target.y - hero.position.z)
-	if position != Vector3(target.x, hero.position.y, target.y):
+	#if position != Vector3(target.x, hero.position.y, target.y):
+		#$MovingTowardsVoidCheck.look_at(Vector3(target.x, hero.position.y, target.y))
+	#if origin is on same location will cause an error
+	if not $MovingTowardsVoidCheck.global_transform.origin.is_equal_approx(Vector3(target.x, hero.position.y, target.y)):
 		$MovingTowardsVoidCheck.look_at(Vector3(target.x, hero.position.y, target.y))
 	
 	var moving_towards_void = false
