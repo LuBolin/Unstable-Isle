@@ -306,6 +306,8 @@ func poll_and_send():
 	var last_input: PlayerInput = game_room.poller.poll_game_input(current_frame)
 	if not last_input:
 		return
+	if buffer.size() == 0:
+		return
 	buffer[buffer.size() - 1].inputs[game_room.mutiplayer.get_unique_id()] = last_input
 	for i in range(MAKE_SURE):
 		game_room.network.send_input.rpc_id(1, last_input.serialize())
