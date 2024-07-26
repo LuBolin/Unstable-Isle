@@ -116,8 +116,8 @@ func close_room(port: int):
 		room.queue_free()
 		rooms_container.remove_child(room)
 	server_instances.erase(port)
-	if server_instances.is_empty():
-		lobby_bgm.play()
+	#if server_instances.is_empty():
+		#lobby_bgm.play()
 	update_clients_about_rooms()
 
 # Lobby start-up functions
@@ -146,7 +146,7 @@ func launch_as_lobby_client():
 	mutiplayer.multiplayer_peer = peer
 	login.show()
 	main_lobby_gui.hide()
-	lobby_bgm.play()
+	#lobby_bgm.play()
 
 
 # Lobby Host Specific

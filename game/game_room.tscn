@@ -115,4 +115,3 @@ script = ExtResource("11_15ryg")
 
 [node name="GameBGM" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("14_sgquc")
-autoplay = true
