@@ -11,28 +11,28 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_a6a60"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8j13q"]
 resource_local_to_scene = true
 shader = ExtResource("3_fhher")
 shader_parameter/cooldown = 5.0
 shader_parameter/current_cooldown = 0.0
 shader_parameter/is_atlas = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vfbtx"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_grqts"]
 resource_local_to_scene = true
 shader = ExtResource("3_fhher")
 shader_parameter/cooldown = 5.0
 shader_parameter/current_cooldown = 0.0
 shader_parameter/is_atlas = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_s8bco"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lv8bq"]
 resource_local_to_scene = true
 shader = ExtResource("3_fhher")
 shader_parameter/cooldown = 5.0
 shader_parameter/current_cooldown = 0.0
 shader_parameter/is_atlas = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qg210"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rcwtm"]
 resource_local_to_scene = true
 shader = ExtResource("3_fhher")
 shader_parameter/cooldown = 5.0
@@ -92,19 +92,19 @@ size_flags_horizontal = 4
 mouse_filter = 2
 
 [node name="Spell" parent="Aligner/SpellIndicatorsHbox" instance=ExtResource("2_21hdc")]
-material = SubResource("ShaderMaterial_a6a60")
+material = SubResource("ShaderMaterial_8j13q")
 layout_mode = 2
 
 [node name="Spell2" parent="Aligner/SpellIndicatorsHbox" instance=ExtResource("2_21hdc")]
-material = SubResource("ShaderMaterial_vfbtx")
+material = SubResource("ShaderMaterial_grqts")
 layout_mode = 2
 
 [node name="Spell3" parent="Aligner/SpellIndicatorsHbox" instance=ExtResource("2_21hdc")]
-material = SubResource("ShaderMaterial_s8bco")
+material = SubResource("ShaderMaterial_lv8bq")
 layout_mode = 2
 
 [node name="Spell4" parent="Aligner/SpellIndicatorsHbox" instance=ExtResource("2_21hdc")]
-material = SubResource("ShaderMaterial_qg210")
+material = SubResource("ShaderMaterial_rcwtm")
 layout_mode = 2
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

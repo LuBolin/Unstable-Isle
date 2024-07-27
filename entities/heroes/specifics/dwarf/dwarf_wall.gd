@@ -2,6 +2,7 @@ class_name DwarfWall
 extends StaticBody3D
 
 @onready var initial_stun_shape_cast: ShapeCast3D = $InitialStunShapeCast
+@onready var ground_damage_shape_cast: ShapeCast3D = $GroundDamageShapeCast
 
 const bullet_scene = preload("res://entities/heroes/specifics/dwarf/dwarf_wall.tscn")
 
@@ -64,12 +65,26 @@ func simulate(unit_states):
 			hits.append(collider)
 			if collider.get("health"):
 				interactions.append(func(): collider.health -= 1)
+				
 			if collider is Hero:
 				var stun = DwarfWallStun.new()
 				stun.create(hero, stun.total_duration)
 				#interactions.append(func(): target.apply_status(slow))
 				collider.apply_status(stun)
-	
+		
+		# ground damage is only handled by server
+		if hero.game_room.mutiplayer.is_server():
+			var ground_hits = []
+			ground_damage_shape_cast.target_position = Vector3.ZERO
+			ground_damage_shape_cast.force_shapecast_update()
+			for target in ground_damage_shape_cast.collision_result:
+				var collider = target['collider']
+				if collider in ground_hits:
+					continue
+				ground_hits.append(collider)
+				if collider is GroundChunk:
+					interactions.append(func(): collider.hit())
+		
 	lifespan -= delta
 	var node = self
 	var parent = get_parent()

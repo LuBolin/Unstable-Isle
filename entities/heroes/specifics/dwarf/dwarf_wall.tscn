@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://boji8mtgtk17e"]
+[gd_scene load_steps=9 format=3 uid="uid://boji8mtgtk17e"]
 
 [ext_resource type="Script" path="res://entities/heroes/specifics/dwarf/dwarf_wall.gd" id="1_dovuv"]
 
@@ -21,6 +21,9 @@ size = Vector3(10, 20, 160)
 [sub_resource type="BoxShape3D" id="BoxShape3D_f5rie"]
 size = Vector3(10, 20, 160)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_k7ps3"]
+size = Vector3(10, 30, 140)
+
 [node name="DwarfWall" type="StaticBody3D"]
 collision_layer = 3
 collision_mask = 0
@@ -35,5 +38,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, -92)
 mesh = SubResource("BoxMesh_bdxr8")
 
 [node name="InitialStunShapeCast" type="ShapeCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, -92)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11, -92)
 shape = SubResource("BoxShape3D_f5rie")
+
+[node name="GroundDamageShapeCast" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -102)
+shape = SubResource("BoxShape3D_k7ps3")
+collision_mask = 2
