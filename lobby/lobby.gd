@@ -139,7 +139,14 @@ func launch_as_lobby_server():
 		main_lobby_gui.show()
 		username_label.set_text("[center][color=pink][b]"
 			+"LOBBY HOST"+"[/b][/color][/center]")
-	lobby_bgm.stop()
+		
+		var master_bus_name := "Master"
+		var master_bus_index: int = AudioServer.get_bus_index(master_bus_name)
+		AudioServer.set_bus_volume_db(
+			master_bus_index,
+			linear_to_db(0)
+		)
+		lobby_bgm.stop()
 	return success
 
 func launch_as_lobby_client():
