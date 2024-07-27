@@ -5,8 +5,6 @@ const bullet_scene = preload("res://entities/heroes/specifics/wizard/wizard_stor
 
 @onready var storm_cloud_cast = $ShapeCast3D
 
-@onready var ray: MeshInstance3D = $Mesh/Ray
-
 @onready var strike_anim: AnimationPlayer = $StrikeAnim
 
 const SPEED = 50

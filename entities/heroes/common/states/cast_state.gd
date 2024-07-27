@@ -66,7 +66,7 @@ func simulate_input(input: PlayerInput):
 		cast_point = spell.cast_point
 		target = input.target
 	#what the idk the syntax below so
-	return null if spell else null #used to be sm.prev_state
+	return null if spell else sm.idle_state
 	
 	if input.key == MOUSE_BUTTON_RIGHT:
 		return sm.move_state

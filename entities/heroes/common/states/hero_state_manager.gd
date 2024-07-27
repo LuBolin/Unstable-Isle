@@ -17,7 +17,7 @@ var hero: Hero
 
 var current_input: PlayerInput
 var pending_input: PlayerInput
-#var prev_state: HeroState
+var prev_state: HeroState
 var current_state: HeroState
 
 var status_label: Label3D
@@ -47,7 +47,7 @@ func change_state(new_state: HeroState):
 	if current_state:
 		current_state.exit()
 
-	#prev_state = current_state
+	prev_state = current_state
 	current_state = new_state
 	current_state.enter()
 	$StateLabel.set_text(current_state.name)

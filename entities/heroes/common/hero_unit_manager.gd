@@ -18,7 +18,7 @@ func simulate(unit_states, input: PlayerInput):
 	unit_states = unit_states["unit_states"]
 	var interactions = []
 	for child in get_children():
-		if child.id in unit_states:
+		if child.id in unit_states and child.type == unit_states[child.id]["type"]: #pls work
 			var unit_state = unit_states[child.id]
 			var interaction = child.simulate(unit_state)
 			unit_states.erase(child.id)
