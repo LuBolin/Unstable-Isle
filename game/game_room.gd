@@ -59,7 +59,7 @@ func get_connected_players():
 
 func _enter_tree():
 	get_tree().set_multiplayer(mutiplayer, self.get_path())
-	bgm.play()
+	#bgm.play()
 
 func create_room(port: int):
 	network.create_server(port)
