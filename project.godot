@@ -20,6 +20,10 @@ config/icon="res://resources/icon.png"
 Settings="*res://global/settings.gd"
 Serializables="*res://global/serializables.gd"
 
+[display]
+
+window/stretch/mode="viewport"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/curvemesh3d/plugin.cfg", "res://addons/gdDelaunay/plugin.cfg")
