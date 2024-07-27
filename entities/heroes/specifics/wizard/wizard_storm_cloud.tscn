@@ -1,0 +1,88 @@
+[gd_scene load_steps=11 format=3 uid="uid://cx4wx31sec6i4"]
+
+[ext_resource type="Script" path="res://entities/heroes/specifics/wizard/wizard_storm_cloud.gd" id="1_ea61c"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_v6md7"]
+frequency = 0.0118
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1j44u"]
+noise = SubResource("FastNoiseLite_v6md7")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_40m5h"]
+transparency = 1
+albedo_color = Color(0, 0.117647, 0.239216, 0.74902)
+albedo_texture = SubResource("NoiseTexture2D_1j44u")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ihl02"]
+material = SubResource("StandardMaterial3D_40m5h")
+top_radius = 36.0
+bottom_radius = 36.0
+height = 30.0
+cap_bottom = false
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_1apyk"]
+height = 30.0
+radius = 36.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_i2w0o"]
+
+[sub_resource type="Animation" id="Animation_ixhjk"]
+resource_name = "strike"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mesh/MeshInstance3D:mesh:material:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.117647, 0.270588, 0.4, 1), Color(0, 0.117647, 0.239216, 0.74902)]
+}
+
+[sub_resource type="Animation" id="Animation_kj4ed"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mesh/MeshInstance3D:mesh:material:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0.117647, 0.239216, 0.74902)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pmpi1"]
+_data = {
+"RESET": SubResource("Animation_kj4ed"),
+"strike": SubResource("Animation_ixhjk")
+}
+
+[node name="WizardStormCloud" type="CharacterBody3D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_ea61c")
+
+[node name="Mesh" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, 0)
+mesh = SubResource("CylinderMesh_ihl02")
+skeleton = NodePath("../..")
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16, 0)
+shape = SubResource("CylinderShape3D_1apyk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_i2w0o")
+
+[node name="StrikeAnim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_pmpi1")
+}

@@ -2,14 +2,14 @@
 
 [ext_resource type="Texture2D" uid="uid://bsujwiafa6sbv" path="res://entities/heroes/specifics/wizard/wizard.png" id="1_bf6r3"]
 [ext_resource type="Script" path="res://entities/heroes/common/hero_asset_holder.gd" id="1_ckoev"]
-[ext_resource type="Resource" uid="uid://514b4oo67uov" path="res://entities/heroes/specifics/bc/bc_spell_list.tres" id="3_un4mx"]
+[ext_resource type="Resource" uid="uid://dj47mu0q12itw" path="res://entities/heroes/specifics/wizard/wizard_spell_list.tres" id="3_a1bex"]
 
 [resource]
 script = ExtResource("1_ckoev")
 hero_name = "Wizard"
 picker_texture = ExtResource("1_bf6r3")
-atk_description = "Wizard Basic Attack"
-fst_description = "Wizard First Spell"
-scd_description = "Wizard Second Spell"
-ult_description = "Thundegod's Wrath"
-spell_list = ExtResource("3_un4mx")
+atk_description = "Fire bolt"
+fst_description = "Sun ray"
+scd_description = "Storm cloud"
+ult_description = "Sun ray air strike"
+spell_list = ExtResource("3_a1bex")
