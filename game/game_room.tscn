@@ -90,7 +90,6 @@ grow_vertical = 2
 script = ExtResource("5_r84ri")
 
 [node name="Chat" parent="ClientSpecifics/GUI" instance=ExtResource("8_kmi4j")]
-visible = false
 layout_mode = 1
 offset_left = 6.0
 offset_right = 6.0

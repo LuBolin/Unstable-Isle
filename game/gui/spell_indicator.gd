@@ -8,12 +8,12 @@ const CASTPOINT_BORDER_COLOR = Color.YELLOW
 const DEFAULT_BORDER_COLOR = Color.WEB_GREEN
 const COOLDOWN_BORDER_COLOR = Color.BLACK
 
-@onready var spell_icon = $Aligner/SpellIndicator/SpellIcon
-@onready var cooldown_overlay = $Aligner/SpellIndicator/CooldownOverlay
-@onready var cooldown_label = $Aligner/SpellIndicator/CooldownLabel
-@onready var status_border = $Aligner/SpellIndicator/StatusBorder
+@onready var spell_icon = $Aligner2/Aligner/SpellIndicator/SpellIcon
+@onready var cooldown_overlay = $Aligner2/Aligner/SpellIndicator/CooldownOverlay
+@onready var cooldown_label = $Aligner2/Aligner/SpellIndicator/CooldownLabel
+@onready var status_border = $Aligner2/Aligner/SpellIndicator/StatusBorder
 
-@onready var spell_desc_label = $Aligner/SpellDescription/SpellDescLabel
+@onready var spell_desc_label = $Aligner2/SpellDescription/SpellDescLabel
 
 @onready var hover_detect: Panel = $HoverDetect
 @onready var input_prompt: TextureRect = $InputPrompt/InputPrompt

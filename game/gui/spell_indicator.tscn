@@ -55,12 +55,29 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_gatkw")
 
-[node name="Aligner" type="HBoxContainer" parent="."]
-layout_mode = 2
-offset_right = 302.0
-offset_bottom = 80.0
+[node name="Aligner2" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_top = -225.0
+offset_right = 226.0
+offset_bottom = 92.0
+alignment = 2
 
-[node name="SpellIndicator" type="MarginContainer" parent="Aligner"]
+[node name="SpellDescription" type="PanelContainer" parent="Aligner2"]
+z_index = 1
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="SpellDescLabel" type="Label" parent="Aligner2/SpellDescription"]
+visible = false
+layout_mode = 2
+text = "Magic missle boom pew pow!
+"
+autowrap_mode = 2
+
+[node name="Aligner" type="HBoxContainer" parent="Aligner2"]
+layout_mode = 2
+
+[node name="SpellIndicator" type="MarginContainer" parent="Aligner2/Aligner"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -71,37 +88,26 @@ theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="SpellIcon" type="TextureRect" parent="Aligner/SpellIndicator"]
+[node name="SpellIcon" type="TextureRect" parent="Aligner2/Aligner/SpellIndicator"]
 material = SubResource("ShaderMaterial_w7dk0")
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 
-[node name="CooldownOverlay" type="TextureRect" parent="Aligner/SpellIndicator"]
+[node name="CooldownOverlay" type="TextureRect" parent="Aligner2/Aligner/SpellIndicator"]
 material = SubResource("ShaderMaterial_ei4sd")
 layout_mode = 2
 texture = SubResource("GradientTexture2D_ykbh6")
 
-[node name="CooldownLabel" type="Label" parent="Aligner/SpellIndicator"]
+[node name="CooldownLabel" type="Label" parent="Aligner2/Aligner/SpellIndicator"]
 layout_mode = 2
 horizontal_alignment = 1
 
-[node name="StatusBorder" type="ReferenceRect" parent="Aligner/SpellIndicator"]
+[node name="StatusBorder" type="ReferenceRect" parent="Aligner2/Aligner/SpellIndicator"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 border_color = Color(1, 1, 0.168627, 1)
 border_width = 4.0
 editor_only = false
-
-[node name="SpellDescription" type="PanelContainer" parent="Aligner"]
-z_index = 1
-layout_mode = 2
-size_flags_vertical = 0
-
-[node name="SpellDescLabel" type="Label" parent="Aligner/SpellDescription"]
-visible = false
-layout_mode = 2
-text = "Magic missle boom pew pow!
-"
 
 [node name="InputPrompt" type="Panel" parent="."]
 custom_minimum_size = Vector2(32, 32)
