@@ -15,10 +15,10 @@ extends Resource
 		scd_icon.set_region(scd_region)
 		ult_icon.set_atlas(texture)
 		ult_icon.set_region(ult_region)
-@export var atk_description: String = "Basic Attack"
-@export var fst_description: String = "First Spell"
-@export var scd_description: String = "Second Spell"
-@export var ult_description: String = "Ultimate"
+@export_multiline var atk_description: String = "Basic Attack"
+@export_multiline var fst_description: String = "First Spell"
+@export_multiline var scd_description: String = "Second Spell"
+@export_multiline var ult_description: String = "Ultimate"
 @export var spell_list: SpellList
 
 var texture_width: int = 64

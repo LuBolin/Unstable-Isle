@@ -9,7 +9,9 @@ script = ExtResource("2_tomr0")
 hero_name = "Cosmic-Dragon"
 picker_texture = ExtResource("1_a1voo")
 atk_description = "Balls"
-fst_description = "Rapid swings"
-scd_description = "Bomb (Destroys terrain)"
+fst_description = "Head - Dragon Breath: knockbacks and slows in targeted direction
+Body - Balls in: Reduces Orbit radius
+Tail - Wish: Creates a healing circle in a random location"
+scd_description = "die"
 ult_description = "Wall (With initial stun)"
 spell_list = ExtResource("3_pkkyb")
