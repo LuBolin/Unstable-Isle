@@ -35,6 +35,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme = ExtResource("1_7341g")
 script = ExtResource("1_v3gvd")
 hero_assets_list = Array[Resource("res://entities/heroes/common/hero_asset_holder.gd")]([ExtResource("2_c85x3"), ExtResource("3_q33y3"), ExtResource("5_pw5a2")])
@@ -47,6 +48,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = SubResource("CanvasTexture_buqeu")
 
 [node name="RegionControl" type="HBoxContainer" parent="."]
@@ -56,6 +58,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="HeroInfo" type="MarginContainer" parent="RegionControl"]
 custom_minimum_size = Vector2(381, 566)
@@ -64,6 +67,7 @@ size_flags_vertical = 4
 
 [node name="Portrait" type="GridContainer" parent="RegionControl/HeroInfo"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="Hero Name" type="Label" parent="RegionControl/HeroInfo/Portrait"]
 layout_mode = 2
@@ -73,16 +77,20 @@ theme_type_variation = &"HeaderLarge"
 [node name="Hero Portrait" type="TextureRect" parent="RegionControl/HeroInfo/Portrait"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 texture = SubResource("AtlasTexture_x26ag")
 expand_mode = 5
 
 [node name="Spacer" type="Label" parent="RegionControl/HeroInfo/Portrait"]
+visible = false
 layout_mode = 2
 
 [node name="Spacer2" type="Label" parent="RegionControl/HeroInfo/Portrait"]
+visible = false
 layout_mode = 2
 
 [node name="Spacer3" type="Label" parent="RegionControl/HeroInfo/Portrait"]
+visible = false
 layout_mode = 2
 
 [node name="Spells" type="GridContainer" parent="RegionControl/HeroInfo"]
@@ -107,6 +115,7 @@ offset_right = 417.0
 offset_bottom = 123.5
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="SelectHeroLabel" type="Label" parent="RegionControl/HeroList/VBoxContainer"]
 layout_mode = 2

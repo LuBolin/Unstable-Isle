@@ -73,14 +73,19 @@ func _on_hero_button_clicked(
 	for spell in spells:
 		var icon = TextureRect.new()
 		icon.set_texture(hero_choice.get(spell[0]))
+		icon.set_custom_minimum_size(Vector2(64, 64))
+		icon.set_stretch_mode(4)
 		hero_spells_inspector.add_child(icon)
 		
+		var scroll = ScrollContainer.new()
 		var label = Label.new()
-		label.size = Vector2(3000, 200)
+		scroll.set_custom_minimum_size(Vector2(300, 0))
+		label.set_custom_minimum_size(Vector2(300, 0))
 		label.set_text(hero_choice.get(spell[1]))
 		# AutowrapMode AUTOWRAP_WORD_SMART = 3
-		label.set_autowrap_mode(0)
-		hero_spells_inspector.add_child(label)
+		label.set_autowrap_mode(3)
+		scroll.add_child(label)
+		hero_spells_inspector.add_child(scroll)
 	
 	if not choice:
 		return
