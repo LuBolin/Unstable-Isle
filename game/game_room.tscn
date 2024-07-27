@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cq3fw2li54bru"]
+[gd_scene load_steps=23 format=3 uid="uid://cq3fw2li54bru"]
 
 [ext_resource type="Script" path="res://game/world/world_camera.gd" id="1_0tqhe"]
 [ext_resource type="Script" path="res://game/game_room.gd" id="1_b4ycu"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://game/game_round.gd" id="9_yo23v"]
 [ext_resource type="Script" path="res://game/input_poller.gd" id="11_15ryg"]
 [ext_resource type="PackedScene" uid="uid://cwor7os8b7cbr" path="res://game/gui/hero_info_hud.tscn" id="11_obc47"]
+[ext_resource type="PackedScene" uid="uid://cjktmbwx1ggf7" path="res://global/settings_panel.tscn" id="13_yyijb"]
 [ext_resource type="AudioStream" uid="uid://daj0f3sl3ocxo" path="res://resources/sounds/game_bgm.mp3" id="14_sgquc"]
 
 [sub_resource type="Gradient" id="Gradient_238p4"]
@@ -107,6 +108,9 @@ mouse_filter = 2
 layout_mode = 1
 
 [node name="MenuOverlay" parent="ClientSpecifics/GUI" instance=ExtResource("4_wre41")]
+layout_mode = 1
+
+[node name="Settings" parent="ClientSpecifics/GUI" instance=ExtResource("13_yyijb")]
 layout_mode = 1
 
 [node name="InputPoller" type="Node3D" parent="ClientSpecifics"]

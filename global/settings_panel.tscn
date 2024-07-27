@@ -1,0 +1,85 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjktmbwx1ggf7"]
+
+[ext_resource type="Texture2D" uid="uid://y34sve5n5q6o" path="res://resources/input_prompts/keyboard_escape_outline.png" id="1_swrun"]
+[ext_resource type="Script" path="res://global/user_settings.gd" id="1_tbqpm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pi3po"]
+bg_color = Color(0.027451, 0.196078, 0.247059, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+
+[node name="Settings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_tbqpm")
+
+[node name="SettingsContainer" type="MarginContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+theme_override_constants/margin_left = 192
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 192
+theme_override_constants/margin_bottom = 80
+
+[node name="PanelContainer" type="PanelContainer" parent="SettingsContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pi3po")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsContainer/PanelContainer"]
+layout_mode = 2
+mouse_filter = 0
+
+[node name="quarter" type="Control" parent="SettingsContainer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SettingsVBox" type="VBoxContainer" parent="SettingsContainer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+mouse_filter = 0
+
+[node name="SettingsLabel" type="Label" parent="SettingsContainer/PanelContainer/HBoxContainer/SettingsVBox"]
+layout_mode = 2
+mouse_filter = 0
+theme_override_font_sizes/font_size = 40
+text = "Settings
+"
+horizontal_alignment = 1
+
+[node name="BackgroundVolumeLabel" type="Label" parent="SettingsContainer/PanelContainer/HBoxContainer/SettingsVBox"]
+layout_mode = 2
+mouse_filter = 0
+text = "Background Volume"
+
+[node name="BackgroundVolumeSlider" type="HSlider" parent="SettingsContainer/PanelContainer/HBoxContainer/SettingsVBox"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+
+[node name="quarter2" type="Control" parent="SettingsContainer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SettingsButton" type="Button" parent="."]
+layout_mode = 0
+offset_right = 216.0
+offset_bottom = 72.0
+scale = Vector2(0.65, 0.65)
+theme_override_font_sizes/font_size = 36
+text = "Settings"
+icon = ExtResource("1_swrun")

@@ -5,6 +5,8 @@ extends Control
 @onready var rooms_container = $"../Rooms"
 @onready var controls: LobbyGui = $LobbyGUI
 @onready var login = $LobbyGUI/LogIn
+@onready var settings = $Settings
+
 
 @onready var username_label: RichTextLabel = $LobbyGUI/MainAndSideHBox/Controls/Username
 @onready var refresh_rooms_timer = $RefreshRoomsTimer
@@ -168,3 +170,5 @@ func _on_logged_in(un: String):
 	username_label.set_text("[color=orange][u]"+un+"[/u][/color]")
 	login.hide()
 	main_lobby_gui.show()
+	if not is_lobby_host:
+		settings.show()
