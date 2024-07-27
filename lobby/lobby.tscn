@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bqoa02rehrcau"]
+[gd_scene load_steps=8 format=3 uid="uid://bqoa02rehrcau"]
 
 [ext_resource type="Theme" uid="uid://chv8tthirups8" path="res://lobby/base_ui_theme.tres" id="1_gs7h1"]
 [ext_resource type="Script" path="res://lobby/lobby.gd" id="2_83rwl"]
 [ext_resource type="Script" path="res://lobby/lobby_gui.gd" id="3_yh7kv"]
 [ext_resource type="Script" path="res://lobby/lobby_login.gd" id="4_kkprd"]
 [ext_resource type="Script" path="res://lobby/lobby_network.gd" id="4_xlaaj"]
+[ext_resource type="PackedScene" uid="uid://cjktmbwx1ggf7" path="res://global/settings_panel.tscn" id="5_4cgkn"]
 [ext_resource type="AudioStream" uid="uid://y8n4ijh5jxe" path="res://resources/sounds/lobby_bgm.mp3" id="6_8pfu6"]
 
 [node name="Wrapper" type="Node"]
@@ -36,6 +37,7 @@ grow_vertical = 2
 script = ExtResource("3_yh7kv")
 
 [node name="MainAndSideHBox" type="HBoxContainer" parent="Lobby/LobbyGUI"]
+visible = false
 layout_mode = 2
 
 [node name="MainVBox" type="VBoxContainer" parent="Lobby/LobbyGUI/MainAndSideHBox"]
@@ -88,6 +90,7 @@ layout_mode = 2
 text = "Create Room"
 
 [node name="LogIn" type="Control" parent="Lobby/LobbyGUI"]
+visible = false
 layout_mode = 2
 script = ExtResource("4_kkprd")
 
@@ -151,7 +154,7 @@ text = "Start"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MessageLabel" type="RichTextLabel" parent="Lobby"]
+[node name="MessageLabel(Deprecated)" type="RichTextLabel" parent="Lobby"]
 visible = false
 layout_mode = 1
 anchors_preset = 12
@@ -163,6 +166,18 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "Error: Failed to connect to server."
 fit_content = true
+
+[node name="Settings" parent="Lobby" instance=ExtResource("5_4cgkn")]
+visible = false
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 1132.0
+offset_bottom = 628.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="LobbyNetwork" type="Node" parent="Lobby"]
 script = ExtResource("4_xlaaj")

@@ -3,8 +3,8 @@ extends Control
 
 
 @onready var start_game_button = $StartGame
-@onready var disconnect_button = $Disconnect
-@onready var close_room_button = $CloseRoom
+@onready var disconnect_button = $BtmLeftVBox/Disconnect
+@onready var close_room_button = $BtmLeftVBox/CloseRoom
 
 @onready var gui_controller: GameroomGuiController = $".."
 var game_room: GameRoom
