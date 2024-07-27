@@ -8,7 +8,8 @@ const SPEED: float = 100.0
 var id: int
 var type = "CosmicDragonWish"
 var direction: Vector2
-var lifespan: float = 10
+const duration: float = 7
+var lifespan: float = duration
 var hero : Hero
 
 static func create(hero: Hero, target: Vector2):
@@ -38,9 +39,19 @@ func simulate(unit_states):
 	
 	lifespan -= delta
 	if lifespan < 10:
-		$MeshInstance3D.show()
+		$outer.show()
+		$inner.show()
+		$Star.show()
+		$HealParticles.show()
 	else:
-		$MeshInstance3D.hide()
+		$outer.hide()
+		$inner.hide()
+		$Star.hide()
+		$HealParticles.hide()
+	
+	var size = (duration - lifespan) / duration
+	$inner.scale = Vector3(size, size, size)
+	$Star.position = Vector3(lifespan / 2, lifespan, lifespan / 2) * 100
 	
 	if lifespan < 0:
 		var node = self
@@ -48,7 +59,6 @@ func simulate(unit_states):
 		var count = get_collision_count()
 		for i in range(count):
 			var target = get_collider(i)
-			print(target)
 			if not target.get("health") == null:
 				interactions.append(func(): target.health += 1)
 		interactions.append(func(): parent.remove_child(node); queue_free())
