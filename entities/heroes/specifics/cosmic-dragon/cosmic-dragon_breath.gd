@@ -35,7 +35,7 @@ func simulate(unit_states):
 	lifespan = unit_states['lifespan']
 	direction = unit_states['direction']
 	var delta = get_physics_process_delta_time()
-	global_position = hero.global_position + Vector3(direction.x, 0, direction.y) * 50
+	global_position = hero.global_position + Vector3(direction.x, 0.5, direction.y) * 50
 	
 	lifespan -= delta
 	look_at(global_position + Vector3(direction.x, 0, direction.y))
