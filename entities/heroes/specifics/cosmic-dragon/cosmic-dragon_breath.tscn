@@ -1,12 +1,35 @@
-[gd_scene load_steps=4 format=3 uid="uid://dwvyedwfk4pdi"]
+[gd_scene load_steps=8 format=3 uid="uid://dwvyedwfk4pdi"]
 
 [ext_resource type="Script" path="res://entities/heroes/specifics/cosmic-dragon/cosmic-dragon_breath.gd" id="1_xq43q"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3lxla"]
 size = Vector3(20, 20, 50)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ueye8"]
+transparency = 1
+albedo_color = Color(0.0627451, 0, 0.254902, 0.929412)
+
 [sub_resource type="BoxMesh" id="BoxMesh_oh5gm"]
+material = SubResource("StandardMaterial3D_ueye8")
 size = Vector3(20, 20, 50)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_at4if"]
+emission_shape_scale = Vector3(5, 5, 5)
+emission_shape = 2
+emission_sphere_radius = 1.0
+inherit_velocity_ratio = 1.0
+direction = Vector3(0, 0, -1)
+spread = 30.0
+initial_velocity_min = 25.0
+initial_velocity_max = 25.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0w3sk"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_lcxti"]
+material = SubResource("StandardMaterial3D_0w3sk")
+radius = 1.5
+height = 3.0
 
 [node name="Cosmic-dragonBreath" type="ShapeCast3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.534, 0)
@@ -17,3 +40,10 @@ script = ExtResource("1_xq43q")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.310434)
 mesh = SubResource("BoxMesh_oh5gm")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 18.9639)
+amount = 16
+lifetime = 0.8
+process_material = SubResource("ParticleProcessMaterial_at4if")
+draw_pass_1 = SubResource("SphereMesh_lcxti")

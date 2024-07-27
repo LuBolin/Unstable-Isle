@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dytyfo2bcnyn0"]
+[gd_scene load_steps=12 format=3 uid="uid://dytyfo2bcnyn0"]
 
 [ext_resource type="Script" path="res://entities/heroes/specifics/cosmic-dragon/cosmic-dragon-wish.gd" id="1_j07ja"]
 
@@ -14,11 +14,69 @@ material = SubResource("StandardMaterial3D_x5alg")
 inner_radius = 50.0
 outer_radius = 52.0
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rcnuh"]
+transparency = 1
+albedo_color = Color(1, 1, 0, 0.929412)
+
+[sub_resource type="SphereMesh" id="SphereMesh_ha4na"]
+material = SubResource("StandardMaterial3D_rcnuh")
+radius = 6.0
+height = 12.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2em4m"]
+emission_shape_scale = Vector3(5, 5, 5)
+emission_shape = 1
+emission_sphere_radius = 1.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="SphereMesh" id="SphereMesh_od6ef"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_a0ww3"]
+emission_shape_scale = Vector3(50, 20, 50)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 0.0
+direction = Vector3(0, 1, 0)
+spread = 62.349
+initial_velocity_min = 30.0
+initial_velocity_max = 30.0
+gravity = Vector3(0, 0, 0)
+scale_min = 40.0
+scale_max = 40.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8vvdf"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="TextMesh" id="TextMesh_85tbr"]
+material = SubResource("StandardMaterial3D_8vvdf")
+text = "+"
+
 [node name="Cosmic-dragon-wish" type="ShapeCast3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.53114, 0)
 shape = SubResource("CylinderShape3D_uim63")
 script = ExtResource("1_j07ja")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="outer" type="MeshInstance3D" parent="."]
 visible = false
 mesh = SubResource("TorusMesh_n5fwn")
+skeleton = NodePath("../inner")
+
+[node name="inner" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("TorusMesh_n5fwn")
+
+[node name="Star" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_ha4na")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Star"]
+visible = false
+process_material = SubResource("ParticleProcessMaterial_2em4m")
+draw_pass_1 = SubResource("SphereMesh_od6ef")
+
+[node name="HealParticles" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.422618, 0.906308, 0, -0.906308, 0.422618, 0, 0, 0)
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_a0ww3")
+draw_pass_1 = SubResource("TextMesh_85tbr")
