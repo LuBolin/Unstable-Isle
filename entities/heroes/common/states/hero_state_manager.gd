@@ -12,6 +12,7 @@ var hero: Hero
 @export var move_state: HeroState
 @export var fall_state: HeroState
 @export var cast_state: HeroState
+@export var channel_state: HeroState
 @export var death_state: HeroState
 
 var current_input: PlayerInput

@@ -25,20 +25,21 @@ func simulate(hero, state, input):
 	h_id = state["h_id"]
 	
 	#root and silence hero
-	hero.state_manager.state_statuses["Rooted"] = [duration, total_duration]
-	hero.state_manager.state_statuses["Silenced"] = [duration, total_duration]
+	hero.state_manager.state_statuses["Channeling"] = [duration, total_duration]
 	#every 0.1 seconds fire a bullet
 	if not input == null:
 		target = input.target
 	if not target == null:
 		if not floor(duration * 10) == floor((duration - delta) * 10):
-			RangerAttack.create(hero, target)
+			interactions.append(func(): RangerAttack.create(hero, target))
 	
 	duration -= delta
 	var node = self
 	var parent = get_parent()
 	if duration < 0:
 		interactions.append(func(): parent.remove_child(node); queue_free())
+	else:
+		interactions.append(func(): if "Stunned" in hero.state_manager.state_statuses: parent.remove_child(node); queue_free())
 	return interactions
 
 func get_state():

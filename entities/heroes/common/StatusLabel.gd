@@ -18,4 +18,7 @@ func apply_status(state_statuses):
 	elif "Flying" in state_statuses:
 		set_text("Flying")
 		proportion = state_statuses["Flying"][0] / state_statuses["Flying"][1]
+	elif "Channeling" in state_statuses:
+		set_text("Channeling")
+		proportion = state_statuses["Channeling"][0] / state_statuses["Channeling"][1]
 	$Bar.set_scale(Vector3(proportion, 1, 1))
