@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://wm0ovqoua01t"]
+
+[ext_resource type="Script" path="res://entities/heroes/specifics/wizard/wizard_sky_strike.gd" id="1_djjw5"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_nuq3a"]
+height = 40.0
+radius = 16.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e68fa"]
+transparency = 1
+albedo_color = Color(1, 0.580392, 0, 0.541176)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_taa6t"]
+material = SubResource("StandardMaterial3D_e68fa")
+top_radius = 16.0
+bottom_radius = 16.0
+height = 500.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_534ku"]
+albedo_color = Color(1, 0.580392, 0, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_rqv3q"]
+material = SubResource("StandardMaterial3D_534ku")
+inner_radius = 14.0
+outer_radius = 16.0
+
+[node name="WizardSkyStrike" type="Node3D"]
+script = ExtResource("1_djjw5")
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="."]
+shape = SubResource("CylinderShape3D_nuq3a")
+collision_mask = 3
+
+[node name="Mesh" type="Node3D" parent="."]
+
+[node name="Ray" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 250, 0)
+mesh = SubResource("CylinderMesh_taa6t")
+skeleton = NodePath("../..")
+
+[node name="Area" type="MeshInstance3D" parent="Mesh"]
+mesh = SubResource("TorusMesh_rqv3q")

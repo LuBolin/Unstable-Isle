@@ -2,35 +2,35 @@
 
 [ext_resource type="Script" path="res://entities/heroes/common/input_indicator.gd" id="1_kut4g"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_okujh"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o12aq"]
 resource_local_to_scene = true
 albedo_color = Color(0, 0.427451, 0, 1)
 
 [sub_resource type="TorusMesh" id="TorusMesh_da36y"]
 resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_okujh")
+material = SubResource("StandardMaterial3D_o12aq")
 inner_radius = 13.0
 outer_radius = 15.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ft1k5"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qa1tu"]
 albedo_color = Color(0, 0.752941, 0, 1)
 
 [sub_resource type="PrismMesh" id="PrismMesh_285pr"]
-material = SubResource("StandardMaterial3D_ft1k5")
+material = SubResource("StandardMaterial3D_qa1tu")
 size = Vector3(5, 4, 0.1)
 
-[sub_resource type="Gradient" id="Gradient_moh4u"]
+[sub_resource type="Gradient" id="Gradient_2714a"]
 colors = PackedColorArray(0, 0.752941, 0, 1, 0.627451, 0.627451, 0.627451, 0)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_jcgr8"]
-gradient = SubResource("Gradient_moh4u")
+gradient = SubResource("Gradient_2714a")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k7p6g"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6pjxn"]
 transparency = 1
 albedo_texture = SubResource("GradientTexture1D_jcgr8")
 
 [sub_resource type="QuadMesh" id="QuadMesh_0ubcf"]
-material = SubResource("StandardMaterial3D_k7p6g")
+material = SubResource("StandardMaterial3D_6pjxn")
 size = Vector2(12, 3)
 
 [sub_resource type="Animation" id="Animation_3frlt"]

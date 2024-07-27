@@ -42,4 +42,3 @@ func game_ended():
 	hero_picker.set_visible(false)
 	round_info.set_visible(true)
 	hero_info_hud.set_visible(false)
-	chat.set_visible(false)

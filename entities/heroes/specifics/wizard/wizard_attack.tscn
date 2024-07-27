@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://bsf54nt6au4d0"]
+
+[ext_resource type="Script" path="res://entities/heroes/specifics/wizard/wizard_attack.gd" id="1_pdv8p"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_u5jbd"]
+radius = 5.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xirui"]
+albedo_color = Color(1, 0.290196, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_rh2pl"]
+lightmap_size_hint = Vector2i(11, 6)
+material = SubResource("StandardMaterial3D_xirui")
+radius = 5.0
+height = 10.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ury1r"]
+albedo_color = Color(1, 0.290196, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_gcaoy"]
+material = SubResource("StandardMaterial3D_ury1r")
+top_radius = 10.0
+bottom_radius = 0.0
+height = 20.0
+
+[node name="WizardAttack" type="CharacterBody3D"]
+top_level = true
+collision_layer = 2
+script = ExtResource("1_pdv8p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_u5jbd")
+
+[node name="Mesh" type="Node3D" parent="."]
+
+[node name="Head" type="MeshInstance3D" parent="Mesh"]
+mesh = SubResource("SphereMesh_rh2pl")
+
+[node name="Body" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(0.5, 0, 0, 0, -4.37114e-08, 0.5, 0, -1, -2.18557e-08, 0, 0, 10)
+mesh = SubResource("CylinderMesh_gcaoy")
