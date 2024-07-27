@@ -34,7 +34,6 @@ func sync_settings():
 	)
 
 func modify_background_volume(value: float):
-	print("Set volume to ", linear_to_db(value))
 	AudioServer.set_bus_volume_db(
 		master_bus_index,
 		linear_to_db(value)
