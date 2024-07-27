@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dqmbhtd1nghrs"]
+[gd_scene load_steps=24 format=3 uid="uid://dqmbhtd1nghrs"]
 
 [ext_resource type="Script" path="res://entities/heroes/common/base_hero.gd" id="1_vaswu"]
 [ext_resource type="Script" path="res://entities/heroes/common/statusLabel.gd" id="3_kctb3"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://entities/heroes/common/states/cast_state.gd" id="9_ninn8"]
 [ext_resource type="Script" path="res://entities/heroes/common/states/death_state.gd" id="10_8c41r"]
 [ext_resource type="Script" path="res://entities/heroes/common/hero_unit_manager.gd" id="10_qqqta"]
+[ext_resource type="Script" path="res://entities/heroes/common/states/channel_state.gd" id="11_qs2pe"]
 [ext_resource type="Script" path="res://entities/heroes/common/hero_status_manager.gd" id="12_w46rw"]
 [ext_resource type="Script" path="res://entities/heroes/common/hero_movement.gd" id="13_aiud7"]
 
@@ -176,13 +177,14 @@ skeleton = NodePath("../..")
 [node name="UnitManager" type="Node3D" parent="."]
 script = ExtResource("10_qqqta")
 
-[node name="StateManager" type="Node3D" parent="." node_paths=PackedStringArray("starting_state", "idle_state", "move_state", "fall_state", "cast_state", "death_state")]
+[node name="StateManager" type="Node3D" parent="." node_paths=PackedStringArray("starting_state", "idle_state", "move_state", "fall_state", "cast_state", "channel_state", "death_state")]
 script = ExtResource("5_xogyf")
 starting_state = NodePath("Idle")
 idle_state = NodePath("Idle")
 move_state = NodePath("Move")
 fall_state = NodePath("Fall")
 cast_state = NodePath("Cast")
+channel_state = NodePath("Channel")
 death_state = NodePath("Death")
 
 [node name="Idle" type="Node3D" parent="StateManager"]
@@ -199,6 +201,9 @@ script = ExtResource("9_ninn8")
 
 [node name="Death" type="Node3D" parent="StateManager"]
 script = ExtResource("10_8c41r")
+
+[node name="Channel" type="Node3D" parent="StateManager"]
+script = ExtResource("11_qs2pe")
 
 [node name="StateLabel" type="Label3D" parent="StateManager"]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 19.2479, -11)
