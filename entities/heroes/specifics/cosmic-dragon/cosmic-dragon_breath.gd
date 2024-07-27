@@ -38,7 +38,8 @@ func simulate(unit_states):
 	global_position = hero.global_position + Vector3(direction.x, 0.5, direction.y) * 50
 	
 	lifespan -= delta
-	look_at(global_position + Vector3(direction.x, 0, direction.y))
+	if not global_transform.origin.is_equal_approx(global_position + Vector3(direction.x, 0, direction.y)):
+		look_at(global_position + Vector3(direction.x, 0, direction.y))
 	#apply every 0.2 seconds
 	if not floor(lifespan * 5) == floor((lifespan - delta) * 5):
 		var count = get_collision_count()
