@@ -18,6 +18,8 @@ func _init():
 	attack = Spell.new(
 		0.1, 1.0, "attack",
 		func (hero: Hero, target: Vector2):
+			if not create_part(hero):
+				return
 			var hero_pos = Vector2(
 						hero.global_position.x,
 						hero.global_position.z)
@@ -34,10 +36,16 @@ func _init():
 	first_spell = Spell.new(
 		0.01, 0.1, "first_spell",
 		func (hero: Hero, target: Vector2):
+			if not create_part(hero):
+				return
 			var current_part = get_part(hero)
+			var cooldown = 0
+			var cooldowns = get_cooldown(hero)
 			match current_part:
 				HEAD:
 					CosmicDragonBreath.create(hero, target)
+					cooldown = 5
+					cooldowns["CosmicDragonBreath"] = 5
 				BODY:
 					#only works because State simulates after Status
 					for status in hero.status_manager.get_children():
@@ -45,18 +53,26 @@ func _init():
 							status.orbs_out = false
 				TAIL:
 					CosmicDragonWish.create(hero, target)
-			first_spell.current_cooldown = first_spell.cooldown
+					cooldown = 6
+					cooldowns["CosmicDragonWish"] = 6
+			first_spell.current_cooldown = cooldown
 	)
 	
 	second_spell = Spell.new(
 		0.01, 0.1, "second_spell",
 		func (hero: Hero, target: Vector2):
+			if not create_part(hero):
+				return
 			var current_part = get_part(hero)
+			var cooldown = 0
+			var cooldowns = get_cooldown(hero)
 			match current_part:
 				HEAD:
 					var cosmic_dragon_flight = CosmicDragonFlight.new()
 					cosmic_dragon_flight.create(hero, cosmic_dragon_flight.total_duration)
 					hero.apply_status(cosmic_dragon_flight)
+					cooldown = 3
+					cooldowns["CosmicDragonFlight"] = 3
 				BODY:
 					#only works because State simulates after Status
 					for status in hero.status_manager.get_children():
@@ -66,15 +82,29 @@ func _init():
 					var cosmic_dragon_haste = CosmicDragonHaste.new()
 					cosmic_dragon_haste.create(hero, cosmic_dragon_haste.total_duration)
 					hero.apply_status(cosmic_dragon_haste)
-			second_spell.current_cooldown = second_spell.cooldown
+					cooldown = 4
+					cooldowns["CosmicDragonHaste"] = 4
+			second_spell.current_cooldown = cooldown
 	)
 	
 	ulti_spell = Spell.new(
 		0.01, 0.1, "ulti_spell",
 		func (hero: Hero, target: Vector2):
-			create_part(hero)
+			if not create_part(hero):
+				return
 			cycle_part(hero)
 			ulti_spell.current_cooldown = ulti_spell.cooldown
+			var cooldowns = get_cooldown(hero)
+			match get_part(hero):
+				HEAD:
+					first_spell.current_cooldown = cooldowns["CosmicDragonBreath"]
+					second_spell.current_cooldown = cooldowns["CosmicDragonFlight"]
+				BODY:
+					first_spell.current_cooldown = 0
+					second_spell.current_cooldown = 0
+				TAIL:
+					first_spell.current_cooldown = cooldowns["CosmicDragonWish"]
+					second_spell.current_cooldown = cooldowns["CosmicDragonHaste"]
 	)
 
 
@@ -89,6 +119,13 @@ func create_part(hero: Hero):
 	var orbit_status = CosmicDragonOrbit.new()
 	orbit_status.create(hero, 0)
 	hero.apply_status(orbit_status)
+	var cooldowns = CosmicDragonCooldowns.new()
+	cooldowns.create(hero, 0)
+	hero.apply_status(cooldowns)
+	attack.current_cooldown = 0.5
+	first_spell.current_cooldown = 0.5
+	second_spell.current_cooldown = 0.5
+	ulti_spell.current_cooldown = 0.5
 	return false
 
 #get which part is selected
@@ -113,6 +150,11 @@ func cycle_part(hero: Hero):
 			child.selected = next == TAIL
 	return
 
+func get_cooldown(hero: Hero):
+	for child in hero.status_manager.get_children():
+		if child is CosmicDragonCooldowns:
+			return child.cooldowns
+
 func ret_status(case):
 	match case:
 		"CosmicDragonOrbit":
@@ -125,6 +167,8 @@ func ret_status(case):
 			return CosmicDragonHaste.new()
 		"CosmicDragonBreathSlow":
 			return CosmicDragonBreathSlow.new()
+		"CosmicDragonCooldowns":
+			return CosmicDragonCooldowns.new()
 	return
 
 func ret_projectile(case):
