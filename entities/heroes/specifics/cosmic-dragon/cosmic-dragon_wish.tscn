@@ -68,6 +68,7 @@ visible = false
 mesh = SubResource("TorusMesh_n5fwn")
 
 [node name="Star" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("SphereMesh_ha4na")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Star"]
@@ -77,6 +78,7 @@ draw_pass_1 = SubResource("SphereMesh_od6ef")
 
 [node name="HealParticles" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.422618, 0.906308, 0, -0.906308, 0.422618, 0, 0, 0)
+visible = false
 amount = 16
 process_material = SubResource("ParticleProcessMaterial_a0ww3")
 draw_pass_1 = SubResource("TextMesh_85tbr")

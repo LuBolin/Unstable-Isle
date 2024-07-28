@@ -8,7 +8,7 @@ const SPEED: float = 100.0
 var id: int
 var type = "CosmicDragonWish"
 var direction: Vector2
-const duration: float = 7
+const duration: float = 10
 var lifespan: float = duration
 var hero : Hero
 
@@ -38,7 +38,7 @@ func simulate(unit_states):
 	var delta = get_physics_process_delta_time()
 	
 	lifespan -= delta
-	if lifespan < 10:
+	if lifespan < 7:
 		$outer.show()
 		$inner.show()
 		$Star.show()
