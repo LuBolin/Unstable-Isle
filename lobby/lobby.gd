@@ -13,7 +13,7 @@ extends Control
 @onready var main_lobby_gui = $LobbyGUI/MainAndSideHBox
 @onready var lobby_bgm = $LobbyBGM
 
-
+const IS_HOST = true
 const LOBBY_SERVER_ADDRESS = '127.0.0.1'
 const LOBBY_SERVER_PORT = 22400
 const GAME_PORT_RANGE = 200
@@ -31,15 +31,13 @@ var server_instances: Dictionary = {} # port, reference to object
 # client specific
 var username: String
 
-var is_host = true
-
 func _ready():
 	network.refresh_lobby_rooms.connect(controls.refresh_lobby_rooms)
 	controls.join_room.connect(func(port): network.request_join_room.rpc_id(1, port))
 	login.logged_in.connect(_on_logged_in)
 
 	get_tree().set_multiplayer(mutiplayer, self.get_path())
-	if is_host:
+	if IS_HOST:
 		is_lobby_host = launch_as_lobby_server()
 		if is_lobby_host:
 			refresh_rooms_timer.timeout.connect(update_clients_about_rooms)
