@@ -1,3 +1,4 @@
+class_name GameroomChat
 extends HBoxContainer
 
 @onready var chat_history = $ChatVBox/ChatHistory/ChatHistoryVBox
@@ -7,6 +8,10 @@ extends HBoxContainer
 var game_room: GameRoom
 
 const MAX_CHAT_HISTORY = 5
+
+var is_chatting : bool :
+	get:
+		return chat_input.has_focus()
 
 func _ready():
 	game_room = gui_controller.game_room

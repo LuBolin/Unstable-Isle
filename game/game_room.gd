@@ -48,6 +48,7 @@ var players = {}:
 		players = v
 		gui.round_info.update_player_list()
 		gui.menu_overlay.update_player_list()
+		gui.settings.update_player_list()
 
 
 func get_connected_players():
