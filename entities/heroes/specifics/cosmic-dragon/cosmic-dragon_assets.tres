@@ -8,10 +8,13 @@
 script = ExtResource("2_tomr0")
 hero_name = "Cosmic-Dragon"
 picker_texture = ExtResource("1_a1voo")
-atk_description = "Balls"
-fst_description = "Head - Dragon Breath: knockbacks and slows in targeted direction
+atk_description = "Balls that Orbit around the Body."
+fst_description = "Head - Dragon breath: knockbacks and slows in targeted direction
 Body - Balls in: Reduces Orbit radius
 Tail - Wish: Creates a healing circle in a random location"
-scd_description = "die"
-ult_description = "Wall (With initial stun)"
+scd_description = "Head - Dragon flight: Grants Flying status
+Body - Balls out: Increases Orbit radius
+Tail - Haste: Increases movement speed"
+ult_description = "Summons and cycles through Cosmic Dragon's three parts:
+Head > Tail > Body > Head"
 spell_list = ExtResource("3_pkkyb")

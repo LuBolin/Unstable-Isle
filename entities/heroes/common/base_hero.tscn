@@ -1,7 +1,7 @@
 [gd_scene load_steps=24 format=3 uid="uid://dqmbhtd1nghrs"]
 
 [ext_resource type="Script" path="res://entities/heroes/common/base_hero.gd" id="1_vaswu"]
-[ext_resource type="Script" path="res://entities/heroes/common/status_label.gd" id="3_qduua"]
+[ext_resource type="Script" path="res://entities/heroes/common/status_label.gd" id="3_brrpj"]
 [ext_resource type="PackedScene" uid="uid://dxukvbn3aiys5" path="res://entities/paper.tscn" id="4_54hav"]
 [ext_resource type="Script" path="res://entities/heroes/common/states/hero_state_manager.gd" id="5_xogyf"]
 [ext_resource type="Script" path="res://entities/heroes/common/states/idle_state.gd" id="6_umsh3"]
@@ -167,7 +167,7 @@ outline_modulate = Color(0, 0.552941, 0.913725, 1)
 font = SubResource("FontFile_3qmkq")
 font_size = 2000
 outline_size = 127
-script = ExtResource("3_qduua")
+script = ExtResource("3_brrpj")
 
 [node name="Bar" type="MeshInstance3D" parent="StatusLabel"]
 transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, -8.86602, -0.202503)
