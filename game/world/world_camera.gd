@@ -36,6 +36,7 @@ func _input(event):
 		if not target_hero:
 			if event.is_pressed and event.keycode == KEY_SPACE:
 				focus_at(cam_default_focus)
+			return
 		var game_room: GameRoom = target_hero.game_room
 		var chat: GameroomChat = game_room.gui.chat
 		if chat.is_chatting:
