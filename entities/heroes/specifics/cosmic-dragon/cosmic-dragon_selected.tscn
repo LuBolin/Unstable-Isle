@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://blvvae4i52uf2"]
+
+[ext_resource type="Script" path="res://entities/heroes/specifics/cosmic-dragon/cosmic-dragon_selected_indicator.gd" id="1_nius1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jtkjr"]
+albedo_color = Color(0.160784, 0, 1, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_lsc7g"]
+material = SubResource("StandardMaterial3D_jtkjr")
+top_radius = 3.0
+bottom_radius = 0.0
+height = 10.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1d088"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hhicm"]
+transparency = 1
+albedo_color = Color(0.176471, 0, 1, 0.85098)
+
+[sub_resource type="SphereMesh" id="SphereMesh_08dlx"]
+material = SubResource("StandardMaterial3D_hhicm")
+radius = 15.0
+height = 30.0
+
+[node name="Cosmic-dragonSelected" type="CharacterBody3D"]
+script = ExtResource("1_nius1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 47.6448, 0)
+visible = false
+mesh = SubResource("CylinderMesh_lsc7g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_1d088")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.07608, 0)
+mesh = SubResource("SphereMesh_08dlx")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.07608, 0)
+visible = false
+mesh = SubResource("SphereMesh_08dlx")
