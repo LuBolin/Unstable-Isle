@@ -116,6 +116,7 @@ func create_part(hero: Hero):
 			return true
 	CosmicDragonBody.create(hero, Vector2(0, 0))
 	CosmicDragonTail.create(hero, Vector2(0, 0))
+	CosmicDragonSelectedIndicator.create(hero, Vector2(0, 0))
 	var orbit_status = CosmicDragonOrbit.new()
 	orbit_status.create(hero, 0)
 	hero.apply_status(orbit_status)
@@ -183,3 +184,5 @@ func ret_projectile(case):
 			return CosmicDragonWish
 		"CosmicDragonBreath":
 			return CosmicDragonBreath
+		"CosmicDragonSelectedIndicator":
+			return CosmicDragonSelectedIndicator
