@@ -9,6 +9,7 @@ var game_room: GameRoom:
 @onready var round_info = $RoundInfo
 @onready var hero_info_hud = $HeroInfoHUD
 @onready var chat = $Chat
+@onready var settings = $Settings
 
 var is_spectator = false
 

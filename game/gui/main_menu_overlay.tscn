@@ -30,18 +30,29 @@ theme_override_font_sizes/font_size = 36
 toggle_mode = true
 text = "Start Game"
 
-[node name="Disconnect" type="Button" parent="."]
-layout_mode = 2
-offset_top = 590.0
-offset_right = 212.0
-offset_bottom = 648.0
-theme_override_font_sizes/font_size = 36
-text = "Disconnect"
+[node name="PleaseWaitPanel" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="CloseRoom" type="Button" parent="."]
+[node name="PleaseWaitMargin" type="MarginContainer" parent="PleaseWaitPanel"]
 layout_mode = 2
-offset_top = 528.0
-offset_right = 212.0
-offset_bottom = 586.0
-theme_override_font_sizes/font_size = 36
-text = "Close Room"
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="PleaseWaitLabel" type="Label" parent="PleaseWaitPanel/PleaseWaitMargin"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Please wait for the host to start the game."

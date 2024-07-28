@@ -16,8 +16,17 @@ const VALID_INPUTS = [
 	MOUSE_BUTTON_RIGHT # movement
 ]
 
+var gameroom_gui_controller: GameroomGuiController
+
+func _ready():
+	gameroom_gui_controller = get_parent().get_node('GUI')
+
 func _input(event):
 	if len(input_queue) > CAP:
+		return
+	var chat: GameroomChat = gameroom_gui_controller.chat
+	# inputs are to chat, not as game inputs
+	if chat.is_chatting:
 		return
 	if event is InputEvent and event.is_pressed():
 		var key = KEY_NONE

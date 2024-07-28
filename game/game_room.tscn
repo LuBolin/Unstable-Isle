@@ -111,6 +111,7 @@ layout_mode = 1
 
 [node name="Settings" parent="ClientSpecifics/GUI" instance=ExtResource("13_yyijb")]
 layout_mode = 1
+mode = 1
 
 [node name="InputPoller" type="Node3D" parent="ClientSpecifics"]
 visible = false

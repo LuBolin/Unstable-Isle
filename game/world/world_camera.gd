@@ -33,13 +33,20 @@ func _input(event):
 				panning = event.is_pressed()
 				pan_origin = get_focus_point(true)
 	elif event is InputEventKey:
+		if not target_hero:
+			if event.is_pressed and event.keycode == KEY_SPACE:
+				focus_at(cam_default_focus)
+		var game_room: GameRoom = target_hero.game_room
+		var chat: GameroomChat = game_room.gui.chat
+		if chat.is_chatting:
+			return 
 		if event.is_pressed() and event.keycode == KEY_SPACE:
 			if target_hero:
 				var temp = target_hero.global_position
 				focus_at(Vector2(temp.x, temp.z))
 			else:
 				focus_at(cam_default_focus)
-		elif event.is_pressed() and event.keycode == KEY_CAPSLOCK:
+		elif event.is_pressed and event.keycode == KEY_CAPSLOCK:
 			edge_pan = not edge_pan
 
 func _process(delta: float) -> void:
