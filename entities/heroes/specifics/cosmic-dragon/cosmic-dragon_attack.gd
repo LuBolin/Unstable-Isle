@@ -38,7 +38,6 @@ func simulate(unit_states):
 	orbit_angle = unit_states['orbit_angle']
 	lifespan = unit_states['lifespan']
 	var delta = get_physics_process_delta_time()
-	
 	#orbit around body
 	orbit_angle += orbit_speed * delta
 	var body = null
