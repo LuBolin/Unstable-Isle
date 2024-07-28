@@ -11,5 +11,5 @@ picker_texture = ExtResource("1_a4dad")
 atk_description = "Axe swing"
 fst_description = "Rapid swings"
 scd_description = "Bomb (Destroys terrain)"
-ult_description = "Wall (With initial stun)"
+ult_description = "Wall (With initial stun) that destroys terrain"
 spell_list = ExtResource("3_eun63")
