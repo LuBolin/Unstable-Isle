@@ -30,19 +30,19 @@ func simulate(unit_states):
 	lifespan = unit_states['lifespan']
 	var delta = get_physics_process_delta_time()
 	
-	#force_shapecast_update()
-	#var hits = []
-	#for res in collision_result:
-		#var collider = res['collider']
-		#if collider in hits:
-			#continue
-		#hits.append(collider)
-		#if collider is Hero:
-			#var target : Hero = collider
-	var collision = get_collider(0)
-	if collision:
-		if collision is Hero:
-			var target : Hero = collision
+	force_shapecast_update()
+	var hits = []
+	for res in collision_result:
+		var collider = res['collider']
+		if collider in hits or collider == hero:
+			continue
+		hits.append(collider)
+		if collider is Hero:
+			var target : Hero = collider
+	#var collision = get_collider(0)
+	#if collision:
+		#if collision is Hero:
+			#var target : Hero = collision
 			var locked_on = RangerLockedOn.new()
 			locked_on.create(hero, locked_on.total_duration)
 			locked_on.init(target.controller_id)
