@@ -13,7 +13,7 @@ extends Control
 @onready var main_lobby_gui = $LobbyGUI/MainAndSideHBox
 @onready var lobby_bgm = $LobbyBGM
 
-const IS_HOST = false
+const IS_HOST = true
 var LOBBY_SERVER_ADDRESS = '127.0.0.1'
 var LOBBY_SERVER_PORT = 22400
 var GAME_PORT_RANGE = 200

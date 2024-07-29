@@ -3,12 +3,12 @@ extends CharacterBody3D
 
 const bullet_scene = preload("res://entities/heroes/specifics/wizard/wizard_attack.tscn")
 
-const SPEED: float = 100.0
+const SPEED: float = 80.0
 
 var id: int
 var type = "WizardAttack"
 var direction: Vector2
-var lifespan: float = 5
+var lifespan: float = 4
 var hero : Hero
 
 static func create(hero: Hero, target: Vector2):

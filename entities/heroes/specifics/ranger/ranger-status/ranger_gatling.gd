@@ -8,7 +8,7 @@ extends HeroStatus
 # Return a function that applies some effect to self
 
 var duration
-var total_duration = 5
+var total_duration = 3.5
 var h_id
 var id = "RangerGatling"
 var target
@@ -29,8 +29,11 @@ func simulate(hero, state, input):
 	#every 0.1 seconds fire a bullet
 	if not input == null:
 		target = input.target
+	var shots_per_second = 4
+	var period = 1.0 / shots_per_second
+	var factor = 1 / period
 	if not target == null:
-		if not floor(duration * 10) == floor((duration - delta) * 10):
+		if not floor(duration * factor) == floor((duration - delta) * factor):
 			interactions.append(func(): RangerAttack.create(hero, target))
 	
 	duration -= delta

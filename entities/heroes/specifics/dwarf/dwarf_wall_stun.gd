@@ -7,7 +7,7 @@ extends HeroStatus
 # Return a function that applies some effect to self
 
 var duration
-var total_duration = 1.5
+var total_duration = 2.0
 var h_id
 var id = "DwarfWallStun"
 

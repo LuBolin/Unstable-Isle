@@ -2,7 +2,7 @@ class_name DeathState
 extends HeroState
 
 func enter():
-	print("%s died!" % [hero.name])
+	# print("%s died!" % [hero.name])
 	hero.game_room.round.hero_died.emit(hero.controller_id)
 	hero.hide()
 	hero.global_position.y = Settings.KILL_HEIGHT

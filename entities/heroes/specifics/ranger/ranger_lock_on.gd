@@ -29,6 +29,16 @@ func simulate(unit_states):
 	global_position = unit_states['position']
 	lifespan = unit_states['lifespan']
 	var delta = get_physics_process_delta_time()
+	
+	#force_shapecast_update()
+	#var hits = []
+	#for res in collision_result:
+		#var collider = res['collider']
+		#if collider in hits:
+			#continue
+		#hits.append(collider)
+		#if collider is Hero:
+			#var target : Hero = collider
 	var collision = get_collider(0)
 	if collision:
 		if collision is Hero:

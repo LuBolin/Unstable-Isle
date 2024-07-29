@@ -65,7 +65,7 @@ material = SubResource("StandardMaterial3D_7bsxe")
 
 [node name="DwarfBomb" type="CharacterBody3D"]
 collision_layer = 0
-collision_mask = 3
+collision_mask = 2
 script = ExtResource("1_1nsvb")
 speed_curve = SubResource("Curve_sxv0u")
 
