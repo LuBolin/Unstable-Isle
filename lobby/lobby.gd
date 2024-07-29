@@ -13,8 +13,8 @@ extends Control
 @onready var main_lobby_gui = $LobbyGUI/MainAndSideHBox
 @onready var lobby_bgm = $LobbyBGM
 
-const IS_HOST = true
-const LOBBY_SERVER_ADDRESS = '127.0.0.1'
+const IS_HOST = false
+var LOBBY_SERVER_ADDRESS = '127.0.0.1'
 const LOBBY_SERVER_PORT = 22400
 const GAME_PORT_RANGE = 200
 const MAX_CONNECTIONS = 100
@@ -37,6 +37,18 @@ func _ready():
 	login.logged_in.connect(_on_logged_in)
 
 	get_tree().set_multiplayer(mutiplayer, self.get_path())
+	
+	# --server=127.0.0.1
+	var args = Array(OS.get_cmdline_args())
+	var arguments = {}
+	for argument in OS.get_cmdline_args():
+		# Parse valid command-line arguments into a dictionary
+		if argument.find("=") > -1:
+			var key_value = argument.split("=")
+			arguments[key_value[0].lstrip("--")] = key_value[1]
+	if 'server' in arguments:
+		LOBBY_SERVER_ADDRESS = arguments['server']
+		
 	if IS_HOST:
 		is_lobby_host = launch_as_lobby_server()
 		if is_lobby_host:
