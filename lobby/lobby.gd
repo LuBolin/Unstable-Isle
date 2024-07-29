@@ -15,9 +15,9 @@ extends Control
 
 const IS_HOST = false
 var LOBBY_SERVER_ADDRESS = '127.0.0.1'
-const LOBBY_SERVER_PORT = 22400
-const GAME_PORT_RANGE = 200
-const MAX_CONNECTIONS = 100
+var LOBBY_SERVER_PORT = 22400
+var GAME_PORT_RANGE = 200
+var MAX_CONNECTIONS = 100
 var game_ports = range(
 	LOBBY_SERVER_PORT + 1, 
 	LOBBY_SERVER_PORT + 1 + GAME_PORT_RANGE)
@@ -48,6 +48,15 @@ func _ready():
 			arguments[key_value[0].lstrip("--")] = key_value[1]
 	if 'server' in arguments:
 		LOBBY_SERVER_ADDRESS = arguments['server']
+	if 'port_origin' in arguments:
+		LOBBY_SERVER_PORT = arguments['port_origin']
+	if 'port_range' in arguments:
+		GAME_PORT_RANGE = arguments['port_range']
+	if 'max_connections' in arguments:
+		MAX_CONNECTIONS = arguments['max_connections']	
+	game_ports = range(
+		LOBBY_SERVER_PORT + 1, 
+		LOBBY_SERVER_PORT + 1 + GAME_PORT_RANGE)
 		
 	if IS_HOST:
 		is_lobby_host = launch_as_lobby_server()
