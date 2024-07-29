@@ -8,7 +8,7 @@ extends CharacterBody3D
 
 const bullet_scene = preload("res://entities/heroes/specifics/dwarf/dwarf_bomb.tscn")
 
-const FUSE_DURATION = 5
+const FUSE_DURATION = 2.5
 const SPEED: float = 100.0
 
 var id: int
