@@ -17,6 +17,8 @@ boot_splash/bg_color=Color(0.141176, 0.141176, 0.141176, 1)
 boot_splash/image="res://resources/unstable-isle-icon.png"
 boot_splash/fullsize=false
 config/icon="res://resources/unstable-isle-icon.png"
+config/macos_native_icon="res://resources/unstable-isle-icon.png"
+config/windows_native_icon="res://resources/unstable-isle-icon.ico"
 
 [autoload]
 
